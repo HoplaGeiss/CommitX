@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { isNextMonthInFuture } from './calendarUtils';
 
-const MonthNavigation = ({ currentMonth, onMonthChange }) => {
+interface MonthNavigationProps {
+  currentMonth: Date;
+  onMonthChange: (newMonth: Date) => void;
+}
+
+const MonthNavigation: React.FC<MonthNavigationProps> = ({ currentMonth, onMonthChange }) => {
   const handlePreviousMonth = () => {
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(currentMonth.getMonth() - 1);
@@ -58,4 +63,5 @@ const styles = StyleSheet.create({
 });
 
 export default MonthNavigation;
+
 

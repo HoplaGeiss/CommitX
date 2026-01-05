@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { isDateInFuture, isToday } from './calendarUtils';
 
 const { width } = Dimensions.get('window');
@@ -9,7 +8,15 @@ const CARD_PADDING = 20;
 const CARD_WIDTH = width - (CARD_PADDING * 2);
 const CELL_SIZE = (CARD_WIDTH - 32) / DAYS_IN_WEEK;
 
-const CalendarGrid = ({ 
+interface CalendarGridProps {
+  days: (number | null)[];
+  commitmentId: string;
+  currentMonth: Date;
+  isDateCompleted: (commitmentId: string, day: number | null) => boolean;
+  onToggleCompletion: (commitmentId: string, day: number | null) => void;
+}
+
+const CalendarGrid: React.FC<CalendarGridProps> = ({ 
   days, 
   commitmentId, 
   currentMonth, 
@@ -105,4 +112,5 @@ const styles = StyleSheet.create({
 });
 
 export default CalendarGrid;
+
 

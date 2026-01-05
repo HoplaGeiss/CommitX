@@ -5,10 +5,26 @@ import MonthNavigation from './MonthNavigation';
 import WeekDaysRow from './WeekDaysRow';
 import CalendarGrid from './CalendarGrid';
 import { getMonthDays } from './calendarUtils';
+import { Commitment } from '../types';
 
 const { width } = Dimensions.get('window');
 
-const CommitmentCard = ({
+interface CommitmentCardProps {
+  item: Commitment;
+  currentMonth: Date;
+  isEditing: boolean;
+  editedTitle: string;
+  onEditChange: (text: string) => void;
+  onEditSubmit: () => void;
+  onEditCancel: () => void;
+  onStartEdit: (id: string, title: string) => void;
+  onDelete: (commitment: Commitment) => void;
+  isDateCompleted: (commitmentId: string, day: number | null) => boolean;
+  onToggleCompletion: (commitmentId: string, day: number | null) => void;
+  onMonthChange: (newMonth: Date) => void;
+}
+
+const CommitmentCard: React.FC<CommitmentCardProps> = ({
   item,
   currentMonth,
   isEditing,
@@ -126,4 +142,5 @@ const styles = StyleSheet.create({
 });
 
 export default CommitmentCard;
+
 

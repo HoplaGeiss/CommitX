@@ -1,19 +1,19 @@
-export const getDaysInMonth = (date) => {
+export const getDaysInMonth = (date: Date): number => {
   const year = date.getFullYear();
   const month = date.getMonth();
   return new Date(year, month + 1, 0).getDate();
 };
 
-export const getFirstDayOfMonth = (date) => {
+export const getFirstDayOfMonth = (date: Date): number => {
   const year = date.getFullYear();
   const month = date.getMonth();
   return new Date(year, month, 1).getDay();
 };
 
-export const getMonthDays = (currentMonth) => {
+export const getMonthDays = (currentMonth: Date): (number | null)[] => {
   const daysInMonth = getDaysInMonth(currentMonth);
   const firstDay = getFirstDayOfMonth(currentMonth);
-  const days = [];
+  const days: (number | null)[] = [];
 
   // Add empty placeholder cells for days before the first day of the month
   for (let i = 0; i < firstDay; i++) {
@@ -28,7 +28,7 @@ export const getMonthDays = (currentMonth) => {
   return days;
 };
 
-export const isToday = (day, currentMonth) => {
+export const isToday = (day: number | null, currentMonth: Date): boolean => {
   if (!day) return false;
   const today = new Date();
   const date = new Date(
@@ -43,7 +43,7 @@ export const isToday = (day, currentMonth) => {
   );
 };
 
-export const isDateInFuture = (day, currentMonth) => {
+export const isDateInFuture = (day: number | null, currentMonth: Date): boolean => {
   if (!day) return false;
   const today = new Date();
   const todayYear = today.getFullYear();
@@ -62,7 +62,7 @@ export const isDateInFuture = (day, currentMonth) => {
   return dateDay > todayDay;
 };
 
-export const isNextMonthInFuture = (currentMonth) => {
+export const isNextMonthInFuture = (currentMonth: Date): boolean => {
   const today = new Date();
   const todayYear = today.getFullYear();
   const todayMonth = today.getMonth();
@@ -77,4 +77,5 @@ export const isNextMonthInFuture = (currentMonth) => {
   if (nextMonthYear < todayYear) return false;
   return nextMonthMonth > todayMonth;
 };
+
 

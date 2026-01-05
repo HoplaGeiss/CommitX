@@ -8,10 +8,18 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Commitment } from '../types';
 
 const { width } = Dimensions.get('window');
 
-const DeleteModal = ({ visible, commitment, onConfirm, onCancel }) => {
+interface DeleteModalProps {
+  visible: boolean;
+  commitment: Commitment | null;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+const DeleteModal: React.FC<DeleteModalProps> = ({ visible, commitment, onConfirm, onCancel }) => {
   if (!commitment) return null;
 
   return (
@@ -169,4 +177,5 @@ const styles = StyleSheet.create({
 });
 
 export default DeleteModal;
+
 

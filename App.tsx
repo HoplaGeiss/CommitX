@@ -4,8 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import CommitmentsListScreen from './screens/CommitmentsListScreen';
 import AddCommitmentScreen from './screens/AddCommitmentScreen';
+import { RootStackParamList } from './types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
@@ -37,4 +38,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
 

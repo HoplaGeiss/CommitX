@@ -8,23 +8,27 @@ import {
   Dimensions,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { storage } from '../utils/storage';
 import CommitmentCard from '../components/CommitmentCard';
 import DeleteModal from '../components/DeleteModal';
 import { isDateInFuture } from '../components/calendarUtils';
+import { Commitment, Completion, RootStackParamList } from '../types';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'CommitmentsList'>;
 
 const { width } = Dimensions.get('window');
 
-const CommitmentsListScreen = ({ navigation }) => {
+const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   const insets = useSafeAreaInsets();
-  const [commitments, setCommitments] = useState([]);
-  const [completions, setCompletions] = useState([]);
+  const [commitments, setCommitments] = useState<Commitment[]>([]);
+  const [completions, setCompletions] = useState<Completion[]>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [editedTitle, setEditedTitle] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [commitmentToDelete, setCommitmentToDelete] = useState(null);
+  const [commitmentToDelete, setCommitmentToDelete] = useState<Commitment | null>(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -39,7 +43,7 @@ const CommitmentsListScreen = ({ navigation }) => {
     setCompletions(loadedCompletions);
   };
 
-  const isDateCompleted = (commitmentId, day) => {
+  const isDateCompleted = (commitmentId: string, day: number | null): boolean => {
     if (!day) return false;
     const date = new Date(
       currentMonth.getFullYear(),
@@ -52,7 +56,7 @@ const CommitmentsListScreen = ({ navigation }) => {
     );
   };
 
-  const handleToggleCompletion = async (commitmentId, day) => {
+  const handleToggleCompletion = async (commitmentId: string, day: number | null) => {
     if (!day) return;
     if (isDateInFuture(day, currentMonth)) return;
     
@@ -65,14 +69,14 @@ const CommitmentsListScreen = ({ navigation }) => {
     await loadData();
   };
 
-  const handleEditCommitment = async (commitmentId, newTitle) => {
+  const handleEditCommitment = async (commitmentId: string, newTitle: string) => {
     if (newTitle.trim()) {
       await storage.updateCommitment(commitmentId, { title: newTitle.trim() });
       await loadData();
     }
   };
 
-  const handleDeleteCommitment = (commitment) => {
+  const handleDeleteCommitment = (commitment: Commitment) => {
     setCommitmentToDelete(commitment);
     setShowDeleteModal(true);
   };
@@ -91,11 +95,11 @@ const CommitmentsListScreen = ({ navigation }) => {
     setCommitmentToDelete(null);
   };
 
-  const handleMonthChange = (newMonth) => {
+  const handleMonthChange = (newMonth: Date) => {
     setCurrentMonth(newMonth);
   };
 
-  const renderCommitmentCard = ({ item }) => {
+  const renderCommitmentCard = ({ item }: { item: Commitment }) => {
     const isEditing = editingId === item.id;
 
     return (
@@ -213,3 +217,5 @@ const styles = StyleSheet.create({
 });
 
 export default CommitmentsListScreen;
+
+

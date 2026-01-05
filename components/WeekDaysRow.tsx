@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 const DAYS_IN_WEEK = 7;
@@ -10,7 +9,7 @@ const CELL_SIZE = (CARD_WIDTH - 32) / DAYS_IN_WEEK;
 
 const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const WeekDaysRow = () => {
+const WeekDaysRow: React.FC = () => {
   return (
     <View style={styles.weekDaysRow}>
       {WEEK_DAYS.map((day, index) => (
@@ -43,4 +42,5 @@ const styles = StyleSheet.create({
 });
 
 export default WeekDaysRow;
+
 

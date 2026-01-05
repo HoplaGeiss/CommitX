@@ -8,9 +8,13 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { storage } from '../utils/storage';
+import { RootStackParamList } from '../types';
 
-const AddCommitmentScreen = ({ navigation }) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'AddCommitment'>;
+
+const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
   const [title, setTitle] = useState('');
 
   const handleSave = async () => {
@@ -93,4 +97,5 @@ const styles = StyleSheet.create({
 });
 
 export default AddCommitmentScreen;
+
 

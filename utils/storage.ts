@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Commitment, Completion } from '../types';
 
 const COMMITMENTS_KEY = '@commitments';
 const COMPLETIONS_KEY = '@completions';
 
 export const storage = {
   // Commitments
-  async getCommitments() {
+  async getCommitments(): Promise<Commitment[]> {
     try {
       const data = await AsyncStorage.getItem(COMMITMENTS_KEY);
       return data ? JSON.parse(data) : [];
@@ -15,7 +16,7 @@ export const storage = {
     }
   },
 
-  async saveCommitments(commitments) {
+  async saveCommitments(commitments: Commitment[]): Promise<void> {
     try {
       await AsyncStorage.setItem(COMMITMENTS_KEY, JSON.stringify(commitments));
     } catch (error) {
@@ -23,9 +24,9 @@ export const storage = {
     }
   },
 
-  async addCommitment(commitment) {
+  async addCommitment(commitment: { title: string }): Promise<Commitment> {
     const commitments = await this.getCommitments();
-    const newCommitment = {
+    const newCommitment: Commitment = {
       id: Date.now().toString(),
       title: commitment.title,
       createdAt: new Date().toISOString(),
@@ -35,7 +36,7 @@ export const storage = {
     return newCommitment;
   },
 
-  async updateCommitment(id, updates) {
+  async updateCommitment(id: string, updates: Partial<Commitment>): Promise<Commitment | null> {
     const commitments = await this.getCommitments();
     const index = commitments.findIndex(c => c.id === id);
     if (index >= 0) {
@@ -46,7 +47,7 @@ export const storage = {
     return null;
   },
 
-  async deleteCommitment(id) {
+  async deleteCommitment(id: string): Promise<void> {
     const commitments = await this.getCommitments();
     const filtered = commitments.filter(c => c.id !== id);
     await this.saveCommitments(filtered);
@@ -57,7 +58,7 @@ export const storage = {
   },
 
   // Completions
-  async getCompletions() {
+  async getCompletions(): Promise<Completion[]> {
     try {
       const data = await AsyncStorage.getItem(COMPLETIONS_KEY);
       return data ? JSON.parse(data) : [];
@@ -67,7 +68,7 @@ export const storage = {
     }
   },
 
-  async saveCompletions(completions) {
+  async saveCompletions(completions: Completion[]): Promise<void> {
     try {
       await AsyncStorage.setItem(COMPLETIONS_KEY, JSON.stringify(completions));
     } catch (error) {
@@ -75,7 +76,7 @@ export const storage = {
     }
   },
 
-  async toggleCompletion(commitmentId, date) {
+  async toggleCompletion(commitmentId: string, date: Date): Promise<Completion[]> {
     const completions = await this.getCompletions();
     // Use local date components to avoid timezone issues
     const year = date.getFullYear();
@@ -103,12 +104,12 @@ export const storage = {
     return completions;
   },
 
-  async getCompletionsForCommitment(commitmentId) {
+  async getCompletionsForCommitment(commitmentId: string): Promise<Completion[]> {
     const completions = await this.getCompletions();
     return completions.filter(c => c.commitmentId === commitmentId);
   },
 
-  isDateCompleted(completions, date) {
+  isDateCompleted(completions: Completion[], date: Date): boolean {
     // Use local date components to avoid timezone issues
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -117,4 +118,5 @@ export const storage = {
     return completions.some(c => c.date === dateStr);
   },
 };
+
 

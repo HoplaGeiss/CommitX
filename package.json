@@ -1,7 +1,7 @@
 {
   "name": "commitz",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -23,7 +23,9 @@
     "@expo/metro-runtime": "~6.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.0"
+    "@babel/core": "^7.25.0",
+    "@types/react": "~19.1.10",
+    "typescript": "~5.9.2"
   },
   "private": true,
   "packageManager": "pnpm@9.0.0"
