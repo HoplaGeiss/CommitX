@@ -8,9 +8,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   // Enable CORS for frontend app
+  // Allow all origins (needed for mobile apps and Railway deployment)
   app.enableCors({
-    origin: true,
-    credentials: true,
+    origin: '*', // Allow all origins - mobile apps don't have a traditional origin
+    credentials: false, // Set to false when using wildcard origin
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+    exposedHeaders: ['Content-Type'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
 
   // Global validation pipe
