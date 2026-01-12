@@ -10,13 +10,22 @@ async function bootstrap() {
   // Enable CORS for frontend app
   // Allow all origins (needed for mobile apps and Railway deployment)
   app.enableCors({
-    origin: '*', // Allow all origins - mobile apps don't have a traditional origin
+    origin: true, // Allow all origins - dynamically set based on request
     credentials: false, // Set to false when using wildcard origin
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS', 'PUT'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'X-Requested-With',
+      'Origin',
+      'Access-Control-Request-Method',
+      'Access-Control-Request-Headers',
+    ],
     exposedHeaders: ['Content-Type'],
     preflightContinue: false,
     optionsSuccessStatus: 204,
+    maxAge: 86400, // Cache preflight requests for 24 hours
   });
 
   // Global validation pipe
