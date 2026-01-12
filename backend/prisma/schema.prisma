@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String?
+  createdAt DateTime @default(now())
+  
+  commitments Commitment[]
+  completions Completion[]
+  participantCommitments CommitmentParticipant[]
+}
+
+model Commitment {
+  id          String   @id @default(uuid())
+  title       String
+  type        String   // 'self' | 'collaborative' | 'shared'
+  userId      String
+  shareCode   String?  @unique
+  ownerId     String?  // For shared challenges
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user        User     @relation(fields: [userId], references: [id])
+  participants CommitmentParticipant[]
+  completions Completion[]
+}
+
+model CommitmentParticipant {
+  id            String   @id @default(uuid())
+  commitmentId  String
+  userId        String
+  joinedAt      DateTime @default(now())
+  
+  commitment    Commitment @relation(fields: [commitmentId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id])
+  
+  @@unique([commitmentId, userId])
+  @@index([commitmentId])
+  @@index([userId])
+}
+
+model Completion {
+  id            String   @id @default(uuid())
+  commitmentId  String
+  userId        String
+  date          String   // YYYY-MM-DD format
+  createdAt     DateTime @default(now())
+  
+  commitment    Commitment @relation(fields: [commitmentId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id])
+  
+  @@unique([commitmentId, userId, date])
+  @@index([commitmentId])
+  @@index([userId])
+  @@index([date])
+}

@@ -1,0 +1,65 @@
+import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AppModule } from './app.module';
+import * as os from 'os';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  
+  // Enable CORS for frontend app
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
+
+  // Global validation pipe
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
+  
+  // Swagger configuration
+  const config = new DocumentBuilder()
+    .setTitle('CommitX API')
+    .setDescription('CommitX Backend API for managing commitments and completions')
+    .setVersion('1.0')
+    .addTag('commitments', 'Commitment management endpoints')
+    .build();
+  
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+  
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  
+  // Get local IP address
+  const networkInterfaces = os.networkInterfaces();
+  let localIp = 'localhost';
+  
+  for (const interfaceName in networkInterfaces) {
+    const addresses = networkInterfaces[interfaceName];
+    if (addresses) {
+      for (const address of addresses) {
+        // Skip internal (loopback) and non-IPv4 addresses
+        if (address.family === 'IPv4' && !address.internal) {
+          localIp = address.address;
+          break;
+        }
+      }
+      if (localIp !== 'localhost') break;
+    }
+  }
+  
+  console.log(`🚀 CommitX Backend running on:`);
+  console.log(`   http://localhost:${port}`);
+  console.log(`   http://${localIp}:${port}`);
+  console.log(`📚 Swagger documentation available at:`);
+  console.log(`   http://localhost:${port}/api`);
+  console.log(`   http://${localIp}:${port}/api`);
+}
+bootstrap();
+

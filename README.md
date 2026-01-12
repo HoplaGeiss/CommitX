@@ -1,99 +1,109 @@
-# CommitZ
+# CommitX
 
-A React Native mobile app built with Expo for tracking daily commitments and habits. Built with a modern dark theme and intuitive calendar interface.
+A full-stack commitment tracking application with a NestJS backend and React Native frontend built with Expo.
+
+## Project Structure
+
+```
+commitX/
+├── backend/          # NestJS backend API
+│   ├── src/
+│   │   ├── commitments/  # Commitments module (CRUD + completions)
+│   │   └── main.ts      # Application entry point
+│   └── package.json
+├── frontend/         # React Native/Expo frontend app
+│   ├── screens/      # Screen components
+│   ├── components/   # Reusable components
+│   ├── utils/        # Utilities (API client, etc.)
+│   └── package.json
+└── package.json      # Root workspace configuration
+```
 
 ## Features
 
-- ✅ **Create and Manage Commitments**: Add, edit, and delete commitments with ease
+- ✅ **Create and Manage Commitments**: Add, edit, and delete commitments via REST API
 - 📅 **Monthly Calendar View**: Visual calendar showing completion status for each day
 - ✓ **Quick Check-in**: Mark commitments as done for today with a single tap
 - 🔄 **Month Navigation**: Navigate between months to view past completions
 - 🎯 **Future Date Protection**: Prevents check-ins on future dates
-- 💾 **Local Storage**: All data stored locally using AsyncStorage
 - 🎨 **Modern Dark UI**: Beautiful dark theme with green accent colors
 - 📱 **Safe Area Support**: Properly handles Android navigation bars and iOS safe areas
+- 🚀 **RESTful API**: NestJS backend with full CRUD operations
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- pnpm (v9.0.0 or higher) - see package.json for exact version
+- Node.js (v20.19.4 or higher)
+- pnpm (v9.0.0 or higher)
 - Expo CLI (installed globally or via npx)
 
 ### Installation
 
-1. Install dependencies:
+1. Install all dependencies (root, backend, and frontend):
 ```bash
 pnpm install
 ```
 
-2. Start the Expo development server:
+This will install dependencies for all workspaces automatically.
+
+### Running the Application
+
+#### Development Mode
+
+**Start both backend and frontend:**
 ```bash
-pnpm start
-# or
-npm start
+pnpm dev
 ```
 
-3. Run on your device:
-   - Scan the QR code with Expo Go app (iOS/Android)
-   - Or press `i` for iOS simulator
-   - Or press `a` for Android emulator
-   - Or press `w` for web browser
+**Or start them separately:**
 
-## Project Structure
-
-```
-commitZ/
-├── App.js                      # Main app component with navigation
-├── app.json                    # Expo configuration
-├── screens/                    # Screen components
-│   ├── CommitmentsListScreen.js    # Main list view with calendar cards
-│   └── AddCommitmentScreen.js      # Create new commitment screen
-├── utils/
-│   └── storage.js              # Local storage utilities (AsyncStorage)
-└── assets/                     # App assets (icons, images)
-    ├── icon.png
-    ├── adaptive-icon.png
-    ├── splash.png
-    └── favicon.png
+Backend (runs on http://localhost:3000):
+```bash
+pnpm dev:backend
 ```
 
-## Usage
+Frontend app:
+```bash
+pnpm dev:frontend
+```
 
-1. **Create a Commitment**: 
-   - Tap the green + button (FAB) on the main screen
-   - Enter a commitment title and save
+Then:
+- Scan the QR code with Expo Go app (iOS/Android)
+- Or press `i` for iOS simulator
+- Or press `a` for Android emulator
+- Or press `w` for web browser
 
-2. **Mark as Done**: 
-   - Tap the checkmark icon (✓) on the top left of each commitment card to mark it as done for today
-   - The calendar cell for today will turn green
+### Backend API
 
-3. **Navigate Months**: 
-   - Use the chevron buttons (‹ ›) next to the month name to navigate between months
-   - The forward button is hidden when viewing the current month
+The NestJS backend provides the following endpoints:
 
-4. **Edit Commitment**: 
-   - Tap the edit icon (✎) next to the commitment title
-   - Modify the title and save
+#### Commitments
+- `GET /commitments` - Get all commitments
+- `GET /commitments/:id` - Get a specific commitment
+- `POST /commitments` - Create a new commitment
+- `PATCH /commitments/:id` - Update a commitment
+- `DELETE /commitments/:id` - Delete a commitment
 
-5. **Delete Commitment**: 
-   - Tap the trash icon next to the commitment title
-   - Confirm deletion in the modal popup
+#### Completions
+- `POST /commitments/:id/completions` - Toggle completion for a date
+- `GET /commitments/:id/completions` - Get completions for a commitment
+- `GET /commitments/completions/all` - Get all completions
 
-6. **View Calendar**: 
-   - Each commitment card shows a mini calendar with day numbers
-   - Completed days are highlighted in green
-   - Future dates are dimmed and disabled
+The backend runs on `http://localhost:3000` by default (configurable via `PORT` environment variable).
 
 ## Technologies
 
-- **React Native** (0.81.5) - Mobile framework
+### Backend
+- **NestJS** (^10.0.0) - Progressive Node.js framework
+- **TypeScript** - Type-safe development
+- **Express** - HTTP server
+
+### Frontend
+- **React Native** (0.81.5) - Mobile framework (frontend)
 - **Expo** (~54.0.0) - Development platform
 - **React Navigation** (v6) - Navigation library
-- **AsyncStorage** - Local data persistence
-- **React Native Safe Area Context** - Safe area handling
-- **Expo Vector Icons** - Icon library
+- **TypeScript** - Type-safe development
 
 ## Design
 
@@ -105,4 +115,3 @@ commitZ/
 ## License
 
 Private project
-
