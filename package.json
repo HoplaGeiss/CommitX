@@ -2,7 +2,7 @@
   "name": "commitx",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@10.26.1",
   "scripts": {
     "dev:backend": "cd backend && pnpm run start:dev",
     "dev:frontend": "cd frontend && pnpm run start",
