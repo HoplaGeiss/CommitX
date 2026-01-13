@@ -1,0 +1,4 @@
+appId: com.commitx.app
+---
+- assertVisible: "Share Code"
+- tapOn: "Close"

@@ -1,0 +1,27 @@
+appId: com.commitx.app
+---
+- launchApp
+- assertVisible: "CommitX"
+
+- tapOn:
+    text: "+"
+
+- assertVisible: "Enter commitment title"
+- inputText: "E2E Test Collaborative"
+
+- tapOn:
+    text: "Collaborative"
+
+- tapOn:
+    text: "Save"
+
+- runFlow:
+    when:
+      visible: "Share Code"
+    file: flows/closeShareCode.yaml
+
+- assertVisible: "E2E Test Collaborative"
+
+- stopApp
+- launchApp
+- assertVisible: "E2E Test Collaborative"

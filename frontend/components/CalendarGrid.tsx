@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import Svg, { Polygon, ClipPath, Defs, Rect } from 'react-native-svg';
+import Svg, { Polygon, ClipPath, Defs, Rect, G } from 'react-native-svg';
 import { isDateInFuture, isToday } from './calendarUtils';
 import { ChallengeType } from '../types';
 
@@ -61,7 +61,7 @@ const SplitTriangleCell: React.FC<SplitTriangleCellProps> = ({
               <Rect width={containerSize} height={containerSize} rx="8" ry="8" />
             </ClipPath>
           </Defs>
-          <g clipPath={`url(#clip-${day})`}>
+          <G clipPath={`url(#clip-${day})`}>
             {/* Top-left triangle (User A - Current User) */}
             <Polygon
               points={`0,0 ${containerSize},0 0,${containerSize}`}
@@ -74,7 +74,7 @@ const SplitTriangleCell: React.FC<SplitTriangleCellProps> = ({
               fill={bottomRightColor}
               opacity={isFuture ? 0.4 : 1}
             />
-          </g>
+          </G>
         </Svg>
         {/* Border for today - render on top as a View to ensure it shows fully */}
         {isTodayDate && (
