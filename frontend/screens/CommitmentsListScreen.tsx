@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,7 @@ import { useUser } from '../utils/userContext';
 import UserSwitcher from '../components/UserSwitcher';
 import CommitmentCard from '../components/CommitmentCard';
 import DeleteModal from '../components/DeleteModal';
+import ActionSheet from '../components/ActionSheet';
 import { isDateInFuture } from '../components/calendarUtils';
 import { Commitment, Completion, RootStackParamList } from '../types';
 
@@ -35,8 +36,11 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   const [editedTitle, setEditedTitle] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [commitmentToDelete, setCommitmentToDelete] = useState<Commitment | null>(null);
+  const [showActionSheet, setShowActionSheet] = useState(false);
   const [participantsMap, setParticipantsMap] = useState<Record<string, string[]>>({});
   const [hasInitialSync, setHasInitialSync] = useState(false);
+  // Track if we just deleted the default commitment to prevent recreation
+  const justDeletedDefaultRef = useRef<boolean>(false);
 
   // Initial sync on startup - fetch collaborative commitments from server
   useEffect(() => {
@@ -166,11 +170,49 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
 
   const loadData = async () => {
     // Load from local storage immediately (no blocking)
-    const loadedCommitments = await storage.getCommitments();
+    let loadedCommitments = await storage.getCommitments();
+    
+    // If we just deleted the default commitment, skip creation and reset the ref
+    if (justDeletedDefaultRef.current) {
+      justDeletedDefaultRef.current = false;
+      const loadedCompletions = await storage.getCompletions();
+      setCommitments(loadedCommitments);
+      setCompletions(loadedCompletions);
+      updateParticipantsMap(loadedCommitments, loadedCompletions);
+      return;
+    }
+    
+    // If no commitments exist and default commitment hasn't been created yet for this user,
+    // create a default one for first-time users (only once per user)
+    if (loadedCommitments.length === 0 && currentUser.id) {
+      const hasDefaultBeenCreated = await storage.hasDefaultCommitmentBeenCreated(currentUser.id);
+      if (!hasDefaultBeenCreated) {
+        // Double-check that no commitment with this title exists (safety check)
+        const existingDefault = loadedCommitments.find(
+          c => c.title === 'Your first commitment' && c.userId === currentUser.id
+        );
+        
+        if (!existingDefault) {
+          // Set the flag FIRST to prevent race conditions if loadData() is called again
+          await storage.setDefaultCommitmentCreated(currentUser.id);
+          // Then create the commitment
+          await storage.addCommitment({
+            title: 'Your first commitment',
+            type: 'self',
+            userId: currentUser.id,
+          });
+          loadedCommitments = await storage.getCommitments();
+        } else {
+          // If it exists but flag wasn't set, set the flag now
+          await storage.setDefaultCommitmentCreated(currentUser.id);
+        }
+      }
+    }
+    
     const loadedCompletions = await storage.getCompletions();
     setCommitments(loadedCommitments);
     setCompletions(loadedCompletions);
-
+    
     // Derive participants from completions
     updateParticipantsMap(loadedCommitments, loadedCompletions);
   };
@@ -235,22 +277,36 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
 
   const confirmDelete = async () => {
     if (commitmentToDelete) {
-      // Delete from local storage first
+      // Check if this is the default commitment
+      const isDefaultCommitment = commitmentToDelete.title === 'Your first commitment' && 
+                                   commitmentToDelete.type === 'self' && 
+                                   commitmentToDelete.userId === currentUser.id;
+      
+      if (isDefaultCommitment) {
+        // Set flag first to prevent recreation
+        await storage.setDefaultCommitmentCreated(currentUser.id);
+        // Set ref to skip creation in the next loadData() call
+        justDeletedDefaultRef.current = true;
+      }
+      
+      // Delete from local storage
       await storage.deleteCommitment(commitmentToDelete.id);
       
-      // If it's a collaborative commitment, also delete from backend
+      // If it's a collaborative commitment, delete/leave from backend
       if (commitmentToDelete.type === 'collaborative' && !commitmentToDelete.id.startsWith('local-')) {
         try {
-          await api.deleteCommitment(commitmentToDelete.id);
+          await api.deleteCommitment(commitmentToDelete.id, currentUser.id);
         } catch (error) {
           console.error('Failed to delete commitment from backend:', error);
           // Continue anyway - local deletion already happened
         }
       }
       
-      await loadData();
       setShowDeleteModal(false);
       setCommitmentToDelete(null);
+      
+      // Load data after deletion
+      await loadData();
     }
   };
 
@@ -323,18 +379,9 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
             styles.fab,
             { bottom: Math.max(insets.bottom, 20) + 20 }
           ]}
-          onPress={() => navigation.navigate('AddCommitment')}
+          onPress={() => setShowActionSheet(true)}
         >
           <Text style={styles.fabText}>+</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.joinFab,
-            { bottom: Math.max(insets.bottom, 20) + 90 }
-          ]}
-          onPress={() => navigation.navigate('JoinChallenge')}
-        >
-          <Ionicons name="people-outline" size={24} color="#ffffff" />
         </TouchableOpacity>
       </View>
 
@@ -343,6 +390,14 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
         commitment={commitmentToDelete}
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
+        currentUserId={currentUser.id}
+      />
+
+      <ActionSheet
+        visible={showActionSheet}
+        onClose={() => setShowActionSheet(false)}
+        onCreate={() => navigation.navigate('AddCommitment')}
+        onJoin={() => navigation.navigate('JoinChallenge')}
       />
     </>
   );
@@ -376,21 +431,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '300',
     lineHeight: 32,
-  },
-  joinFab: {
-    position: 'absolute',
-    right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#2196F3',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
   },
   emptyContainer: {
     flex: 1,

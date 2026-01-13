@@ -94,9 +94,10 @@ class ApiClient {
     });
   }
 
-  async deleteCommitment(id: string): Promise<void> {
+  async deleteCommitment(id: string, userId: string): Promise<void> {
     return this.request<void>(`/commitments/${id}`, {
       method: 'DELETE',
+      body: JSON.stringify({ userId }),
     });
   }
 

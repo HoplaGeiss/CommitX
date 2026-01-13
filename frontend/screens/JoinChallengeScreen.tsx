@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -13,6 +12,7 @@ import { RootStackParamList } from '../types';
 import { api } from '../utils/api';
 import { storage } from '../utils/storage';
 import { useUser } from '../utils/userContext';
+import AlertModal, { AlertType } from '../components/AlertModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'JoinChallenge'>;
 
@@ -20,10 +20,29 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
   const [shareCode, setShareCode] = useState('');
   const [loading, setLoading] = useState(false);
   const { currentUser } = useUser();
+  const [alert, setAlert] = useState<{
+    visible: boolean;
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    visible: false,
+    type: 'info',
+    title: '',
+    message: '',
+  });
+
+  const showAlert = (type: AlertType, title: string, message: string) => {
+    setAlert({ visible: true, type, title, message });
+  };
+
+  const hideAlert = () => {
+    setAlert((prev) => ({ ...prev, visible: false }));
+  };
 
   const handleJoin = async () => {
     if (!shareCode.trim()) {
-      Alert.alert('Error', 'Please enter a share code');
+      showAlert('error', 'Error', 'Please enter a share code');
       return;
     }
 
@@ -66,9 +85,17 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
       }
 
       navigation.navigate('CommitmentsList');
-      Alert.alert('Success', `Joined "${collaborativeChallenge.title}"`);
-    } catch (error) {
-      Alert.alert('Error', 'Invalid share code or failed to join challenge. Please check and try again.');
+      showAlert('success', 'Success', `Joined "${collaborativeChallenge.title}"`);
+    } catch (error: any) {
+      // Handle specific error messages from backend
+      const errorMessage = error?.message || error?.response?.data?.message || 'Invalid share code or failed to join challenge. Please check and try again.';
+      
+      // Check if it's a participant limit error
+      if (errorMessage.includes('full') || errorMessage.includes('Maximum 2 participants')) {
+        showAlert('warning', 'Challenge Full', 'This collaborative challenge is full. Maximum 2 participants allowed.');
+      } else {
+        showAlert('error', 'Error', errorMessage);
+      }
       console.error('Join challenge error:', error);
     } finally {
       setLoading(false);
@@ -79,7 +106,8 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Join Challenge</Text>
       <Text style={styles.description}>
-        Enter a share code to join a collaborative challenge or view a shared challenge
+        Enter a share code to join a collaborative challenge.{'\n'}
+        Collaborative challenges are limited to 2 participants.
       </Text>
 
       <TextInput
@@ -112,6 +140,14 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
       >
         <Text style={styles.cancelButtonText}>Cancel</Text>
       </TouchableOpacity>
+
+      <AlertModal
+        visible={alert.visible}
+        type={alert.type}
+        title={alert.title}
+        message={alert.message}
+        onClose={hideAlert}
+      />
     </View>
   );
 };

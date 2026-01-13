@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Share } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import MonthNavigation from './MonthNavigation';
 import WeekDaysRow from './WeekDaysRow';
@@ -47,7 +47,31 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
   const days = getMonthDays(currentMonth);
   const isShared = item.type === 'shared';
   const isCollaborative = item.type === 'collaborative';
+  const isCreator = currentUserId && item.userId === currentUserId;
   const showActions = !readonly && !isShared;
+  const showEditButton = showActions && (!isCollaborative || isCreator);
+  const showShareButton = isCollaborative && isCreator && item.shareCode;
+
+  const handleShare = async () => {
+    if (!item.shareCode) return;
+    
+    try {
+      const result = await Share.share({
+        message: `Join my collaborative challenge "${item.title}"!\n\nShare code: ${item.shareCode}\n\nUse this code in CommitX to join the challenge.`,
+        title: `Share "${item.title}" Challenge`,
+      });
+      
+      // Share was successful (user selected an app)
+      if (result.action === Share.sharedAction) {
+        // Optional: Could show a success message here
+      }
+    } catch (error: any) {
+      // User cancelled or error occurred
+      if (error.message !== 'User did not share') {
+        console.error('Error sharing:', error);
+      }
+    }
+  };
 
   return (
     <View style={styles.card}>
@@ -78,12 +102,22 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
             </View>
             {showActions && (
               <View style={styles.cardActions}>
-                <TouchableOpacity
-                  style={styles.actionButton}
-                  onPress={() => onStartEdit(item.id, item.title)}
-                >
-                  <Ionicons name="create-outline" size={18} color="#ffffff" />
-                </TouchableOpacity>
+                {showShareButton && (
+                  <TouchableOpacity
+                    style={styles.actionButton}
+                    onPress={handleShare}
+                  >
+                    <Ionicons name="share-outline" size={18} color="#4CAF50" />
+                  </TouchableOpacity>
+                )}
+                {showEditButton && (
+                  <TouchableOpacity
+                    style={styles.actionButton}
+                    onPress={() => onStartEdit(item.id, item.title)}
+                  >
+                    <Ionicons name="create-outline" size={18} color="#ffffff" />
+                  </TouchableOpacity>
+                )}
                 <TouchableOpacity
                   style={styles.actionButton}
                   onPress={() => onDelete(item)}

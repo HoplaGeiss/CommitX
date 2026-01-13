@@ -17,10 +17,19 @@ interface DeleteModalProps {
   commitment: Commitment | null;
   onConfirm: () => void;
   onCancel: () => void;
+  currentUserId?: string;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ visible, commitment, onConfirm, onCancel }) => {
+const DeleteModal: React.FC<DeleteModalProps> = ({ visible, commitment, onConfirm, onCancel, currentUserId }) => {
   if (!commitment) return null;
+
+  const isCreator = currentUserId && commitment.userId === currentUserId;
+  const isCollaborative = commitment.type === 'collaborative';
+  const title = isCollaborative && !isCreator ? 'Leave Challenge' : 'Delete Commitment';
+  const message = isCollaborative && !isCreator
+    ? `Are you sure you want to leave "${commitment.title}"? You will need a new share code to join again.`
+    : `Are you sure you want to delete "${commitment.title}"? This action cannot be undone.`;
+  const buttonText = isCollaborative && !isCreator ? 'Leave' : 'Delete';
 
   return (
     <Modal
@@ -45,10 +54,8 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ visible, commitment, onConfir
                 <Ionicons name="trash" size={32} color="#ff4444" />
               </View>
             </View>
-            <Text style={styles.modalTitle}>Delete Commitment</Text>
-            <Text style={styles.modalMessage}>
-              Are you sure you want to delete <Text style={styles.modalCommitmentName}>"{commitment.title}"</Text>? This action cannot be undone.
-            </Text>
+            <Text style={styles.modalTitle}>{title}</Text>
+            <Text style={styles.modalMessage}>{message}</Text>
             <View style={styles.modalButtons}>
               <TouchableOpacity
                 style={styles.modalCancelButton}
@@ -62,7 +69,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ visible, commitment, onConfir
                 onPress={onConfirm}
                 activeOpacity={0.8}
               >
-                <Text style={styles.modalDeleteText}>Delete</Text>
+                <Text style={styles.modalDeleteText}>{buttonText}</Text>
               </TouchableOpacity>
             </View>
           </View>

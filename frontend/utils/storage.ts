@@ -4,6 +4,7 @@ import { Commitment, Completion } from '../types';
 const COMMITMENTS_KEY = '@commitments';
 const COMPLETIONS_KEY = '@completions';
 const CURRENT_USER_ID_KEY = '@current_user_id';
+const DEFAULT_COMMITMENT_CREATED_KEY = '@default_commitment_created';
 
 export const storage = {
   // Commitments
@@ -179,6 +180,27 @@ export const storage = {
   async getUnsyncedCompletions(): Promise<Completion[]> {
     const completions = await this.getCompletions();
     return completions.filter(c => !c.synced);
+  },
+
+  // Default commitment tracking (per user)
+  async hasDefaultCommitmentBeenCreated(userId: string): Promise<boolean> {
+    try {
+      const userSpecificKey = `${DEFAULT_COMMITMENT_CREATED_KEY}_${userId}`;
+      const value = await AsyncStorage.getItem(userSpecificKey);
+      return value === 'true';
+    } catch (error) {
+      console.error('Error checking default commitment flag:', error);
+      return false;
+    }
+  },
+
+  async setDefaultCommitmentCreated(userId: string): Promise<void> {
+    try {
+      const userSpecificKey = `${DEFAULT_COMMITMENT_CREATED_KEY}_${userId}`;
+      await AsyncStorage.setItem(userSpecificKey, 'true');
+    } catch (error) {
+      console.error('Error setting default commitment flag:', error);
+    }
   },
 };
 

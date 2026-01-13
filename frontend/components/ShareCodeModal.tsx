@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   Modal,
   TouchableOpacity,
   StyleSheet,
-  Alert,
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
+import AlertModal, { AlertType } from './AlertModal';
 
 interface ShareCodeModalProps {
   visible: boolean;
@@ -20,12 +20,32 @@ const ShareCodeModal: React.FC<ShareCodeModalProps> = ({
   shareCode,
   onClose,
 }) => {
+  const [alert, setAlert] = useState<{
+    visible: boolean;
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    visible: false,
+    type: 'info',
+    title: '',
+    message: '',
+  });
+
+  const showAlert = (type: AlertType, title: string, message: string) => {
+    setAlert({ visible: true, type, title, message });
+  };
+
+  const hideAlert = () => {
+    setAlert((prev) => ({ ...prev, visible: false }));
+  };
+
   const copyToClipboard = async () => {
     try {
       await Clipboard.setStringAsync(shareCode);
-      Alert.alert('Copied!', 'Share code copied to clipboard');
+      showAlert('success', 'Copied!', 'Share code copied to clipboard');
     } catch (error) {
-      Alert.alert('Error', 'Failed to copy share code');
+      showAlert('error', 'Error', 'Failed to copy share code');
     }
   };
 
@@ -61,6 +81,14 @@ const ShareCodeModal: React.FC<ShareCodeModalProps> = ({
           </View>
         </View>
       </View>
+
+      <AlertModal
+        visible={alert.visible}
+        type={alert.type}
+        title={alert.title}
+        message={alert.message}
+        onClose={hideAlert}
+      />
     </Modal>
   );
 };

@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Alert,
+  Share,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { storage } from '../utils/storage';
@@ -16,16 +16,33 @@ import { api } from '../utils/api';
 import { useUser } from '../utils/userContext';
 import { RootStackParamList, ChallengeType } from '../types';
 import ChallengeTypeSelector from '../components/ChallengeTypeSelector';
-import ShareCodeModal from '../components/ShareCodeModal';
+import AlertModal, { AlertType } from '../components/AlertModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddCommitment'>;
 
 const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState<ChallengeType>('self');
-  const [showShareCodeModal, setShowShareCodeModal] = useState(false);
-  const [shareCode, setShareCode] = useState('');
   const { currentUser } = useUser();
+  const [alert, setAlert] = useState<{
+    visible: boolean;
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    visible: false,
+    type: 'info',
+    title: '',
+    message: '',
+  });
+
+  const showAlert = (type: AlertType, title: string, message: string) => {
+    setAlert({ visible: true, type, title, message });
+  };
+
+  const hideAlert = () => {
+    setAlert((prev) => ({ ...prev, visible: false }));
+  };
 
   const handleSave = async () => {
     if (!title.trim()) {
@@ -54,16 +71,25 @@ const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
         commitments.push(commitment);
         await storage.saveCommitments(commitments);
 
-        // If collaborative, show share code
+        // If collaborative, share the code using native share sheet
         if (type === 'collaborative' && commitment.shareCode) {
-          setShareCode(commitment.shareCode);
-          setShowShareCodeModal(true);
-        } else {
-          navigation.goBack();
+          try {
+            await Share.share({
+              message: `Join my collaborative challenge "${commitment.title}"!\n\nShare code: ${commitment.shareCode}\n\nUse this code in CommitX to join the challenge.`,
+              title: `Share "${commitment.title}" Challenge`,
+            });
+          } catch (error: any) {
+            // User cancelled or error occurred - that's okay, just navigate back
+            if (error.message !== 'User did not share') {
+              console.error('Error sharing:', error);
+            }
+          }
         }
+        
+        navigation.goBack();
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to create commitment. Please try again.');
+      showAlert('error', 'Error', 'Failed to create commitment. Please try again.');
       console.error('Error creating commitment:', error);
     }
   };
@@ -88,12 +114,6 @@ const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
 
         <ChallengeTypeSelector selectedType={type} onTypeChange={setType} />
 
-        {type === 'shared' && (
-          <Text style={styles.hint}>
-            To view a shared challenge, use the "Join Challenge" option from the home screen.
-          </Text>
-        )}
-
         <TouchableOpacity
           style={[styles.saveButton, !title.trim() && styles.saveButtonDisabled]}
           onPress={handleSave}
@@ -103,13 +123,12 @@ const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
         </TouchableOpacity>
       </ScrollView>
 
-      <ShareCodeModal
-        visible={showShareCodeModal}
-        shareCode={shareCode}
-        onClose={() => {
-          setShowShareCodeModal(false);
-          navigation.goBack();
-        }}
+      <AlertModal
+        visible={alert.visible}
+        type={alert.type}
+        title={alert.title}
+        message={alert.message}
+        onClose={hideAlert}
       />
     </KeyboardAvoidingView>
   );

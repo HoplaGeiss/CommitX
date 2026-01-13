@@ -14,7 +14,6 @@ const ChallengeTypeSelector: React.FC<ChallengeTypeSelectorProps> = ({
   const types: { value: ChallengeType; label: string }[] = [
     { value: 'self', label: 'Self' },
     { value: 'collaborative', label: 'Collaborative' },
-    { value: 'shared', label: 'Shared' },
   ];
 
   return (

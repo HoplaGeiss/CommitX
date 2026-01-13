@@ -18,6 +18,7 @@ interface UserContextType {
   currentUser: User;
   switchUser: (userId: string) => Promise<void>;
   createNewUser: () => Promise<User>;
+  clearAllUsers: () => Promise<void>;
   availableUsers: User[];
   isLoading: boolean;
 }
@@ -105,6 +106,30 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const clearAllUsers = async (): Promise<void> => {
+    try {
+      // Clear users list and current user from storage
+      await AsyncStorage.removeItem(USERS_LIST_KEY);
+      await AsyncStorage.removeItem(USER_STORAGE_KEY);
+      
+      // Create a new first user
+      const firstUserId = generateUUID();
+      const firstUser: User = { id: firstUserId };
+      const newUsers = [firstUser];
+      
+      // Save the new user list
+      await AsyncStorage.setItem(USERS_LIST_KEY, JSON.stringify(newUsers));
+      await AsyncStorage.setItem(USER_STORAGE_KEY, firstUserId);
+      
+      // Update state
+      setAvailableUsers(newUsers);
+      setCurrentUser(firstUser);
+    } catch (error) {
+      console.error('Error clearing users:', error);
+      throw error;
+    }
+  };
+
   if (isLoading || !currentUser) {
     // Show nothing while loading (or you could add a loading screen)
     return null;
@@ -115,6 +140,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       currentUser, 
       switchUser, 
       createNewUser,
+      clearAllUsers,
       availableUsers, 
       isLoading: false 
     }}>

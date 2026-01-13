@@ -9,7 +9,7 @@ const shortenId = (id: string): string => {
 };
 
 const UserSwitcher: React.FC = () => {
-  const { currentUser, switchUser, createNewUser, availableUsers } = useUser();
+  const { currentUser, switchUser, createNewUser, clearAllUsers, availableUsers } = useUser();
   
   // Only show in dev mode (controlled by environment variable)
   const isDevMode = process.env.EXPO_PUBLIC_DEV_MODE === 'true' || 
@@ -24,6 +24,14 @@ const UserSwitcher: React.FC = () => {
       await createNewUser();
     } catch (error) {
       console.error('Failed to create new user:', error);
+    }
+  };
+
+  const handleClearUsers = async () => {
+    try {
+      await clearAllUsers();
+    } catch (error) {
+      console.error('Failed to clear users:', error);
     }
   };
 
@@ -59,6 +67,12 @@ const UserSwitcher: React.FC = () => {
           onPress={handleCreateNew}
         >
           <Ionicons name="add" size={20} color="#ffffff" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.clearButton}
+          onPress={handleClearUsers}
+        >
+          <Ionicons name="trash-outline" size={18} color="#ffffff" />
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -113,6 +127,17 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     borderWidth: 1,
     borderColor: '#2196F3',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 40,
+  },
+  clearButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: '#ff4444',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#ff4444',
     justifyContent: 'center',
     alignItems: 'center',
     minWidth: 40,

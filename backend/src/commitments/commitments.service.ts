@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Logger } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UsersService } from '../users/users.service';
 import { Commitment } from './entities/commitment.entity';
@@ -24,6 +24,11 @@ export class CommitmentsService {
     const errorName = error instanceof Error ? error.constructor.name : '';
     const errorCode = error && typeof error === 'object' && 'code' in error ? error.code : null;
     
+    // P2025 is "Record not found" - not a connection error
+    if (errorCode === 'P2025') {
+      return; // Don't log connection error messages for "not found" errors
+    }
+    
     // Prisma "Invalid invocation" errors often indicate database connection issues
     const isInvalidInvocation = errorString.includes('invalid') && errorString.includes('invocation');
     const isConnectionError = errorString.includes('connect econnrefused') || 
@@ -34,7 +39,7 @@ export class CommitmentsService {
                               errorCode === 'ECONNREFUSED' ||
                               isInvalidInvocation;
     
-    if (isConnectionError || errorName.includes('PrismaClient')) {
+    if (isConnectionError || (errorName.includes('PrismaClient') && errorCode !== 'P2025')) {
       // Log helpful messages FIRST so they're more visible
       this.logger.error('');
       this.logger.error('💡 Database connection issue detected during ' + operation + '.');
@@ -195,19 +200,63 @@ export class CommitmentsService {
         createdAt: commitment.createdAt.toISOString(),
         updatedAt: commitment.updatedAt.toISOString(),
       };
-    } catch (error) {
+    } catch (error: any) {
+      // Handle "record not found" error (P2025)
+      if (error?.code === 'P2025') {
+        throw new NotFoundException(`Commitment with ID ${id} not found`);
+      }
+      
       this.logger.error(`Failed to update commitment ${id}`);
       this.logDatabaseConnectionError(error, 'update commitment');
       throw error;
     }
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: string, userId: string): Promise<void> {
     try {
-      await this.prisma.commitment.delete({
+      const commitment = await this.prisma.commitment.findUnique({
         where: { id },
+        include: { participants: true },
       });
+
+      if (!commitment) {
+        throw new NotFoundException(`Commitment with ID ${id} not found`);
+      }
+
+      // For collaborative commitments, check if user is creator or participant
+      if (commitment.type === 'collaborative') {
+        const isCreator = commitment.userId === userId;
+        const isParticipant = commitment.participants.some(p => p.userId === userId);
+
+        if (isCreator) {
+          // Creator deletes the entire commitment
+          await this.prisma.commitment.delete({
+            where: { id },
+          });
+        } else if (isParticipant) {
+          // Participant leaves the challenge (removes themselves)
+          await this.prisma.commitmentParticipant.deleteMany({
+            where: {
+              commitmentId: id,
+              userId,
+            },
+          });
+        } else {
+          throw new NotFoundException('You are not a participant of this challenge');
+        }
+      } else {
+        // For non-collaborative commitments, only creator can delete
+        if (commitment.userId !== userId) {
+          throw new NotFoundException('You do not have permission to delete this commitment');
+        }
+        await this.prisma.commitment.delete({
+          where: { id },
+        });
+      }
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
       this.logger.error(`Failed to delete commitment ${id}`);
       this.logDatabaseConnectionError(error, 'delete commitment');
       throw error;
@@ -256,13 +305,44 @@ export class CommitmentsService {
       },
     });
 
-    if (!existingParticipant) {
-      await this.prisma.commitmentParticipant.create({
-        data: {
-          commitmentId: commitment.id,
-          userId,
-        },
-      });
+    if (existingParticipant) {
+      // User is already a participant, return the commitment
+      return this.findOne(commitment.id);
+    }
+
+    // Check participant limit (max 2 participants: creator + 1 other)
+    const participantCount = await this.prisma.commitmentParticipant.count({
+      where: {
+        commitmentId: commitment.id,
+      },
+    });
+
+    // Block if already at or above limit (2 participants = creator + 1 other)
+    // Check BEFORE adding to prevent exceeding limit
+    if (participantCount >= 2) {
+      this.logger.warn(`Attempted to join full challenge. Commitment: ${commitment.id}, Current count: ${participantCount}, User: ${userId}`);
+      throw new BadRequestException('This collaborative challenge is full. Maximum 2 participants allowed (creator + 1 other).');
+    }
+
+    // Add the new participant
+    await this.prisma.commitmentParticipant.create({
+      data: {
+        commitmentId: commitment.id,
+        userId,
+      },
+    });
+
+    // Verify we didn't exceed limit after adding
+    const newCount = await this.prisma.commitmentParticipant.count({
+      where: {
+        commitmentId: commitment.id,
+      },
+    });
+    
+    if (newCount > 2) {
+      this.logger.error(`ERROR: Challenge exceeded participant limit! Commitment: ${commitment.id}, Count: ${newCount}`);
+      // Note: We've already added the participant, so we can't easily rollback here
+      // This should not happen if the check above works correctly
     }
 
     return this.findOne(commitment.id);

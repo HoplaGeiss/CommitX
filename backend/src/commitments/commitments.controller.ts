@@ -22,6 +22,7 @@ import { CreateCommitmentDto } from './dto/create-commitment.dto';
 import { UpdateCommitmentDto } from './dto/update-commitment.dto';
 import { ToggleCompletionDto } from './dto/toggle-completion.dto';
 import { JoinCommitmentDto } from './dto/join-commitment.dto';
+import { DeleteCommitmentDto } from './dto/delete-commitment.dto';
 import { Commitment } from './entities/commitment.entity';
 import { Completion } from './entities/completion.entity';
 
@@ -96,15 +97,16 @@ export class CommitmentsController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Delete a commitment' })
+  @ApiOperation({ summary: 'Delete a commitment or leave a collaborative challenge' })
   @ApiParam({ name: 'id', description: 'Commitment ID' })
+  @ApiBody({ type: DeleteCommitmentDto })
   @ApiResponse({
     status: 204,
-    description: 'The commitment has been successfully deleted.',
+    description: 'The commitment has been successfully deleted or user has left the challenge.',
   })
   @ApiResponse({ status: 404, description: 'Commitment not found.' })
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.commitmentsService.remove(id);
+  async remove(@Param('id') id: string, @Body() deleteDto: DeleteCommitmentDto): Promise<void> {
+    return this.commitmentsService.remove(id, deleteDto.userId);
   }
 
   @Post(':id/completions')
