@@ -30,5 +30,17 @@ export class Completion {
     example: '2024-01-05T12:00:00.000Z',
   })
   createdAt: string;
+
+  @ApiProperty({
+    description: 'ISO timestamp of when the completion was last updated',
+    example: '2024-01-05T12:00:00.000Z',
+  })
+  updatedAt: string;
+
+  @ApiProperty({
+    description: 'Whether this completion has been soft deleted',
+    example: false,
+  })
+  deleted: boolean;
 }
 

@@ -11,11 +11,10 @@ const shortenId = (id: string): string => {
 const UserSwitcher: React.FC = () => {
   const { currentUser, switchUser, createNewUser, clearAllUsers, availableUsers } = useUser();
   
-  // Only show in dev mode (controlled by environment variable)
-  const isDevMode = process.env.EXPO_PUBLIC_DEV_MODE === 'true' || 
-                    (typeof __DEV__ !== 'undefined' && __DEV__);
+  // Only show in E2E testing mode (controlled by environment variable)
+  const isE2EMode = process.env.EXPO_PUBLIC_E2E_MODE === 'true';
   
-  if (!isDevMode) {
+  if (!isE2EMode) {
     return null;
   }
 

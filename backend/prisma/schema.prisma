@@ -26,10 +26,13 @@ model Commitment {
   ownerId     String?  // For shared challenges
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  deleted     Boolean  @default(false)
   
   user        User     @relation(fields: [userId], references: [id])
   participants CommitmentParticipant[]
   completions Completion[]
+  
+  @@index([deleted])
 }
 
 model CommitmentParticipant {
@@ -37,6 +40,7 @@ model CommitmentParticipant {
   commitmentId  String
   userId        String
   joinedAt      DateTime @default(now())
+  deleted       Boolean  @default(false)
   
   commitment    Commitment @relation(fields: [commitmentId], references: [id], onDelete: Cascade)
   user          User     @relation(fields: [userId], references: [id])
@@ -44,6 +48,7 @@ model CommitmentParticipant {
   @@unique([commitmentId, userId])
   @@index([commitmentId])
   @@index([userId])
+  @@index([deleted])
 }
 
 model Completion {
@@ -52,6 +57,8 @@ model Completion {
   userId        String
   date          String   // YYYY-MM-DD format
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+  deleted       Boolean  @default(false)
   
   commitment    Commitment @relation(fields: [commitmentId], references: [id], onDelete: Cascade)
   user          User     @relation(fields: [userId], references: [id])
@@ -60,4 +67,5 @@ model Completion {
   @@index([commitmentId])
   @@index([userId])
   @@index([date])
+  @@index([deleted])
 }

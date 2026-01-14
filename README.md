@@ -47,6 +47,21 @@ pnpm install
 
 This will install dependencies for all workspaces automatically.
 
+2. Configure environment variables:
+
+Create a `.env` file in the `frontend` directory:
+```bash
+# frontend/.env
+EXPO_PUBLIC_API_URL=http://localhost:8080
+EXPO_PUBLIC_E2E_MODE=false  # Set to 'true' only for E2E testing
+EXPO_PUBLIC_DEV_MODE=true
+```
+
+**Environment Variables:**
+- `EXPO_PUBLIC_API_URL`: Backend API URL
+- `EXPO_PUBLIC_E2E_MODE`: Shows user switcher for multi-user E2E testing (default: `false`)
+- `EXPO_PUBLIC_DEV_MODE`: Enables development features (default: `true`)
+
 ### Running the Application
 
 #### Development Mode
@@ -91,6 +106,28 @@ The NestJS backend provides the following endpoints:
 - `GET /commitments/completions/all` - Get all completions
 
 The backend runs on `http://localhost:3000` by default (configurable via `PORT` environment variable).
+
+## Testing
+
+### E2E Tests with Maestro
+
+The project includes E2E tests using [Maestro](https://maestro.mobile.dev/).
+
+**Enable E2E Mode:**
+```bash
+# In frontend/.env
+EXPO_PUBLIC_E2E_MODE=true
+```
+
+This will show the UserSwitcher component for multi-user testing scenarios.
+
+**Run E2E tests:**
+```bash
+cd frontend
+maestro test .maestro/
+```
+
+**Note:** Remember to disable E2E mode (`EXPO_PUBLIC_E2E_MODE=false`) when not running tests to hide the user switcher in development.
 
 ## Technologies
 

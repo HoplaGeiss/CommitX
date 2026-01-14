@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react-native';
 import { Commitment, Completion } from '../types';
 
 // Get API URL from environment variable, with fallback for development
@@ -27,15 +28,57 @@ class ApiClient {
       ...options.headers,
     };
 
+    const startTime = Date.now();
+    const method = options.method || 'GET';
+    
     try {
       const response = await fetch(url, {
         ...options,
         headers,
       });
 
+      // Extract request ID from response headers
+      const requestId = response.headers.get('x-request-id');
+      const duration = Date.now() - startTime;
+
+      // Add Sentry breadcrumb for API call
+      if (Sentry.isInitialized()) {
+        Sentry.addBreadcrumb({
+          category: 'api',
+          message: `${method} ${endpoint}`,
+          level: response.ok ? 'info' : 'error',
+          data: {
+            url: endpoint,
+            method,
+            status: response.status,
+            requestId,
+            duration: `${duration}ms`,
+          },
+        });
+
+        // Tag error context with requestId if call fails
+        if (!response.ok && requestId) {
+          Sentry.setTag('lastRequestId', requestId);
+        }
+      }
+
       if (!response.ok) {
         const error = await response.json().catch(() => ({ message: 'Request failed' }));
-        throw new Error(error.message || `HTTP error! status: ${response.status}`);
+        const errorMessage = error.message || `HTTP error! status: ${response.status}`;
+        
+        // Capture API error to Sentry with context
+        if (Sentry.isInitialized() && response.status >= 500) {
+          Sentry.captureException(new Error(`API Error: ${errorMessage}`), {
+            tags: {
+              endpoint,
+              method,
+              status: response.status,
+              requestId: requestId || 'unknown',
+            },
+          });
+        }
+        
+        throw new Error(errorMessage);
       }
 
       // Handle empty responses (e.g., 204 No Content for DELETE requests)
@@ -129,6 +172,11 @@ class ApiClient {
 
   async getCompletions(commitmentId: string): Promise<Completion[]> {
     return this.request<Completion[]>(`/commitments/${commitmentId}/completions`);
+  }
+
+  // DEBUG METHOD - Remove after testing Sentry
+  async testSentry(): Promise<void> {
+    return this.request<void>('/commitments/debug-sentry');
   }
 }
 

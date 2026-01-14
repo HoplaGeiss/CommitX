@@ -32,6 +32,15 @@
       "eas": {
         "projectId": "a056ba00-715b-4d5d-a41c-ba0b876fedca"
       }
-    }
+    },
+    "plugins": [
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "your-org",
+          "project": "commitx-mobile"
+        }
+      ]
+    ]
   }
 }

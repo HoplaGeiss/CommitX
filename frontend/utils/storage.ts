@@ -98,12 +98,16 @@ export const storage = {
       completions.splice(existingIndex, 1);
     } else {
       // Add completion
+      const now = new Date().toISOString();
       completions.push({
         id: Date.now().toString(),
         commitmentId,
         userId,
         date: dateStr,
         synced: false,
+        createdAt: now,
+        updatedAt: now,
+        deleted: false,
       });
     }
 
@@ -173,6 +177,24 @@ export const storage = {
     const index = completions.findIndex(c => c.id === completionId);
     if (index >= 0) {
       completions[index].synced = true;
+      await this.saveCompletions(completions);
+    }
+  },
+
+  async markCompletionSyncedByDate(
+    commitmentId: string, 
+    date: string, 
+    userId: string
+  ): Promise<void> {
+    const completions = await this.getCompletions();
+    const completion = completions.find(
+      c => c.commitmentId === commitmentId && 
+           c.date === date && 
+           c.userId === userId
+    );
+    
+    if (completion) {
+      completion.synced = true;
       await this.saveCompletions(completions);
     }
   },

@@ -108,12 +108,30 @@ export class CommitmentsService {
       // For collaborative commitments, automatically add creator as participant
       if (type === 'collaborative') {
         try {
-          await this.prisma.commitmentParticipant.create({
-            data: {
+          // Check if there's a soft-deleted participant to restore
+          const deletedParticipant = await this.prisma.commitmentParticipant.findFirst({
+            where: {
               commitmentId: commitment.id,
               userId: createCommitmentDto.userId,
+              deleted: true,
             },
           });
+
+          if (deletedParticipant) {
+            // Restore soft-deleted participant
+            await this.prisma.commitmentParticipant.update({
+              where: { id: deletedParticipant.id },
+              data: { deleted: false },
+            });
+          } else {
+            // Create new participant
+            await this.prisma.commitmentParticipant.create({
+              data: {
+                commitmentId: commitment.id,
+                userId: createCommitmentDto.userId,
+              },
+            });
+          }
         } catch (error) {
           // Ignore duplicate participant errors (shouldn't happen, but be safe)
           this.logger.warn(`Failed to add creator as participant for commitment ${commitment.id}:`, error);
@@ -129,6 +147,7 @@ export class CommitmentsService {
         ownerId: commitment.ownerId || undefined,
         createdAt: commitment.createdAt.toISOString(),
         updatedAt: commitment.updatedAt.toISOString(),
+        deleted: commitment.deleted,
       };
     } catch (error) {
       this.logger.error('Failed to create commitment');
@@ -139,7 +158,7 @@ export class CommitmentsService {
 
   async findAll(userId?: string): Promise<Commitment[]> {
     try {
-      const where = userId ? { userId } : {};
+      const where = userId ? { userId, deleted: false } : { deleted: false };
       const commitments = await this.prisma.commitment.findMany({
         where,
         orderBy: { createdAt: 'desc' },
@@ -154,6 +173,7 @@ export class CommitmentsService {
         ownerId: c.ownerId || undefined,
         createdAt: c.createdAt.toISOString(),
         updatedAt: c.updatedAt.toISOString(),
+        deleted: c.deleted,
       }));
     } catch (error) {
       this.logger.error('Failed to fetch commitments');
@@ -163,8 +183,8 @@ export class CommitmentsService {
   }
 
   async findOne(id: string): Promise<Commitment> {
-    const commitment = await this.prisma.commitment.findUnique({
-      where: { id },
+    const commitment = await this.prisma.commitment.findFirst({
+      where: { id, deleted: false },
     });
 
     if (!commitment) {
@@ -180,6 +200,7 @@ export class CommitmentsService {
       ownerId: commitment.ownerId || undefined,
       createdAt: commitment.createdAt.toISOString(),
       updatedAt: commitment.updatedAt.toISOString(),
+      deleted: commitment.deleted,
     };
   }
 
@@ -199,6 +220,7 @@ export class CommitmentsService {
         ownerId: commitment.ownerId || undefined,
         createdAt: commitment.createdAt.toISOString(),
         updatedAt: commitment.updatedAt.toISOString(),
+        deleted: commitment.deleted,
       };
     } catch (error: any) {
       // Handle "record not found" error (P2025)
@@ -214,9 +236,9 @@ export class CommitmentsService {
 
   async remove(id: string, userId: string): Promise<void> {
     try {
-      const commitment = await this.prisma.commitment.findUnique({
-        where: { id },
-        include: { participants: true },
+      const commitment = await this.prisma.commitment.findFirst({
+        where: { id, deleted: false },
+        include: { participants: { where: { deleted: false } } },
       });
 
       if (!commitment) {
@@ -229,17 +251,48 @@ export class CommitmentsService {
         const isParticipant = commitment.participants.some(p => p.userId === userId);
 
         if (isCreator) {
-          // Creator deletes the entire commitment
-          await this.prisma.commitment.delete({
+          // Creator soft deletes the entire commitment and all its completions
+          await this.prisma.commitment.update({
             where: { id },
+            data: { deleted: true },
+          });
+          
+          // Soft-delete all completions for this commitment
+          await this.prisma.completion.updateMany({
+            where: {
+              commitmentId: id,
+              deleted: false,
+            },
+            data: { deleted: true },
+          });
+          
+          // Soft-delete all participants
+          await this.prisma.commitmentParticipant.updateMany({
+            where: {
+              commitmentId: id,
+              deleted: false,
+            },
+            data: { deleted: true },
           });
         } else if (isParticipant) {
-          // Participant leaves the challenge (removes themselves)
-          await this.prisma.commitmentParticipant.deleteMany({
+          // Participant leaves the challenge (soft delete their participation AND completions)
+          await this.prisma.commitmentParticipant.updateMany({
             where: {
               commitmentId: id,
               userId,
+              deleted: false,
             },
+            data: { deleted: true },
+          });
+          
+          // Also soft-delete their completions for this commitment
+          await this.prisma.completion.updateMany({
+            where: {
+              commitmentId: id,
+              userId,
+              deleted: false,
+            },
+            data: { deleted: true },
           });
         } else {
           throw new NotFoundException('You are not a participant of this challenge');
@@ -249,8 +302,18 @@ export class CommitmentsService {
         if (commitment.userId !== userId) {
           throw new NotFoundException('You do not have permission to delete this commitment');
         }
-        await this.prisma.commitment.delete({
+        await this.prisma.commitment.update({
           where: { id },
+          data: { deleted: true },
+        });
+        
+        // Also soft-delete all completions for this commitment
+        await this.prisma.completion.updateMany({
+          where: {
+            commitmentId: id,
+            deleted: false,
+          },
+          data: { deleted: true },
         });
       }
     } catch (error) {
@@ -296,12 +359,11 @@ export class CommitmentsService {
     }
 
     // Check if user is already a participant
-    const existingParticipant = await this.prisma.commitmentParticipant.findUnique({
+    const existingParticipant = await this.prisma.commitmentParticipant.findFirst({
       where: {
-        commitmentId_userId: {
-          commitmentId: commitment.id,
-          userId,
-        },
+        commitmentId: commitment.id,
+        userId,
+        deleted: false,
       },
     });
 
@@ -314,6 +376,7 @@ export class CommitmentsService {
     const participantCount = await this.prisma.commitmentParticipant.count({
       where: {
         commitmentId: commitment.id,
+        deleted: false,
       },
     });
 
@@ -324,18 +387,37 @@ export class CommitmentsService {
       throw new BadRequestException('This collaborative challenge is full. Maximum 2 participants allowed (creator + 1 other).');
     }
 
-    // Add the new participant
-    await this.prisma.commitmentParticipant.create({
-      data: {
+    // Add the new participant (or restore if soft-deleted)
+    const deletedParticipant = await this.prisma.commitmentParticipant.findFirst({
+      where: {
         commitmentId: commitment.id,
         userId,
+        deleted: true,
       },
     });
+
+    if (deletedParticipant) {
+      // Restore the soft-deleted participant (start fresh, no completion restoration)
+      await this.prisma.commitmentParticipant.update({
+        where: { id: deletedParticipant.id },
+        data: { deleted: false },
+      });
+      // Note: We don't restore old completions - user starts with a clean slate
+    } else {
+      // Create new participant
+      await this.prisma.commitmentParticipant.create({
+        data: {
+          commitmentId: commitment.id,
+          userId,
+        },
+      });
+    }
 
     // Verify we didn't exceed limit after adding
     const newCount = await this.prisma.commitmentParticipant.count({
       where: {
         commitmentId: commitment.id,
+        deleted: false,
       },
     });
     
@@ -349,8 +431,8 @@ export class CommitmentsService {
   }
 
   async viewSharedChallenge(shareCode: string): Promise<Commitment> {
-    const commitment = await this.prisma.commitment.findUnique({
-      where: { shareCode },
+    const commitment = await this.prisma.commitment.findFirst({
+      where: { shareCode, deleted: false },
     });
 
     if (!commitment) {
@@ -362,7 +444,7 @@ export class CommitmentsService {
 
   async getParticipants(commitmentId: string): Promise<string[]> {
     const participants = await this.prisma.commitmentParticipant.findMany({
-      where: { commitmentId },
+      where: { commitmentId, deleted: false },
       select: { userId: true },
     });
 
@@ -376,13 +458,14 @@ export class CommitmentsService {
         where: {
           userId,
           type: 'collaborative',
+          deleted: false,
         },
         orderBy: { createdAt: 'desc' },
       });
 
       // Get commitments where user is a participant
       const participantRecords = await this.prisma.commitmentParticipant.findMany({
-        where: { userId },
+        where: { userId, deleted: false },
         select: { commitmentId: true },
       });
 
@@ -393,6 +476,7 @@ export class CommitmentsService {
             where: {
               id: { in: participantCommitmentIds },
               type: 'collaborative',
+              deleted: false,
             },
             orderBy: { createdAt: 'desc' },
           })
@@ -413,6 +497,7 @@ export class CommitmentsService {
         ownerId: c.ownerId || undefined,
         createdAt: c.createdAt.toISOString(),
         updatedAt: c.updatedAt.toISOString(),
+        deleted: c.deleted,
       }));
     } catch (error) {
       this.logger.error('Failed to fetch collaborative commitments');
@@ -426,36 +511,48 @@ export class CommitmentsService {
     // Ensure user exists, create if not
     await this.ensureUserExists(userId);
 
-    const existing = await this.prisma.completion.findUnique({
+    const existing = await this.prisma.completion.findFirst({
       where: {
-        commitmentId_userId_date: {
-          commitmentId,
-          userId,
-          date,
-        },
+        commitmentId,
+        userId,
+        date,
+        deleted: false,
       },
     });
 
     if (existing) {
-      // Remove completion
-      await this.prisma.completion.delete({
+      // Soft delete completion
+      await this.prisma.completion.update({
+        where: { id: existing.id },
+        data: { deleted: true },
+      });
+    } else {
+      // Check if a deleted completion exists and restore it
+      const deletedCompletion = await this.prisma.completion.findFirst({
         where: {
-          commitmentId_userId_date: {
+          commitmentId,
+          userId,
+          date,
+          deleted: true,
+        },
+      });
+
+      if (deletedCompletion) {
+        // Restore deleted completion
+        await this.prisma.completion.update({
+          where: { id: deletedCompletion.id },
+          data: { deleted: false },
+        });
+      } else {
+        // Create new completion
+        await this.prisma.completion.create({
+          data: {
             commitmentId,
             userId,
             date,
           },
-        },
-      });
-    } else {
-      // Add completion
-      await this.prisma.completion.create({
-        data: {
-          commitmentId,
-          userId,
-          date,
-        },
-      });
+        });
+      }
     }
 
     return this.getCompletionsForCommitment(commitmentId, userId);
@@ -467,6 +564,8 @@ export class CommitmentsService {
       where.userId = userId;
     }
 
+    // Return ALL completions (including deleted ones with deleted flag)
+    // Frontend will handle filtering and sync logic
     const completions = await this.prisma.completion.findMany({
       where,
       orderBy: { date: 'asc' },
@@ -478,6 +577,8 @@ export class CommitmentsService {
       userId: c.userId,
       date: c.date,
       createdAt: c.createdAt.toISOString(),
+      updatedAt: c.updatedAt.toISOString(),
+      deleted: c.deleted,
     }));
   }
 
@@ -492,6 +593,8 @@ export class CommitmentsService {
       userId: c.userId,
       date: c.date,
       createdAt: c.createdAt.toISOString(),
+      updatedAt: c.updatedAt.toISOString(),
+      deleted: c.deleted,
     }));
   }
 

@@ -18,6 +18,10 @@
       "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
+      },
+      "env": {
+        "SENTRY_ORG": "your-org",
+        "SENTRY_PROJECT": "commitx-mobile"
       }
     }
   },

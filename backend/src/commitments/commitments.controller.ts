@@ -54,6 +54,22 @@ export class CommitmentsController {
     return this.commitmentsService.findAll(userId);
   }
 
+  // DEBUG ENDPOINT - Remove after testing Sentry
+  // Note: Must be defined before :id routes to avoid route matching conflicts
+  @Get('debug-sentry')
+  @ApiTags('debug')
+  @ApiOperation({ 
+    summary: 'Test Sentry error tracking', 
+    description: 'Throws a test error to verify Sentry integration is working correctly. Use this endpoint to test error tracking, alerts, and logging.',
+  })
+  @ApiResponse({ 
+    status: 500, 
+    description: 'Intentionally throws a test error that should be captured by Sentry',
+  })
+  getError() {
+    throw new Error('My first Sentry error!');
+  }
+
   @Get('collaborative/:userId')
   @ApiOperation({ summary: 'Get all collaborative commitments for a user' })
   @ApiParam({ name: 'userId', description: 'User ID' })

@@ -51,5 +51,11 @@ export class Commitment {
     example: '2024-01-05T12:00:00.000Z',
   })
   updatedAt: string;
+
+  @ApiProperty({
+    description: 'Whether this commitment has been soft deleted',
+    example: false,
+  })
+  deleted: boolean;
 }
 

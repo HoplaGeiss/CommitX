@@ -1,3 +1,8 @@
+// IMPORTANT: Make sure to import `instrument.ts` at the top of your file.
+// If you're using CommonJS (CJS) syntax, use `require("./instrument.ts");`
+import './instrument';
+
+// All other imports below
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -22,7 +27,7 @@ async function bootstrap() {
       'Access-Control-Request-Method',
       'Access-Control-Request-Headers',
     ],
-    exposedHeaders: ['Content-Type'],
+    exposedHeaders: ['Content-Type', 'X-Request-Id'],
     preflightContinue: false,
     optionsSuccessStatus: 204,
     maxAge: 86400, // Cache preflight requests for 24 hours
@@ -43,6 +48,7 @@ async function bootstrap() {
     .setDescription('CommitX Backend API for managing commitments and completions')
     .setVersion('1.0')
     .addTag('commitments', 'Commitment management endpoints')
+    .addTag('debug', 'Debug and testing endpoints')
     .build();
   
   const document = SwaggerModule.createDocument(app, config);

@@ -15,6 +15,7 @@ export interface Commitment {
   ownerId?: string; // For shared challenges
   createdAt: string;
   updatedAt?: string;
+  deleted?: boolean;
 }
 
 export interface Completion {
@@ -24,6 +25,8 @@ export interface Completion {
   date: string; // YYYY-MM-DD format
   synced?: boolean; // Track sync status
   createdAt?: string;
+  updatedAt?: string; // For conflict resolution
+  deleted?: boolean; // Soft delete flag
 }
 
 export type RootStackParamList = {

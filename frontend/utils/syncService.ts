@@ -38,14 +38,15 @@ class SyncService {
       // Only sync collaborative commitments - self commitments stay local-only
       const collaborativeCommitments = await storage.getCollaborativeCommitments();
       
-      // Get unsynced completions for collaborative commitments only
+      // Get unsynced completions for user's own completions in collaborative commitments only
       const allUnsyncedCompletions = await storage.getUnsyncedCompletions();
-      const unsyncedCompletions = allUnsyncedCompletions.filter(c => {
-        return collaborativeCommitments.some(commitment => commitment.id === c.commitmentId);
+      const unsyncedUserCompletions = allUnsyncedCompletions.filter(c => {
+        return c.userId === userId && // Only user's own completions
+               collaborativeCommitments.some(commitment => commitment.id === c.commitmentId);
       });
 
-      // Sync completions for collaborative commitments
-      for (const completion of unsyncedCompletions) {
+      // Retry failed syncs for user's completions
+      for (const completion of unsyncedUserCompletions) {
         try {
           await api.toggleCompletion(
             completion.commitmentId,

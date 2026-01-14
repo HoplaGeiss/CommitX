@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  Alert,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -88,11 +90,14 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
       
       const serverCollaborativeCommitments = await api.getCollaborativeCommitments(currentUser.id);
       
-      // Merge commitments: keep self commitments, update/add collaborative ones
+      // Merge commitments: keep self commitments, update/add collaborative ones (exclude deleted)
       const localSelfCommitments = localCommitments.filter(c => c.type === 'self');
       const commitmentMap = new Map<string, Commitment>();
       localSelfCommitments.forEach(c => commitmentMap.set(c.id, c));
-      serverCollaborativeCommitments.forEach(c => commitmentMap.set(c.id, c));
+      // Only add non-deleted collaborative commitments from server
+      serverCollaborativeCommitments
+        .filter(c => !c.deleted)
+        .forEach(c => commitmentMap.set(c.id, c));
       
       const mergedCommitments = Array.from(commitmentMap.values());
       await storage.saveCommitments(mergedCommitments);
@@ -100,25 +105,119 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
       // Fetch completions for collaborative commitments
       const collaborativeCommitmentIds = serverCollaborativeCommitments.map(c => c.id);
       
-      // Build completion map: start with all local completions
+      // Build completion map: start with user's own local completions only
       const completionKey = (c: Completion) => `${c.commitmentId}-${c.userId}-${c.date}`;
       const completionMap = new Map<string, Completion>();
-      localCompletions.forEach(c => {
-        completionMap.set(completionKey(c), c);
-      });
+      
+      // Keep only user's own completions and self commitment completions from local storage
+      localCompletions
+        .filter(c => c.userId === currentUser.id || !collaborativeCommitmentIds.includes(c.commitmentId))
+        .forEach(c => {
+          completionMap.set(completionKey(c), c);
+        });
       
       // Fetch and merge server completions for each collaborative commitment
+      // This will REPLACE other users' completions with fresh data from backend
       for (const commitmentId of collaborativeCommitmentIds) {
         try {
           const serverCompletions = await api.getCompletions(commitmentId);
           
-          // Overwrite with server completions (server is source of truth for collaborative)
-          serverCompletions.forEach(c => {
-            completionMap.set(completionKey(c), {
-              ...c,
-              synced: true,
+          // Get user's local completions for this commitment (exclude deleted)
+          const userLocalCompletions = localCompletions.filter(
+            c => c.commitmentId === commitmentId && c.userId === currentUser.id && !c.deleted
+          );
+          
+          // Get user's completions from server (all, including deleted)
+          const userServerCompletions = serverCompletions.filter(c => c.userId === currentUser.id);
+          
+          console.log(`🔄 Reconciling commitment ${commitmentId} for user ${currentUser.id}:`);
+          console.log(`  Local completions (${userLocalCompletions.length}):`, userLocalCompletions.map(c => ({ date: c.date, updatedAt: c.updatedAt, deleted: c.deleted })));
+          console.log(`  Server completions (${userServerCompletions.length}):`, userServerCompletions.map(c => ({ date: c.date, updatedAt: c.updatedAt, deleted: c.deleted })));
+          
+          // Build maps for quick lookup
+          const serverCompletionsByDate = new Map<string, typeof serverCompletions[0]>();
+          userServerCompletions.forEach(c => serverCompletionsByDate.set(c.date, c));
+          
+          const localCompletionsByDate = new Map<string, typeof userLocalCompletions[0]>();
+          userLocalCompletions.forEach(c => localCompletionsByDate.set(c.date, c));
+          
+          // Reconcile user's completions using timestamps
+          for (const localCompletion of userLocalCompletions) {
+            const serverCompletion = serverCompletionsByDate.get(localCompletion.date);
+            
+            if (!serverCompletion) {
+              // Completion exists locally but not on server - push to backend
+              try {
+                console.log(`Reconciling: pushing missing completion to backend: ${localCompletion.commitmentId} ${localCompletion.date}`);
+                await api.toggleCompletion(localCompletion.commitmentId, localCompletion.date, localCompletion.userId);
+                // Mark as synced in the completion map
+                const key = completionKey(localCompletion);
+                const existingCompletion = completionMap.get(key);
+                if (existingCompletion) {
+                  completionMap.set(key, { ...existingCompletion, synced: true });
+                }
+              } catch (error) {
+                console.error('Failed to reconcile completion:', error);
+              }
+            } else if (serverCompletion.deleted) {
+              // Server has it marked as deleted - remove from local
+              console.log(`Reconciling: server marked as deleted, removing from local: ${localCompletion.commitmentId} ${localCompletion.date}`);
+              const key = completionKey(localCompletion);
+              completionMap.delete(key); // Remove from map, won't be saved
+            } else {
+              // Completion exists in both - compare timestamps with tolerance
+              const localTime = localCompletion.updatedAt ? new Date(localCompletion.updatedAt).getTime() : 0;
+              const serverTime = serverCompletion.updatedAt ? new Date(serverCompletion.updatedAt).getTime() : 0;
+              const timeDiff = Math.abs(localTime - serverTime);
+              const TOLERANCE_MS = 5000; // 5 seconds tolerance for network/sync delays
+              
+              if (timeDiff <= TOLERANCE_MS) {
+                // Timestamps are close enough - consider them the same, no action needed
+                // Keep local version (already in map)
+              } else if (localTime > serverTime) {
+                // Local is significantly newer - push to backend
+                try {
+                  console.log(`Reconciling: local is newer, pushing to backend: ${localCompletion.commitmentId} ${localCompletion.date}`);
+                  await api.toggleCompletion(localCompletion.commitmentId, localCompletion.date, localCompletion.userId);
+                  const key = completionKey(localCompletion);
+                  const existingCompletion = completionMap.get(key);
+                  if (existingCompletion) {
+                    completionMap.set(key, { ...existingCompletion, synced: true });
+                  }
+                } catch (error) {
+                  console.error('Failed to push newer local completion:', error);
+                }
+              } else if (serverTime > localTime) {
+                // Server is significantly newer - use server version
+                console.log(`Reconciling: server is newer, using server version: ${localCompletion.commitmentId} ${localCompletion.date}`);
+                const key = completionKey(localCompletion);
+                completionMap.set(key, { ...serverCompletion, synced: true });
+              }
+            }
+          }
+          
+          // Handle completions that exist on server but not locally (pull from server)
+          for (const serverCompletion of userServerCompletions) {
+            if (!localCompletionsByDate.has(serverCompletion.date)) {
+              if (!serverCompletion.deleted) {
+                // Completion exists on server and not deleted - pull from server
+                console.log(`Reconciling: pulling missing completion from server: ${serverCompletion.commitmentId} ${serverCompletion.date}`);
+                const key = completionKey(serverCompletion);
+                completionMap.set(key, { ...serverCompletion, synced: true });
+              }
+              // If server has it as deleted, don't add to local (skip)
+            }
+          }
+          
+          // Add other users' completions from server (exclude deleted)
+          serverCompletions
+            .filter(c => c.userId !== currentUser.id && !c.deleted)
+            .forEach(c => {
+              completionMap.set(completionKey(c), {
+                ...c,
+                synced: true, // Server completions are always synced
+              });
             });
-          });
         } catch (error) {
           console.error(`Failed to fetch completions for ${commitmentId}:`, error);
         }
@@ -225,7 +324,7 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
       day
     );
     return storage.isDateCompleted(
-      completions.filter(c => c.commitmentId === commitmentId),
+      completions.filter(c => c.commitmentId === commitmentId && !c.deleted),
       date,
       userId
     );
@@ -247,19 +346,25 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
       await storage.toggleCompletion(commitmentId, date, currentUser.id);
       await loadData();
     } else if (commitment?.type === 'collaborative') {
-      // Collaborative commitments: update local storage immediately, then sync to backend
+      // 1. Update local storage immediately (optimistic update)
       await storage.toggleCompletion(commitmentId, date, currentUser.id);
       await loadData();
       
-      // Sync to backend in background (non-blocking)
+      // 2. Push to backend immediately (non-blocking)
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const dayStr = String(date.getDate()).padStart(2, '0');
       const dateStr = `${year}-${month}-${dayStr}`;
       
-      api.toggleCompletion(commitmentId, dateStr, currentUser.id).catch(error => {
+      try {
+        await api.toggleCompletion(commitmentId, dateStr, currentUser.id);
+        // Mark as synced on success
+        await storage.markCompletionSyncedByDate(commitmentId, dateStr, currentUser.id);
+      } catch (error) {
         console.error('Failed to sync completion to backend:', error);
-      });
+        // Completion stays marked as unsynced in local storage
+        // Will be retried in background sync
+      }
     }
   };
 
@@ -319,6 +424,48 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     setCurrentMonth(newMonth);
   };
 
+  const handleClearStorage = () => {
+    Alert.alert(
+      'Clear Storage',
+      'This will delete all commitments, completions, and user data from local storage. Continue?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Clear',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await AsyncStorage.clear();
+              // Reload the app state
+              await loadData();
+              Alert.alert('Success', 'Storage cleared successfully');
+            } catch (error) {
+              console.error('Failed to clear storage:', error);
+              Alert.alert('Error', 'Failed to clear storage');
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleTestBackendSentry = async () => {
+    try {
+      await api.testSentry();
+    } catch (error) {
+      Alert.alert('Expected Error', 'Backend threw test error (check Sentry dashboard)');
+    }
+  };
+
+  const handleTestMobileSentry = () => {
+    if (Sentry.isInitialized()) {
+      Sentry.captureException(new Error('Test mobile Sentry error'));
+      Alert.alert('Test Sent', 'Test error sent to Sentry Mobile project');
+    } else {
+      Alert.alert('Sentry Not Initialized', 'Sentry is only active in production builds');
+    }
+  };
+
   const renderCommitmentCard = ({ item }: { item: Commitment }) => {
     const isEditing = editingId === item.id;
     const isShared = item.type === 'shared';
@@ -355,10 +502,41 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     );
   };
 
+  const isDevMode = process.env.EXPO_PUBLIC_DEV_MODE === 'true' || 
+                    (typeof __DEV__ !== 'undefined' && __DEV__);
+
   return (
     <>
       <View style={styles.container}>
         <UserSwitcher />
+        {isDevMode && (
+          <View style={styles.devToolbar}>
+            <Text style={styles.devLabel}>DEV settings:</Text>
+            <View style={styles.devButtonsRow}>
+              <TouchableOpacity
+                style={styles.devButton}
+                onPress={handleTestBackendSentry}
+              >
+                <Ionicons name="bug-outline" size={14} color="#ff9800" />
+                <Text style={styles.devButtonText}>Test Backend</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.devButton}
+                onPress={handleTestMobileSentry}
+              >
+                <Ionicons name="bug-outline" size={14} color="#ff9800" />
+                <Text style={styles.devButtonText}>Test Mobile</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.clearStorageButton}
+                onPress={handleClearStorage}
+              >
+                <Ionicons name="trash-outline" size={14} color="#ff4444" />
+                <Text style={styles.clearStorageText}>Clear</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
         <FlatList
           data={commitments}
           renderItem={renderCommitmentCard}
@@ -447,6 +625,57 @@ const styles = StyleSheet.create({
   emptySubtext: {
     color: '#888888',
     fontSize: 14,
+  },
+  devToolbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: '#1a1a1a',
+    borderBottomWidth: 1,
+    borderBottomColor: '#333',
+  },
+  devLabel: {
+    color: '#888888',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  devButtonsRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  devButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    backgroundColor: '#2a2a2a',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#ff9800',
+    gap: 4,
+  },
+  devButtonText: {
+    color: '#ff9800',
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  clearStorageButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    backgroundColor: '#2a2a2a',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#ff4444',
+    gap: 4,
+  },
+  clearStorageText: {
+    color: '#ff4444',
+    fontSize: 11,
+    fontWeight: '600',
   },
 });
 

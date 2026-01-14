@@ -1,28 +1,82 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import * as Sentry from '@sentry/react-native';
 import CommitmentsListScreen from './screens/CommitmentsListScreen';
 import AddCommitmentScreen from './screens/AddCommitmentScreen';
 import JoinChallengeScreen from './screens/JoinChallengeScreen';
 import { RootStackParamList } from './types';
 import { UserProvider, useUser } from './utils/userContext';
 import { api } from './utils/api';
+import appConfig from './app.json';
+
+// Initialize Sentry for production only
+if (!__DEV__ && process.env.EXPO_PUBLIC_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+    environment: 'production',
+    release: appConfig.expo.version,
+    enableAutoSessionTracking: true,
+    enableNativeFramesTracking: true,
+    // Performance Monitoring
+    tracesSampleRate: 1.0,
+    // Integrations
+    integrations: [
+      Sentry.reactNativeTracingIntegration(),
+    ],
+  });
+}
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// Create navigation ref for Sentry
+const navigationRef = React.createRef<any>();
+
 function AppNavigator() {
   const { currentUser, isLoading } = useUser();
+  const routeNameRef = useRef<string>();
 
   useEffect(() => {
     if (!isLoading && currentUser) {
       // Set userId in API client when user changes
       api.setUserId(currentUser.id);
+      
+      // Set user context for Sentry
+      if (Sentry.isInitialized()) {
+        Sentry.setUser({ id: currentUser.id });
+      }
     }
   }, [currentUser?.id, isLoading]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
+      }}
+      onStateChange={() => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
+
+        if (previousRouteName !== currentRouteName && currentRouteName) {
+          // Add breadcrumb for navigation
+          if (Sentry.isInitialized()) {
+            Sentry.addBreadcrumb({
+              category: 'navigation',
+              message: `Navigated to ${currentRouteName}`,
+              level: 'info',
+              data: {
+                from: previousRouteName,
+                to: currentRouteName,
+              },
+            });
+          }
+        }
+
+        routeNameRef.current = currentRouteName;
+      }}
+    >
       <StatusBar style="light" />
       <Stack.Navigator
         screenOptions={{
