@@ -64,3 +64,6 @@ backend/.nyc_output
 .cache/
 .temp/
 .tmp/
+
+# Sentry
+frontend/sentry.properties
