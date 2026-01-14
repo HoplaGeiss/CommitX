@@ -23,7 +23,7 @@ Sentry.init({
   // Set sampling rate for profiling - this is relative to tracesSampleRate
   profilesSampleRate: 1.0,
   
-  // Only initialize if DSN is provided and in production
+  // Only enable if DSN is provided and in production
   enabled: process.env.NODE_ENV === 'production' && !!process.env.SENTRY_DSN,
   
   // BeforeSend hook to enrich all events with requestId and userId
@@ -60,6 +60,12 @@ Sentry.init({
   },
 });
 
-if (Sentry.isInitialized()) {
-  console.log('✅ Sentry initialized for production');
+// Log Sentry status
+const isEnabled = process.env.NODE_ENV === 'production' && !!process.env.SENTRY_DSN;
+const environment = process.env.NODE_ENV || 'development';
+
+if (isEnabled) {
+  console.log(`✅ Sentry enabled for ${environment}`);
+} else {
+  console.log(`ℹ️  Sentry initialized but disabled (environment: ${environment})`);
 }

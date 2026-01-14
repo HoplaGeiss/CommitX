@@ -11,11 +11,15 @@ import { UserProvider, useUser } from './utils/userContext';
 import { api } from './utils/api';
 import appConfig from './app.json';
 
-// Initialize Sentry for production only
-if (!__DEV__ && process.env.EXPO_PUBLIC_SENTRY_DSN) {
+// Initialize Sentry
+// By default, only in production (!__DEV__)
+// Can be overridden with EXPO_PUBLIC_FORCE_SENTRY=true for testing in dev
+const shouldInitializeSentry = !__DEV__ || process.env.EXPO_PUBLIC_FORCE_SENTRY === 'true';
+
+if (shouldInitializeSentry && process.env.EXPO_PUBLIC_SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-    environment: 'production',
+    environment: __DEV__ ? 'development' : 'production',
     release: appConfig.expo.version,
     enableAutoSessionTracking: true,
     enableNativeFramesTracking: true,
@@ -26,6 +30,8 @@ if (!__DEV__ && process.env.EXPO_PUBLIC_SENTRY_DSN) {
       Sentry.reactNativeTracingIntegration(),
     ],
   });
+  
+  console.log(`🔍 Sentry initialized in ${__DEV__ ? 'development' : 'production'} mode`);
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -43,9 +49,7 @@ function AppNavigator() {
       api.setUserId(currentUser.id);
       
       // Set user context for Sentry
-      if (Sentry.isInitialized()) {
-        Sentry.setUser({ id: currentUser.id });
-      }
+      Sentry.setUser({ id: currentUser.id });
     }
   }, [currentUser?.id, isLoading]);
 
@@ -61,17 +65,15 @@ function AppNavigator() {
 
         if (previousRouteName !== currentRouteName && currentRouteName) {
           // Add breadcrumb for navigation
-          if (Sentry.isInitialized()) {
-            Sentry.addBreadcrumb({
-              category: 'navigation',
-              message: `Navigated to ${currentRouteName}`,
-              level: 'info',
-              data: {
-                from: previousRouteName,
-                to: currentRouteName,
-              },
-            });
-          }
+          Sentry.addBreadcrumb({
+            category: 'navigation',
+            message: `Navigated to ${currentRouteName}`,
+            level: 'info',
+            data: {
+              from: previousRouteName,
+              to: currentRouteName,
+            },
+          });
         }
 
         routeNameRef.current = currentRouteName;

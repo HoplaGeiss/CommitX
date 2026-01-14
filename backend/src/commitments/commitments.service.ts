@@ -69,12 +69,11 @@ export class CommitmentsService {
   }
 
   private generateRandomShareCode(): string {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let code = '';
-    for (let i = 0; i < 6; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
+    // Generate a 6-digit numeric code (100000 to 999999)
+    const min = 100000;
+    const max = 999999;
+    const code = Math.floor(Math.random() * (max - min + 1)) + min;
+    return code.toString();
   }
 
   async create(createCommitmentDto: CreateCommitmentDto): Promise<Commitment> {

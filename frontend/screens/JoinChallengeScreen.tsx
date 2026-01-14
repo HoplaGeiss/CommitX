@@ -50,7 +50,7 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
     try {
       // Join as collaborative challenge
       const collaborativeChallenge = await api.joinChallenge(
-        shareCode.trim().toUpperCase(),
+        shareCode.trim(),
         currentUser.id
       );
 
@@ -112,12 +112,12 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
-        placeholder="Enter share code"
+        placeholder="Enter 6-digit code"
         placeholderTextColor="#666"
         value={shareCode}
         onChangeText={setShareCode}
-        autoCapitalize="characters"
-        maxLength={8}
+        keyboardType="number-pad"
+        maxLength={6}
         editable={!loading}
       />
 

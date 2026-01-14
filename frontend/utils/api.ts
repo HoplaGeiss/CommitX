@@ -42,32 +42,30 @@ class ApiClient {
       const duration = Date.now() - startTime;
 
       // Add Sentry breadcrumb for API call
-      if (Sentry.isInitialized()) {
-        Sentry.addBreadcrumb({
-          category: 'api',
-          message: `${method} ${endpoint}`,
-          level: response.ok ? 'info' : 'error',
-          data: {
-            url: endpoint,
-            method,
-            status: response.status,
-            requestId,
-            duration: `${duration}ms`,
-          },
-        });
+      Sentry.addBreadcrumb({
+        category: 'api',
+        message: `${method} ${endpoint}`,
+        level: response.ok ? 'info' : 'error',
+        data: {
+          url: endpoint,
+          method,
+          status: response.status,
+          requestId,
+          duration: `${duration}ms`,
+        },
+      });
 
-        // Tag error context with requestId if call fails
-        if (!response.ok && requestId) {
-          Sentry.setTag('lastRequestId', requestId);
-        }
+      // Tag error context with requestId if call fails
+      if (!response.ok && requestId) {
+        Sentry.setTag('lastRequestId', requestId);
       }
 
       if (!response.ok) {
         const error = await response.json().catch(() => ({ message: 'Request failed' }));
         const errorMessage = error.message || `HTTP error! status: ${response.status}`;
         
-        // Capture API error to Sentry with context
-        if (Sentry.isInitialized() && response.status >= 500) {
+        // Capture API error to Sentry with context (500+ errors only)
+        if (response.status >= 500) {
           Sentry.captureException(new Error(`API Error: ${errorMessage}`), {
             tags: {
               endpoint,

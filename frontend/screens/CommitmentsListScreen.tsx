@@ -21,6 +21,7 @@ import UserSwitcher from '../components/UserSwitcher';
 import CommitmentCard from '../components/CommitmentCard';
 import DeleteModal from '../components/DeleteModal';
 import ActionSheet from '../components/ActionSheet';
+import Sidebar from '../components/Sidebar';
 import { isDateInFuture } from '../components/calendarUtils';
 import { Commitment, Completion, RootStackParamList } from '../types';
 
@@ -41,6 +42,7 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   const [showActionSheet, setShowActionSheet] = useState(false);
   const [participantsMap, setParticipantsMap] = useState<Record<string, string[]>>({});
   const [hasInitialSync, setHasInitialSync] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
   // Track if we just deleted the default commitment to prevent recreation
   const justDeletedDefaultRef = useRef<boolean>(false);
 
@@ -50,6 +52,20 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
       initialSync();
     }
   }, [currentUser.id, hasInitialSync]);
+
+  // Set up the burger menu button in the header
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => setShowSidebar(true)}
+          style={{ marginLeft: 15 }}
+        >
+          <Ionicons name="menu" size={28} color="#ffffff" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   useFocusEffect(
     useCallback(() => {
@@ -449,23 +465,6 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     );
   };
 
-  const handleTestBackendSentry = async () => {
-    try {
-      await api.testSentry();
-    } catch (error) {
-      Alert.alert('Expected Error', 'Backend threw test error (check Sentry dashboard)');
-    }
-  };
-
-  const handleTestMobileSentry = () => {
-    if (Sentry.isInitialized()) {
-      Sentry.captureException(new Error('Test mobile Sentry error'));
-      Alert.alert('Test Sent', 'Test error sent to Sentry Mobile project');
-    } else {
-      Alert.alert('Sentry Not Initialized', 'Sentry is only active in production builds');
-    }
-  };
-
   const renderCommitmentCard = ({ item }: { item: Commitment }) => {
     const isEditing = editingId === item.id;
     const isShared = item.type === 'shared';
@@ -502,41 +501,10 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     );
   };
 
-  const isDevMode = process.env.EXPO_PUBLIC_DEV_MODE === 'true' || 
-                    (typeof __DEV__ !== 'undefined' && __DEV__);
-
   return (
     <>
       <View style={styles.container}>
         <UserSwitcher />
-        {isDevMode && (
-          <View style={styles.devToolbar}>
-            <Text style={styles.devLabel}>DEV settings:</Text>
-            <View style={styles.devButtonsRow}>
-              <TouchableOpacity
-                style={styles.devButton}
-                onPress={handleTestBackendSentry}
-              >
-                <Ionicons name="bug-outline" size={14} color="#ff9800" />
-                <Text style={styles.devButtonText}>Test Backend</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.devButton}
-                onPress={handleTestMobileSentry}
-              >
-                <Ionicons name="bug-outline" size={14} color="#ff9800" />
-                <Text style={styles.devButtonText}>Test Mobile</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.clearStorageButton}
-                onPress={handleClearStorage}
-              >
-                <Ionicons name="trash-outline" size={14} color="#ff4444" />
-                <Text style={styles.clearStorageText}>Clear</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
         <FlatList
           data={commitments}
           renderItem={renderCommitmentCard}
@@ -576,6 +544,12 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
         onClose={() => setShowActionSheet(false)}
         onCreate={() => navigation.navigate('AddCommitment')}
         onJoin={() => navigation.navigate('JoinChallenge')}
+      />
+
+      <Sidebar
+        visible={showSidebar}
+        onClose={() => setShowSidebar(false)}
+        onClearStorage={handleClearStorage}
       />
     </>
   );
@@ -625,57 +599,6 @@ const styles = StyleSheet.create({
   emptySubtext: {
     color: '#888888',
     fontSize: 14,
-  },
-  devToolbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    backgroundColor: '#1a1a1a',
-    borderBottomWidth: 1,
-    borderBottomColor: '#333',
-  },
-  devLabel: {
-    color: '#888888',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  devButtonsRow: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  devButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    backgroundColor: '#2a2a2a',
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#ff9800',
-    gap: 4,
-  },
-  devButtonText: {
-    color: '#ff9800',
-    fontSize: 11,
-    fontWeight: '600',
-  },
-  clearStorageButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    backgroundColor: '#2a2a2a',
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#ff4444',
-    gap: 4,
-  },
-  clearStorageText: {
-    color: '#ff4444',
-    fontSize: 11,
-    fontWeight: '600',
   },
 });
 
