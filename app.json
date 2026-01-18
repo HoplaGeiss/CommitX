@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "a056ba00-715b-4d5d-a41c-ba0b876fedca"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.hoplageiss.commitx",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    }
+  }
+}
