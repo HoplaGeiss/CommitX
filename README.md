@@ -149,6 +149,15 @@ maestro test .maestro/
 - **Typography**: Clean, modern fonts with proper hierarchy
 - **Layout**: Full-width calendar cards with compact month navigation
 
+## TODO / Known Issues
+
+### Sentry Configuration
+- [ ] **Re-enable Sentry Metro Plugin** - Currently disabled in `frontend/metro.config.js` due to bundling errors with `@sentry/react-native@7.9.0`. Once Sentry releases a fix for the Metro bundler compatibility issue (error: `Cannot read properties of undefined (reading 'match')`), remove the production check and re-enable `withSentryConfig()` to get:
+  - Enhanced source maps with debug IDs for better stack traces
+  - Automatic release tracking improvements
+  - Bundle analysis features
+  - See: https://github.com/getsentry/sentry-react-native/issues for updates
+
 ## License
 
 Private project
