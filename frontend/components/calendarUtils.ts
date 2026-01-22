@@ -7,7 +7,10 @@ export const getDaysInMonth = (date: Date): number => {
 export const getFirstDayOfMonth = (date: Date): number => {
   const year = date.getFullYear();
   const month = date.getMonth();
-  return new Date(year, month, 1).getDay();
+  const day = new Date(year, month, 1).getDay();
+  // Convert from Sunday-based (0-6) to Monday-based (0-6)
+  // Sunday (0) becomes 6, Monday (1) becomes 0, etc.
+  return (day + 6) % 7;
 };
 
 export const getMonthDays = (currentMonth: Date): (number | null)[] => {

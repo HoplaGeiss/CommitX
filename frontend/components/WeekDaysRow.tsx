@@ -12,13 +12,13 @@ const WeekDaysRow: React.FC = () => {
   const { t } = useTranslation();
   
   const weekDays = [
-    t('weekDays.sun'),
     t('weekDays.mon'),
     t('weekDays.tue'),
     t('weekDays.wed'),
     t('weekDays.thu'),
     t('weekDays.fri'),
     t('weekDays.sat'),
+    t('weekDays.sun'),
   ];
   
   return (
