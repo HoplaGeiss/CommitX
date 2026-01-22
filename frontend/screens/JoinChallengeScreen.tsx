@@ -138,9 +138,12 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
           />
 
           <TouchableOpacity
-            style={[styles.button, loading && styles.buttonDisabled]}
+            style={[
+              styles.button,
+              (loading || shareCode.trim().length !== 6) && styles.buttonDisabled
+            ]}
             onPress={handleJoin}
-            disabled={loading}
+            disabled={loading || shareCode.trim().length !== 6}
           >
             {loading ? (
               <ActivityIndicator color="#ffffff" />

@@ -571,12 +571,14 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <UserSwitcher />
-        <View style={styles.monthNavigationContainer}>
-          <MonthNavigation
-            currentMonth={currentMonth}
-            onMonthChange={handleMonthChange}
-          />
-        </View>
+        {commitments.length > 0 && (
+          <View style={styles.monthNavigationContainer}>
+            <MonthNavigation
+              currentMonth={currentMonth}
+              onMonthChange={handleMonthChange}
+            />
+          </View>
+        )}
         <FlatList
           data={commitments}
           renderItem={renderCommitmentCard}

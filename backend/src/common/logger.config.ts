@@ -1,6 +1,8 @@
 import { Params } from 'nestjs-pino';
 import { getRequestId } from './request-id.middleware';
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 export const pinoLoggerConfig: Params = {
   pinoHttp: {
     // Custom request ID using our middleware
@@ -12,18 +14,19 @@ export const pinoLoggerConfig: Params = {
     }),
     
     // Transport for pretty printing in development
-    transport:
-      process.env.NODE_ENV !== 'production'
-        ? {
-            target: 'pino-pretty',
-            options: {
-              colorize: true,
-              singleLine: true,
-              ignore: 'pid,hostname',
-              translateTime: 'SYS:standard',
-            },
-          }
-        : undefined,
+    transport: isDevelopment
+      ? {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            translateTime: 'HH:MM:ss',
+            ignore: 'pid,hostname,req.headers,req.remoteAddress,req.remotePort',
+            // Custom message format for better readability
+            messageFormat: '{req.method} {req.url} → {res.statusCode} ({responseTime}ms) [{requestId}]',
+            singleLine: false,
+          },
+        }
+      : undefined,
     
     // Custom serializers
     serializers: {
@@ -31,8 +34,6 @@ export const pinoLoggerConfig: Params = {
         id: req.id,
         method: req.method,
         url: req.url,
-        // Don't log headers by default (may contain sensitive data)
-        // headers: req.headers,
       }),
       res: (res: any) => ({
         statusCode: res.statusCode,
@@ -53,6 +54,15 @@ export const pinoLoggerConfig: Params = {
         // Optionally ignore certain routes (e.g., health checks)
         return req.url === '/health' || req.url === '/api';
       },
+    },
+    
+    // Custom log message for requests
+    customSuccessMessage: (req: any, res: any) => {
+      return `${req.method} ${req.url} completed`;
+    },
+    
+    customErrorMessage: (req: any, res: any, err: any) => {
+      return `${req.method} ${req.url} failed`;
     },
   },
 };
