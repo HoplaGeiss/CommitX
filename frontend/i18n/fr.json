@@ -76,6 +76,17 @@
     "joinChallenge": "Rejoindre un défi",
     "cancel": "Annuler"
   },
+  "onboarding": {
+    "title": "Bienvenue sur CommitX !",
+    "subtitle": "Développez de meilleures habitudes en suivant vos engagements quotidiens",
+    "feature1Title": "Suivez vos habitudes",
+    "feature1Description": "Créez des engagements et marquez les jours comme terminés d'un simple toucher sur le calendrier",
+    "feature2Title": "Engagements personnels",
+    "feature2Description": "Gardez vos engagements privés et suivez votre propre progression",
+    "feature3Title": "Défis collaboratifs",
+    "feature3Description": "Partagez des engagements avec vos amis et restez responsables ensemble",
+    "cta": "Créer mon premier engagement"
+  },
   "sidebar": {
     "title": "Menu",
     "devTools": "Outils de développement",

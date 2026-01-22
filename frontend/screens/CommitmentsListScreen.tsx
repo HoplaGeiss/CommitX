@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -23,6 +23,7 @@ import CommitmentCard from '../components/CommitmentCard';
 import DeleteModal from '../components/DeleteModal';
 import ActionSheet from '../components/ActionSheet';
 import Sidebar from '../components/Sidebar';
+import OnboardingModal from '../components/OnboardingModal';
 import { isDateInFuture } from '../components/calendarUtils';
 import { Commitment, Completion, RootStackParamList } from '../types';
 
@@ -45,8 +46,20 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   const [participantsMap, setParticipantsMap] = useState<Record<string, string[]>>({});
   const [hasInitialSync, setHasInitialSync] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-  // Track if we just deleted the default commitment to prevent recreation
-  const justDeletedDefaultRef = useRef<boolean>(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // Check if user has completed onboarding
+  useEffect(() => {
+    const checkOnboarding = async () => {
+      if (currentUser.id) {
+        const hasCompleted = await storage.hasCompletedOnboarding(currentUser.id);
+        if (!hasCompleted) {
+          setShowOnboarding(true);
+        }
+      }
+    };
+    checkOnboarding();
+  }, [currentUser.id]);
 
   // Initial sync on startup - fetch collaborative commitments from server
   useEffect(() => {
@@ -287,46 +300,9 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
 
   const loadData = async () => {
     // Load from local storage immediately (no blocking)
-    let loadedCommitments = await storage.getCommitments();
-    
-    // If we just deleted the default commitment, skip creation and reset the ref
-    if (justDeletedDefaultRef.current) {
-      justDeletedDefaultRef.current = false;
-      const loadedCompletions = await storage.getCompletions();
-      setCommitments(loadedCommitments);
-      setCompletions(loadedCompletions);
-      updateParticipantsMap(loadedCommitments, loadedCompletions);
-      return;
-    }
-    
-    // If no commitments exist and default commitment hasn't been created yet for this user,
-    // create a default one for first-time users (only once per user)
-    if (loadedCommitments.length === 0 && currentUser.id) {
-      const hasDefaultBeenCreated = await storage.hasDefaultCommitmentBeenCreated(currentUser.id);
-      if (!hasDefaultBeenCreated) {
-        // Double-check that no commitment with this title exists (safety check)
-        const existingDefault = loadedCommitments.find(
-          c => c.title === 'Your first commitment' && c.userId === currentUser.id
-        );
-        
-        if (!existingDefault) {
-          // Set the flag FIRST to prevent race conditions if loadData() is called again
-          await storage.setDefaultCommitmentCreated(currentUser.id);
-          // Then create the commitment
-          await storage.addCommitment({
-            title: 'Your first commitment',
-            type: 'self',
-            userId: currentUser.id,
-          });
-          loadedCommitments = await storage.getCommitments();
-        } else {
-          // If it exists but flag wasn't set, set the flag now
-          await storage.setDefaultCommitmentCreated(currentUser.id);
-        }
-      }
-    }
-    
+    const loadedCommitments = await storage.getCommitments();
     const loadedCompletions = await storage.getCompletions();
+    
     setCommitments(loadedCommitments);
     setCompletions(loadedCompletions);
     
@@ -400,18 +376,6 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
 
   const confirmDelete = async () => {
     if (commitmentToDelete) {
-      // Check if this is the default commitment
-      const isDefaultCommitment = commitmentToDelete.title === 'Your first commitment' && 
-                                   commitmentToDelete.type === 'self' && 
-                                   commitmentToDelete.userId === currentUser.id;
-      
-      if (isDefaultCommitment) {
-        // Set flag first to prevent recreation
-        await storage.setDefaultCommitmentCreated(currentUser.id);
-        // Set ref to skip creation in the next loadData() call
-        justDeletedDefaultRef.current = true;
-      }
-      
       // Delete from local storage
       await storage.deleteCommitment(commitmentToDelete.id);
       
@@ -465,6 +429,14 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
         },
       ]
     );
+  };
+
+  const handleCreateFirstCommitment = async () => {
+    // Mark onboarding as completed
+    await storage.setOnboardingCompleted(currentUser.id);
+    setShowOnboarding(false);
+    // Navigate to create commitment screen
+    navigation.navigate('AddCommitment');
   };
 
   const renderCommitmentCard = ({ item }: { item: Commitment }) => {
@@ -552,6 +524,11 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
         visible={showSidebar}
         onClose={() => setShowSidebar(false)}
         onClearStorage={handleClearStorage}
+      />
+
+      <OnboardingModal
+        visible={showOnboarding}
+        onCreateFirstCommitment={handleCreateFirstCommitment}
       />
     </>
   );

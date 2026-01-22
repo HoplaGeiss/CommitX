@@ -76,6 +76,17 @@
     "joinChallenge": "Join Challenge",
     "cancel": "Cancel"
   },
+  "onboarding": {
+    "title": "Welcome to CommitX!",
+    "subtitle": "Build better habits by tracking your daily commitments",
+    "feature1Title": "Track Your Habits",
+    "feature1Description": "Create commitments and mark days complete with a simple tap on the calendar",
+    "feature2Title": "Personal Commitments",
+    "feature2Description": "Keep commitments private and track your own progress",
+    "feature3Title": "Collaborative Challenges",
+    "feature3Description": "Share commitments with friends and stay accountable together",
+    "cta": "Create My First Commitment"
+  },
   "sidebar": {
     "title": "Menu",
     "devTools": "Developer Tools",

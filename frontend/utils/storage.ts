@@ -4,7 +4,7 @@ import { Commitment, Completion } from '../types';
 const COMMITMENTS_KEY = '@commitments';
 const COMPLETIONS_KEY = '@completions';
 const CURRENT_USER_ID_KEY = '@current_user_id';
-const DEFAULT_COMMITMENT_CREATED_KEY = '@default_commitment_created';
+const ONBOARDING_COMPLETED_KEY = '@onboarding_completed';
 
 export const storage = {
   // Commitments
@@ -204,24 +204,24 @@ export const storage = {
     return completions.filter(c => !c.synced);
   },
 
-  // Default commitment tracking (per user)
-  async hasDefaultCommitmentBeenCreated(userId: string): Promise<boolean> {
+  // Onboarding tracking (per user)
+  async hasCompletedOnboarding(userId: string): Promise<boolean> {
     try {
-      const userSpecificKey = `${DEFAULT_COMMITMENT_CREATED_KEY}_${userId}`;
+      const userSpecificKey = `${ONBOARDING_COMPLETED_KEY}_${userId}`;
       const value = await AsyncStorage.getItem(userSpecificKey);
       return value === 'true';
     } catch (error) {
-      console.error('Error checking default commitment flag:', error);
+      console.error('Error checking onboarding flag:', error);
       return false;
     }
   },
 
-  async setDefaultCommitmentCreated(userId: string): Promise<void> {
+  async setOnboardingCompleted(userId: string): Promise<void> {
     try {
-      const userSpecificKey = `${DEFAULT_COMMITMENT_CREATED_KEY}_${userId}`;
+      const userSpecificKey = `${ONBOARDING_COMPLETED_KEY}_${userId}`;
       await AsyncStorage.setItem(userSpecificKey, 'true');
     } catch (error) {
-      console.error('Error setting default commitment flag:', error);
+      console.error('Error setting onboarding flag:', error);
     }
   },
 };
