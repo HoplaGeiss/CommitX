@@ -112,6 +112,75 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     };
   }, [currentUser.id]);
 
+  // Periodic polling to pull other users' completions for collaborative commitments
+  useEffect(() => {
+    if (!currentUser.id || !hasInitialSync) {
+      return;
+    }
+
+    const pollCompletions = async () => {
+      try {
+        const localCommitments = await storage.getCommitments();
+        const localCompletions = await storage.getCompletions();
+        const collaborativeCommitments = localCommitments.filter(c => c.type === 'collaborative');
+        
+        if (collaborativeCommitments.length === 0) {
+          return;
+        }
+
+        const completionKey = (c: Completion) => `${c.commitmentId}-${c.userId}-${c.date}`;
+        const completionMap = new Map<string, Completion>();
+        const collaborativeCommitmentIds = collaborativeCommitments.map(c => c.id);
+        
+        // Start with only: 1) current user's completions, and 2) completions for non-collaborative commitments
+        localCompletions
+          .filter(c => 
+            c.userId === currentUser.id || // Keep all current user's completions
+            !collaborativeCommitmentIds.includes(c.commitmentId) // Keep completions for self commitments
+          )
+          .forEach(c => {
+            completionMap.set(completionKey(c), c);
+          });
+
+        // Fetch and add fresh completions from server for each collaborative commitment
+        for (const commitment of collaborativeCommitments) {
+          try {
+            const serverCompletions = await api.getCompletions(commitment.id);
+            
+            // Add ALL other users' completions from server (replaces any old data)
+            serverCompletions
+              .filter(c => c.userId !== currentUser.id && !c.deleted)
+              .forEach(c => {
+                completionMap.set(completionKey(c), {
+                  ...c,
+                  synced: true,
+                });
+              });
+          } catch (error) {
+            console.error(`Failed to poll completions for ${commitment.id}:`, error);
+          }
+        }
+
+        const allCompletions = Array.from(completionMap.values());
+        await storage.saveCompletions(allCompletions);
+        
+        // Update UI
+        setCompletions(allCompletions);
+        updateParticipantsMap(localCommitments, allCompletions);
+      } catch (error) {
+        console.error('Failed to poll completions:', error);
+      }
+    };
+
+    // Poll immediately and then every 20 seconds
+    pollCompletions();
+    const intervalId = setInterval(pollCompletions, 20000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [currentUser.id, hasInitialSync]);
+
   const initialSync = async () => {
     try {
       // Load local commitments first (for immediate display)
@@ -373,7 +442,22 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleEditCommitment = async (commitmentId: string, newTitle: string) => {
     if (newTitle.trim()) {
-      await storage.updateCommitment(commitmentId, { title: newTitle.trim() });
+      const trimmedTitle = newTitle.trim();
+      
+      // Update local storage first
+      await storage.updateCommitment(commitmentId, { title: trimmedTitle });
+      
+      // For collaborative commitments, also update on server
+      const commitment = commitments.find(c => c.id === commitmentId);
+      if (commitment?.type === 'collaborative') {
+        try {
+          await api.updateCommitment(commitmentId, { title: trimmedTitle });
+        } catch (error) {
+          console.error('Failed to update commitment title on server:', error);
+          // Continue anyway - local update succeeded
+        }
+      }
+      
       await loadData();
     }
   };

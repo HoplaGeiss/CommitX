@@ -59,7 +59,7 @@ class SyncService {
         }
       }
 
-      // Sync commitments (create/update) - only for collaborative
+      // Sync commitments (create only) - only for collaborative
       for (const commitment of collaborativeCommitments) {
         try {
           if (commitment.id.startsWith('local-')) {
@@ -71,12 +71,8 @@ class SyncService {
             });
             // Update local ID with server ID
             await storage.updateCommitment(commitment.id, { id: created.id });
-          } else {
-            // Existing commitment, update if needed
-            await api.updateCommitment(commitment.id, {
-              title: commitment.title,
-            });
           }
+          // Title updates are handled explicitly when user edits, no periodic sync needed
         } catch (error) {
           console.error(`Failed to sync commitment ${commitment.id}:`, error);
         }

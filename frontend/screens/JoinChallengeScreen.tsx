@@ -6,6 +6,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -35,6 +39,7 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
   });
 
   const showAlert = (type: AlertType, title: string, message: string) => {
+    Keyboard.dismiss(); // Dismiss keyboard before showing alert
     setAlert({ visible: true, type, title, message });
   };
 
@@ -105,42 +110,54 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('joinChallenge.title')}</Text>
-      <Text style={styles.description}>
-        {t('joinChallenge.description')}
-      </Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder={t('joinChallenge.placeholder')}
-        placeholderTextColor="#666"
-        value={shareCode}
-        onChangeText={setShareCode}
-        keyboardType="number-pad"
-        maxLength={6}
-        editable={!loading}
-      />
-
-      <TouchableOpacity
-        style={[styles.button, loading && styles.buttonDisabled]}
-        onPress={handleJoin}
-        disabled={loading}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
-        {loading ? (
-          <ActivityIndicator color="#ffffff" />
-        ) : (
-          <Text style={styles.buttonText}>{t('joinChallenge.button')}</Text>
-        )}
-      </TouchableOpacity>
+        <View style={styles.content}>
+          <Text style={styles.title}>{t('joinChallenge.title')}</Text>
+          <Text style={styles.description}>
+            {t('joinChallenge.description')}
+          </Text>
 
-      <TouchableOpacity
-        style={styles.cancelButton}
-        onPress={() => navigation.goBack()}
-        disabled={loading}
-      >
-        <Text style={styles.cancelButtonText}>{t('common.cancel')}</Text>
-      </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            placeholder={t('joinChallenge.placeholder')}
+            placeholderTextColor="#666"
+            value={shareCode}
+            onChangeText={setShareCode}
+            keyboardType="number-pad"
+            maxLength={6}
+            editable={!loading}
+          />
+
+          <TouchableOpacity
+            style={[styles.button, loading && styles.buttonDisabled]}
+            onPress={handleJoin}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#ffffff" />
+            ) : (
+              <Text style={styles.buttonText}>{t('joinChallenge.button')}</Text>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => navigation.goBack()}
+            disabled={loading}
+          >
+            <Text style={styles.cancelButtonText}>{t('common.cancel')}</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
 
       <AlertModal
         visible={alert.visible}
@@ -149,7 +166,7 @@ const JoinChallengeScreen: React.FC<Props> = ({ navigation }) => {
         message={alert.message}
         onClose={hideAlert}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -157,7 +174,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000',
+  },
+  scrollContent: {
+    flexGrow: 1,
     padding: 20,
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
   },
   title: {

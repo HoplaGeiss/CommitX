@@ -6,6 +6,8 @@ import {
   Modal,
   TouchableOpacity,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -77,49 +79,54 @@ const AlertModal: React.FC<AlertModalProps> = ({
       animationType="fade"
       onRequestClose={onClose}
     >
-      <TouchableOpacity
-        style={styles.modalOverlay}
-        activeOpacity={1}
-        onPress={onClose}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
       >
         <TouchableOpacity
+          style={styles.modalOverlay}
           activeOpacity={1}
-          onPress={(e) => e.stopPropagation()}
-          style={styles.modalContentContainer}
+          onPress={onClose}
         >
-          <View style={styles.modalContent}>
-            <View style={styles.modalIconContainer}>
-              <View
-                style={[
-                  styles.modalIconCircle,
-                  {
-                    backgroundColor: iconConfig.bgColor,
-                    borderColor: iconConfig.borderColor,
-                  },
-                ]}
-              >
-                <Ionicons
-                  name={iconConfig.name}
-                  size={40}
-                  color={iconConfig.color}
-                />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={(e) => e.stopPropagation()}
+            style={styles.modalContentContainer}
+          >
+            <View style={styles.modalContent}>
+              <View style={styles.modalIconContainer}>
+                <View
+                  style={[
+                    styles.modalIconCircle,
+                    {
+                      backgroundColor: iconConfig.bgColor,
+                      borderColor: iconConfig.borderColor,
+                    },
+                  ]}
+                >
+                  <Ionicons
+                    name={iconConfig.name}
+                    size={40}
+                    color={iconConfig.color}
+                  />
+                </View>
               </View>
+              <Text style={styles.modalTitle}>{title}</Text>
+              <Text style={styles.modalMessage}>{message}</Text>
+              <TouchableOpacity
+                style={[
+                  styles.modalButton,
+                  { backgroundColor: iconConfig.color },
+                ]}
+                onPress={onClose}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.modalButtonText}>{t('common.ok')}</Text>
+              </TouchableOpacity>
             </View>
-            <Text style={styles.modalTitle}>{title}</Text>
-            <Text style={styles.modalMessage}>{message}</Text>
-            <TouchableOpacity
-              style={[
-                styles.modalButton,
-                { backgroundColor: iconConfig.color },
-              ]}
-              onPress={onClose}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.modalButtonText}>{t('common.ok')}</Text>
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </TouchableOpacity>
-      </TouchableOpacity>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
