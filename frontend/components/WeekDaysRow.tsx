@@ -6,7 +6,7 @@ const { width } = Dimensions.get('window');
 const DAYS_IN_WEEK = 7;
 const CARD_PADDING = 20;
 const CARD_WIDTH = width - (CARD_PADDING * 2);
-const CELL_SIZE = (CARD_WIDTH - 32) / DAYS_IN_WEEK;
+const CELL_WIDTH = (CARD_WIDTH - 32) / DAYS_IN_WEEK;
 
 const WeekDaysRow: React.FC = () => {
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     height: 20,
   },
   weekDayCell: {
-    width: CELL_SIZE - 4,
+    width: CELL_WIDTH - 4,
     height: 20,
     alignItems: 'center',
     justifyContent: 'center',

@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Share } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import MonthNavigation from './MonthNavigation';
 import WeekDaysRow from './WeekDaysRow';
 import CalendarGrid from './CalendarGrid';
 import { getMonthDays } from './calendarUtils';
@@ -22,7 +21,6 @@ interface CommitmentCardProps {
   onDelete: (commitment: Commitment) => void;
   isDateCompleted: (commitmentId: string, day: number | null, userId?: string) => boolean;
   onToggleCompletion: (commitmentId: string, day: number | null) => void;
-  onMonthChange: (newMonth: Date) => void;
   currentUserId?: string;
   participants?: string[];
   readonly?: boolean;
@@ -40,7 +38,6 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
   onDelete,
   isDateCompleted,
   onToggleCompletion,
-  onMonthChange,
   currentUserId,
   participants = [],
   readonly = false,
@@ -134,10 +131,6 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
           </>
         )}
       </View>
-      <MonthNavigation
-        currentMonth={currentMonth}
-        onMonthChange={onMonthChange}
-      />
       <View style={styles.calendarContainer}>
         <WeekDaysRow />
         <CalendarGrid

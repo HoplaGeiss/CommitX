@@ -28,25 +28,26 @@ const MonthNavigation: React.FC<MonthNavigationProps> = ({ currentMonth, onMonth
   const locale = i18n.language || 'en';
   const dateLocale = locale === 'fr' ? 'fr-FR' : 'en-US';
 
+  const nextMonthDisabled = isNextMonthInFuture(currentMonth);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.monthNavButton}
         onPress={handlePreviousMonth}
       >
-        <Ionicons name="chevron-back" size={16} color="#888888" />
+        <Ionicons name="chevron-back" size={20} color="#ffffff" />
       </TouchableOpacity>
       <Text style={styles.cardMonth}>
         {currentMonth.toLocaleDateString(dateLocale, { month: 'short', year: 'numeric' })}
       </Text>
-      {!isNextMonthInFuture(currentMonth) && (
-        <TouchableOpacity
-          style={styles.monthNavButton}
-          onPress={handleNextMonth}
-        >
-          <Ionicons name="chevron-forward" size={16} color="#888888" />
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        style={styles.monthNavButton}
+        onPress={nextMonthDisabled ? undefined : handleNextMonth}
+        disabled={nextMonthDisabled}
+      >
+        <Ionicons name="chevron-forward" size={20} color={nextMonthDisabled ? "#333333" : "#ffffff"} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -56,16 +57,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
+    gap: 12,
     marginBottom: 0,
-    paddingVertical: 2,
+    paddingVertical: 4,
   },
   cardMonth: {
-    color: '#888888',
-    fontSize: 11,
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   monthNavButton: {
-    padding: 2,
+    padding: 4,
   },
 });
 

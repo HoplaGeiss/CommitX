@@ -24,6 +24,7 @@ import DeleteModal from '../components/DeleteModal';
 import ActionSheet from '../components/ActionSheet';
 import Sidebar from '../components/Sidebar';
 import OnboardingModal from '../components/OnboardingModal';
+import MonthNavigation from '../components/MonthNavigation';
 import { isDateInFuture } from '../components/calendarUtils';
 import { Commitment, Completion, RootStackParamList } from '../types';
 
@@ -68,7 +69,7 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     }
   }, [currentUser.id, hasInitialSync]);
 
-  // Set up the burger menu button in the header
+  // Set up the burger menu button and add button in the header
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -77,6 +78,14 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
           style={{ marginLeft: 15 }}
         >
           <Ionicons name="menu" size={28} color="#ffffff" />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => setShowActionSheet(true)}
+          style={{ marginRight: 15 }}
+        >
+          <Ionicons name="add" size={28} color="#ffffff" />
         </TouchableOpacity>
       ),
     });
@@ -467,7 +476,6 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
         onDelete={handleDeleteCommitment}
         isDateCompleted={isDateCompleted}
         onToggleCompletion={handleToggleCompletion}
-        onMonthChange={handleMonthChange}
         currentUserId={currentUser.id}
         participants={participants}
         readonly={isShared}
@@ -479,13 +487,19 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <UserSwitcher />
+        <View style={styles.monthNavigationContainer}>
+          <MonthNavigation
+            currentMonth={currentMonth}
+            onMonthChange={handleMonthChange}
+          />
+        </View>
         <FlatList
           data={commitments}
           renderItem={renderCommitmentCard}
           keyExtractor={(item) => item.id}
           contentContainerStyle={[
             styles.listContent,
-            { paddingBottom: Math.max(insets.bottom, 20) + 80 }
+            { paddingBottom: Math.max(insets.bottom, 20) }
           ]}
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
@@ -494,15 +508,6 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
             </View>
           }
         />
-        <TouchableOpacity
-          style={[
-            styles.fab,
-            { bottom: Math.max(insets.bottom, 20) + 20 }
-          ]}
-          onPress={() => setShowActionSheet(true)}
-        >
-          <Text style={styles.fabText}>+</Text>
-        </TouchableOpacity>
       </View>
 
       <DeleteModal
@@ -539,29 +544,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
+  monthNavigationContainer: {
+    backgroundColor: '#000000',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1a1a1a',
+  },
   listContent: {
     padding: 20,
-  },
-  fab: {
-    position: 'absolute',
-    right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#4CAF50',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-  },
-  fabText: {
-    color: '#ffffff',
-    fontSize: 32,
-    fontWeight: '300',
-    lineHeight: 32,
   },
   emptyContainer: {
     flex: 1,

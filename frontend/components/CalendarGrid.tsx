@@ -8,7 +8,8 @@ const { width } = Dimensions.get('window');
 const DAYS_IN_WEEK = 7;
 const CARD_PADDING = 20;
 const CARD_WIDTH = width - (CARD_PADDING * 2);
-const CELL_SIZE = (CARD_WIDTH - 32) / DAYS_IN_WEEK;
+const CELL_WIDTH = (CARD_WIDTH - 32) / DAYS_IN_WEEK;
+const CELL_HEIGHT = 28; // Reduced height for rectangles
 
 interface CalendarGridProps {
   days: (number | null)[];
@@ -23,7 +24,8 @@ interface CalendarGridProps {
 
 interface SplitTriangleCellProps {
   day: number;
-  cellSize: number;
+  cellWidth: number;
+  cellHeight: number;
   isFuture: boolean;
   isTodayDate: boolean;
   userACompleted: boolean;
@@ -33,14 +35,16 @@ interface SplitTriangleCellProps {
 
 const SplitTriangleCell: React.FC<SplitTriangleCellProps> = ({
   day,
-  cellSize,
+  cellWidth,
+  cellHeight,
   isFuture,
   isTodayDate,
   userACompleted,
   userBCompleted,
   onPress,
 }) => {
-  const containerSize = cellSize - 4;
+  const containerWidth = cellWidth - 4;
+  const containerHeight = cellHeight - 4;
   const topLeftColor = userACompleted ? '#4CAF50' : '#2a2a2a';
   const bottomRightColor = userBCompleted ? '#2196F3' : '#2a2a2a';
 
@@ -55,22 +59,22 @@ const SplitTriangleCell: React.FC<SplitTriangleCellProps> = ({
       disabled={isFuture}
     >
       <View style={StyleSheet.absoluteFill}>
-        <Svg width={containerSize} height={containerSize} viewBox={`0 0 ${containerSize} ${containerSize}`}>
+        <Svg width={containerWidth} height={containerHeight} viewBox={`0 0 ${containerWidth} ${containerHeight}`}>
           <Defs>
             <ClipPath id={`clip-${day}`}>
-              <Rect width={containerSize} height={containerSize} rx="8" ry="8" />
+              <Rect width={containerWidth} height={containerHeight} rx="8" ry="8" />
             </ClipPath>
           </Defs>
           <G clipPath={`url(#clip-${day})`}>
             {/* Top-left triangle (User A - Current User) */}
             <Polygon
-              points={`0,0 ${containerSize},0 0,${containerSize}`}
+              points={`0,0 ${containerWidth},0 0,${containerHeight}`}
               fill={topLeftColor}
               opacity={isFuture ? 0.4 : 1}
             />
             {/* Bottom-right triangle (User B - Other Users) */}
             <Polygon
-              points={`${containerSize},0 ${containerSize},${containerSize} 0,${containerSize}`}
+              points={`${containerWidth},0 ${containerWidth},${containerHeight} 0,${containerHeight}`}
               fill={bottomRightColor}
               opacity={isFuture ? 0.4 : 1}
             />
@@ -145,7 +149,8 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
             <SplitTriangleCell
               key={index}
               day={day}
-              cellSize={CELL_SIZE}
+              cellWidth={CELL_WIDTH}
+              cellHeight={CELL_HEIGHT}
               isFuture={isFuture}
               isTodayDate={isTodayDate}
               userACompleted={currentUserCompleted}
@@ -198,8 +203,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   calendarCell: {
-    width: CELL_SIZE - 4,
-    height: CELL_SIZE - 4,
+    width: CELL_WIDTH - 4,
+    height: CELL_HEIGHT - 4,
     backgroundColor: '#2a2a2a',
     borderRadius: 8,
     margin: 2,
@@ -208,8 +213,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   calendarCellEmpty: {
-    width: CELL_SIZE - 4,
-    height: CELL_SIZE - 4,
+    width: CELL_WIDTH - 4,
+    height: CELL_HEIGHT - 4,
     margin: 2,
     backgroundColor: 'transparent',
   },
