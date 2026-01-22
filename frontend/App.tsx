@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import * as Sentry from '@sentry/react-native';
+import { useTranslation } from 'react-i18next';
 import CommitmentsListScreen from './screens/CommitmentsListScreen';
 import AddCommitmentScreen from './screens/AddCommitmentScreen';
 import JoinChallengeScreen from './screens/JoinChallengeScreen';
@@ -10,6 +11,7 @@ import { RootStackParamList } from './types';
 import { UserProvider, useUser } from './utils/userContext';
 import { api } from './utils/api';
 import appConfig from './app.json';
+import './i18n'; // Initialize i18n
 
 // Initialize Sentry
 // By default, only in production (!__DEV__)
@@ -42,6 +44,7 @@ const navigationRef = React.createRef<any>();
 function AppNavigator() {
   const { currentUser, isLoading } = useUser();
   const routeNameRef = useRef<string>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!isLoading && currentUser) {
@@ -95,17 +98,17 @@ function AppNavigator() {
         <Stack.Screen 
           name="CommitmentsList" 
           component={CommitmentsListScreen}
-          options={{ title: 'CommitX' }}
+          options={{ title: t('navigation.commitments') }}
         />
         <Stack.Screen 
           name="AddCommitment" 
           component={AddCommitmentScreen}
-          options={{ title: 'CommitX' }}
+          options={{ title: t('navigation.addCommitment') }}
         />
         <Stack.Screen 
           name="JoinChallenge" 
           component={JoinChallengeScreen}
-          options={{ title: 'Join Challenge' }}
+          options={{ title: t('navigation.joinChallenge') }}
         />
       </Stack.Navigator>
     </NavigationContainer>

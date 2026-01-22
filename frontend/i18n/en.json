@@ -1,0 +1,120 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Join Challenge"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "leave": "Leave",
+    "ok": "OK",
+    "close": "Close",
+    "create": "Create",
+    "join": "Join",
+    "share": "Share",
+    "menu": "Menu"
+  },
+  "weekDays": {
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat"
+  },
+  "commitmentsList": {
+    "empty": "No commitments yet",
+    "emptySubtext": "Tap + to create your first commitment",
+    "clearStorageTitle": "Clear Storage",
+    "clearStorageMessage": "This will delete all commitments, completions, and user data from local storage. Continue?",
+    "clearStorageButton": "Clear",
+    "clearStorageSuccess": "Storage cleared successfully",
+    "clearStorageError": "Failed to clear storage"
+  },
+  "addCommitment": {
+    "title": "Title",
+    "placeholder": "Enter commitment title",
+    "challengeType": "Challenge Type",
+    "error": "Error",
+    "errorMessage": "Failed to create commitment. Please try again."
+  },
+  "joinChallenge": {
+    "title": "Join Challenge",
+    "description": "Enter a share code to join a collaborative challenge.\nCollaborative challenges are limited to 2 participants.",
+    "placeholder": "Enter 6-digit code",
+    "button": "Join Challenge",
+    "error": "Error",
+    "errorInvalidCode": "Invalid share code or failed to join challenge. Please check and try again.",
+    "errorFull": "Challenge Full",
+    "errorFullMessage": "This collaborative challenge is full. Maximum 2 participants allowed.",
+    "success": "Success",
+    "successMessage": "Joined \"{{title}}\"",
+    "errorEmptyCode": "Please enter a share code"
+  },
+  "challengeType": {
+    "self": "Self",
+    "collaborative": "Collaborative",
+    "label": "Challenge Type"
+  },
+  "commitmentCard": {
+    "collaborative": "Collaborative",
+    "sharedReadonly": "Shared (Read-only)",
+    "shareMessage": "Join my collaborative challenge \"{{title}}\"!\n\nShare code: {{shareCode}}\n\nUse this code in CommitX to join the challenge.",
+    "shareTitle": "Share \"{{title}}\" Challenge"
+  },
+  "deleteModal": {
+    "deleteTitle": "Delete Commitment",
+    "leaveTitle": "Leave Challenge",
+    "deleteMessage": "Are you sure you want to delete \"{{title}}\"? This action cannot be undone.",
+    "leaveMessage": "Are you sure you want to leave \"{{title}}\"? You will need a new share code to join again."
+  },
+  "actionSheet": {
+    "createCommitment": "Create Commitment",
+    "joinChallenge": "Join Challenge",
+    "cancel": "Cancel"
+  },
+  "sidebar": {
+    "title": "Menu",
+    "devTools": "Developer Tools",
+    "faq": "Frequently Asked Questions",
+    "testBackendSentry": "Test Backend Sentry",
+    "testMobileSentry": "Test Mobile Sentry",
+    "clearStorage": "Clear Storage",
+    "testSentryExpected": "Expected Error",
+    "testSentryMessage": "Backend threw test error (check Sentry dashboard)",
+    "testSentryMobileSent": "Test Sent",
+    "testSentryMobileMessage": "Test error sent to Sentry Mobile project",
+    "testSentryMobileMessageDev": "Test error sent to Sentry Mobile project\n\nNote: In dev mode, set EXPO_PUBLIC_FORCE_SENTRY=true in .env to enable Sentry",
+    "testSentryError": "Failed to send test error to Sentry",
+    "faqItems": [
+      {
+        "question": "How do I create a commitment?",
+        "answer": "Tap the + button at the bottom right. Choose 'Personal' for your own commitment or 'Collaborative' to share with friends.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "What's a collaborative commitment?",
+        "answer": "A collaborative commitment lets you track progress with friends. Create one and share the code, or join using a friend's code.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "How do I join a friend's challenge?",
+        "answer": "Tap the + button and select 'Join'. Enter the 6-digit code your friend gave you to join their challenge.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "How do I mark a day as complete?",
+        "answer": "Tap any day in your commitment's calendar. The day will turn green to show completion. Tap again to undo.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "How do I delete a commitment?",
+        "answer": "Tap the three dots on a commitment card and select 'Delete'. For collaborative ones, you'll leave the challenge.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

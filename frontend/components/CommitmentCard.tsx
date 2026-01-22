@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Share } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import MonthNavigation from './MonthNavigation';
 import WeekDaysRow from './WeekDaysRow';
 import CalendarGrid from './CalendarGrid';
@@ -44,6 +45,7 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
   participants = [],
   readonly = false,
 }) => {
+  const { t } = useTranslation();
   const days = getMonthDays(currentMonth);
   const isShared = item.type === 'shared';
   const isCollaborative = item.type === 'collaborative';
@@ -57,8 +59,11 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
     
     try {
       const result = await Share.share({
-        message: `Join my collaborative challenge "${item.title}"!\n\nShare code: ${item.shareCode}\n\nUse this code in CommitX to join the challenge.`,
-        title: `Share "${item.title}" Challenge`,
+        message: t('commitmentCard.shareMessage', { 
+          title: item.title, 
+          shareCode: item.shareCode 
+        }),
+        title: t('commitmentCard.shareTitle', { title: item.title }),
       });
       
       // Share was successful (user selected an app)
@@ -81,7 +86,7 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
             style={styles.titleInput}
             value={editedTitle}
             onChangeText={onEditChange}
-            placeholder="Enter commitment title"
+            placeholder={t('addCommitment.placeholder')}
             placeholderTextColor="#666666"
             autoFocus
             onSubmitEditing={onEditSubmit}
@@ -94,10 +99,10 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
                 {item.title}
               </Text>
               {isCollaborative && (
-                <Text style={styles.typeBadge}>Collaborative</Text>
+                <Text style={styles.typeBadge}>{t('commitmentCard.collaborative')}</Text>
               )}
               {isShared && (
-                <Text style={styles.typeBadge}>Shared (Read-only)</Text>
+                <Text style={styles.typeBadge}>{t('commitmentCard.sharedReadonly')}</Text>
               )}
             </View>
             {showActions && (

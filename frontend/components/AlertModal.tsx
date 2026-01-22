@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 const { width } = Dimensions.get('window');
 
@@ -30,6 +31,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   onClose,
   autoDismiss,
 }) => {
+  const { t } = useTranslation();
   // Auto-dismiss removed - alerts must be manually dismissed by user
 
   const getIconConfig = () => {
@@ -113,7 +115,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               onPress={onClose}
               activeOpacity={0.8}
             >
-              <Text style={styles.modalButtonText}>OK</Text>
+              <Text style={styles.modalButtonText}>{t('common.ok')}</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>

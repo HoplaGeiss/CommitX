@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { ChallengeType } from '../types';
 
 interface ChallengeTypeSelectorProps {
@@ -11,14 +12,16 @@ const ChallengeTypeSelector: React.FC<ChallengeTypeSelectorProps> = ({
   selectedType,
   onTypeChange,
 }) => {
-  const types: { value: ChallengeType; label: string }[] = [
-    { value: 'self', label: 'Self' },
-    { value: 'collaborative', label: 'Collaborative' },
+  const { t } = useTranslation();
+  
+  const types: { value: ChallengeType; labelKey: string }[] = [
+    { value: 'self', labelKey: 'challengeType.self' },
+    { value: 'collaborative', labelKey: 'challengeType.collaborative' },
   ];
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Challenge Type</Text>
+      <Text style={styles.label}>{t('challengeType.label')}</Text>
       <View style={styles.buttonGroup}>
         {types.map((type) => (
           <TouchableOpacity
@@ -35,7 +38,7 @@ const ChallengeTypeSelector: React.FC<ChallengeTypeSelectorProps> = ({
                 selectedType === type.value && styles.buttonTextActive,
               ]}
             >
-              {type.label}
+              {t(type.labelKey)}
             </Text>
           </TouchableOpacity>
         ))}

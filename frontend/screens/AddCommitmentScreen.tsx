@@ -11,6 +11,7 @@ import {
   Share,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useTranslation } from 'react-i18next';
 import { storage } from '../utils/storage';
 import { api } from '../utils/api';
 import { useUser } from '../utils/userContext';
@@ -24,6 +25,7 @@ const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState<ChallengeType>('self');
   const { currentUser } = useUser();
+  const { t } = useTranslation();
   const [alert, setAlert] = useState<{
     visible: boolean;
     type: AlertType;
@@ -75,8 +77,11 @@ const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
         if (type === 'collaborative' && commitment.shareCode) {
           try {
             await Share.share({
-              message: `Join my collaborative challenge "${commitment.title}"!\n\nShare code: ${commitment.shareCode}\n\nUse this code in CommitX to join the challenge.`,
-              title: `Share "${commitment.title}" Challenge`,
+              message: t('commitmentCard.shareMessage', { 
+                title: commitment.title, 
+                shareCode: commitment.shareCode 
+              }),
+              title: t('commitmentCard.shareTitle', { title: commitment.title }),
             });
           } catch (error: any) {
             // User cancelled or error occurred - that's okay, just navigate back
@@ -89,7 +94,7 @@ const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
         navigation.goBack();
       }
     } catch (error) {
-      showAlert('error', 'Error', 'Failed to create commitment. Please try again.');
+      showAlert('error', t('addCommitment.error'), t('addCommitment.errorMessage'));
       console.error('Error creating commitment:', error);
     }
   };
@@ -100,12 +105,12 @@ const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
-        <Text style={styles.label}>Title</Text>
+        <Text style={styles.label}>{t('addCommitment.title')}</Text>
         <TextInput
           style={styles.input}
           value={title}
           onChangeText={setTitle}
-          placeholder="Enter commitment title"
+          placeholder={t('addCommitment.placeholder')}
           placeholderTextColor="#666666"
           autoFocus
           returnKeyType="done"
@@ -119,7 +124,7 @@ const AddCommitmentScreen: React.FC<Props> = ({ navigation }) => {
           onPress={handleSave}
           disabled={!title.trim()}
         >
-          <Text style={styles.saveButtonText}>Save</Text>
+          <Text style={styles.saveButtonText}>{t('common.save')}</Text>
         </TouchableOpacity>
       </ScrollView>
 

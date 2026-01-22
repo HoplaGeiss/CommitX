@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const { width } = Dimensions.get('window');
 const DAYS_IN_WEEK = 7;
@@ -7,12 +8,22 @@ const CARD_PADDING = 20;
 const CARD_WIDTH = width - (CARD_PADDING * 2);
 const CELL_SIZE = (CARD_WIDTH - 32) / DAYS_IN_WEEK;
 
-const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
 const WeekDaysRow: React.FC = () => {
+  const { t } = useTranslation();
+  
+  const weekDays = [
+    t('weekDays.sun'),
+    t('weekDays.mon'),
+    t('weekDays.tue'),
+    t('weekDays.wed'),
+    t('weekDays.thu'),
+    t('weekDays.fri'),
+    t('weekDays.sat'),
+  ];
+  
   return (
     <View style={styles.weekDaysRow}>
-      {WEEK_DAYS.map((day, index) => (
+      {weekDays.map((day, index) => (
         <View key={index} style={styles.weekDayCell}>
           <Text style={styles.weekDayText}>{day}</Text>
         </View>

@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 const { width } = Dimensions.get('window');
 
@@ -24,6 +25,8 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
   onCreate,
   onJoin,
 }) => {
+  const { t } = useTranslation();
+  
   const handleCreate = () => {
     onClose();
     onCreate();
@@ -56,7 +59,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
             <View style={styles.optionIcon}>
               <Ionicons name="add-circle-outline" size={24} color="#4CAF50" />
             </View>
-            <Text style={styles.optionText}>Create Commitment</Text>
+            <Text style={styles.optionText}>{t('actionSheet.createCommitment')}</Text>
             <Ionicons name="chevron-forward" size={20} color="#666" />
           </TouchableOpacity>
           <TouchableOpacity
@@ -67,7 +70,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
             <View style={styles.optionIcon}>
               <Ionicons name="people-outline" size={24} color="#2196F3" />
             </View>
-            <Text style={styles.optionText}>Join Challenge</Text>
+            <Text style={styles.optionText}>{t('actionSheet.joinChallenge')}</Text>
             <Ionicons name="chevron-forward" size={20} color="#666" />
           </TouchableOpacity>
           <TouchableOpacity
@@ -75,7 +78,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
             onPress={onClose}
             activeOpacity={0.7}
           >
-            <Text style={styles.cancelText}>Cancel</Text>
+            <Text style={styles.cancelText}>{t('actionSheet.cancel')}</Text>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>

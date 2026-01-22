@@ -1,0 +1,120 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Rejoindre un défi"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "leave": "Quitter",
+    "ok": "OK",
+    "close": "Fermer",
+    "create": "Créer",
+    "join": "Rejoindre",
+    "share": "Partager",
+    "menu": "Menu"
+  },
+  "weekDays": {
+    "sun": "Dim",
+    "mon": "Lun",
+    "tue": "Mar",
+    "wed": "Mer",
+    "thu": "Jeu",
+    "fri": "Ven",
+    "sat": "Sam"
+  },
+  "commitmentsList": {
+    "empty": "Aucun engagement pour le moment",
+    "emptySubtext": "Appuyez sur + pour créer votre premier engagement",
+    "clearStorageTitle": "Effacer le stockage",
+    "clearStorageMessage": "Cela supprimera tous les engagements, complétions et données utilisateur du stockage local. Continuer ?",
+    "clearStorageButton": "Effacer",
+    "clearStorageSuccess": "Stockage effacé avec succès",
+    "clearStorageError": "Échec de l'effacement du stockage"
+  },
+  "addCommitment": {
+    "title": "Titre",
+    "placeholder": "Entrez le titre de l'engagement",
+    "challengeType": "Type de défi",
+    "error": "Erreur",
+    "errorMessage": "Échec de la création de l'engagement. Veuillez réessayer."
+  },
+  "joinChallenge": {
+    "title": "Rejoindre un défi",
+    "description": "Entrez un code de partage pour rejoindre un défi collaboratif.\nLes défis collaboratifs sont limités à 2 participants.",
+    "placeholder": "Entrez le code à 6 chiffres",
+    "button": "Rejoindre le défi",
+    "error": "Erreur",
+    "errorInvalidCode": "Code de partage invalide ou échec de rejoindre le défi. Veuillez vérifier et réessayer.",
+    "errorFull": "Défi complet",
+    "errorFullMessage": "Ce défi collaboratif est complet. Maximum 2 participants autorisés.",
+    "success": "Succès",
+    "successMessage": "Vous avez rejoint \"{{title}}\"",
+    "errorEmptyCode": "Veuillez entrer un code de partage"
+  },
+  "challengeType": {
+    "self": "Personnel",
+    "collaborative": "Collaboratif",
+    "label": "Type de défi"
+  },
+  "commitmentCard": {
+    "collaborative": "Collaboratif",
+    "sharedReadonly": "Partagé (Lecture seule)",
+    "shareMessage": "Rejoignez mon défi collaboratif \"{{title}}\" !\n\nCode de partage : {{shareCode}}\n\nUtilisez ce code dans CommitX pour rejoindre le défi.",
+    "shareTitle": "Partager le défi \"{{title}}\""
+  },
+  "deleteModal": {
+    "deleteTitle": "Supprimer l'engagement",
+    "leaveTitle": "Quitter le défi",
+    "deleteMessage": "Êtes-vous sûr de vouloir supprimer \"{{title}}\" ? Cette action ne peut pas être annulée.",
+    "leaveMessage": "Êtes-vous sûr de vouloir quitter \"{{title}}\" ? Vous aurez besoin d'un nouveau code de partage pour rejoindre à nouveau."
+  },
+  "actionSheet": {
+    "createCommitment": "Créer un engagement",
+    "joinChallenge": "Rejoindre un défi",
+    "cancel": "Annuler"
+  },
+  "sidebar": {
+    "title": "Menu",
+    "devTools": "Outils de développement",
+    "faq": "Questions fréquemment posées",
+    "testBackendSentry": "Tester Sentry Backend",
+    "testMobileSentry": "Tester Sentry Mobile",
+    "clearStorage": "Effacer le stockage",
+    "testSentryExpected": "Erreur attendue",
+    "testSentryMessage": "Le backend a généré une erreur de test (vérifiez le tableau de bord Sentry)",
+    "testSentryMobileSent": "Test envoyé",
+    "testSentryMobileMessage": "Erreur de test envoyée au projet Sentry Mobile",
+    "testSentryMobileMessageDev": "Erreur de test envoyée au projet Sentry Mobile\n\nNote : En mode dev, définissez EXPO_PUBLIC_FORCE_SENTRY=true dans .env pour activer Sentry",
+    "testSentryError": "Échec de l'envoi de l'erreur de test à Sentry",
+    "faqItems": [
+      {
+        "question": "Comment créer un engagement ?",
+        "answer": "Appuyez sur le bouton + en bas à droite. Choisissez 'Personnel' pour votre propre engagement ou 'Collaboratif' pour partager avec des amis.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Qu'est-ce qu'un engagement collaboratif ?",
+        "answer": "Un engagement collaboratif vous permet de suivre les progrès avec des amis. Créez-en un et partagez le code, ou rejoignez en utilisant le code d'un ami.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Comment rejoindre le défi d'un ami ?",
+        "answer": "Appuyez sur le bouton + et sélectionnez 'Rejoindre'. Entrez le code à 6 chiffres que votre ami vous a donné pour rejoindre son défi.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Comment marquer un jour comme terminé ?",
+        "answer": "Appuyez sur n'importe quel jour dans le calendrier de votre engagement. Le jour deviendra vert pour indiquer l'achèvement. Appuyez à nouveau pour annuler.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Comment supprimer un engagement ?",
+        "answer": "Appuyez sur les trois points sur une carte d'engagement et sélectionnez 'Supprimer'. Pour les engagements collaboratifs, vous quitterez le défi.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

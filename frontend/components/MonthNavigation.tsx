@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { isNextMonthInFuture } from './calendarUtils';
 
 interface MonthNavigationProps {
@@ -9,6 +10,8 @@ interface MonthNavigationProps {
 }
 
 const MonthNavigation: React.FC<MonthNavigationProps> = ({ currentMonth, onMonthChange }) => {
+  const { i18n } = useTranslation();
+  
   const handlePreviousMonth = () => {
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(currentMonth.getMonth() - 1);
@@ -21,6 +24,10 @@ const MonthNavigation: React.FC<MonthNavigationProps> = ({ currentMonth, onMonth
     onMonthChange(newMonth);
   };
 
+  // Use the current i18n language for date formatting
+  const locale = i18n.language || 'en';
+  const dateLocale = locale === 'fr' ? 'fr-FR' : 'en-US';
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -30,7 +37,7 @@ const MonthNavigation: React.FC<MonthNavigationProps> = ({ currentMonth, onMonth
         <Ionicons name="chevron-back" size={16} color="#888888" />
       </TouchableOpacity>
       <Text style={styles.cardMonth}>
-        {currentMonth.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+        {currentMonth.toLocaleDateString(dateLocale, { month: 'short', year: 'numeric' })}
       </Text>
       {!isNextMonthInFuture(currentMonth) && (
         <TouchableOpacity

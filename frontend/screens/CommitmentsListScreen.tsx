@@ -13,6 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { storage } from '../utils/storage';
 import { api } from '../utils/api';
 import { syncService } from '../utils/syncService';
@@ -32,6 +33,7 @@ const { width } = Dimensions.get('window');
 const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { currentUser } = useUser();
+  const { t } = useTranslation();
   const [commitments, setCommitments] = useState<Commitment[]>([]);
   const [completions, setCompletions] = useState<Completion[]>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -442,22 +444,22 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleClearStorage = () => {
     Alert.alert(
-      'Clear Storage',
-      'This will delete all commitments, completions, and user data from local storage. Continue?',
+      t('commitmentsList.clearStorageTitle'),
+      t('commitmentsList.clearStorageMessage'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         {
-          text: 'Clear',
+          text: t('commitmentsList.clearStorageButton'),
           style: 'destructive',
           onPress: async () => {
             try {
               await AsyncStorage.clear();
               // Reload the app state
               await loadData();
-              Alert.alert('Success', 'Storage cleared successfully');
+              Alert.alert(t('joinChallenge.success'), t('commitmentsList.clearStorageSuccess'));
             } catch (error) {
               console.error('Failed to clear storage:', error);
-              Alert.alert('Error', 'Failed to clear storage');
+              Alert.alert(t('addCommitment.error'), t('commitmentsList.clearStorageError'));
             }
           },
         },
@@ -515,8 +517,8 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
           ]}
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
-              <Text style={styles.emptyText}>No commitments yet</Text>
-              <Text style={styles.emptySubtext}>Tap + to create your first commitment</Text>
+              <Text style={styles.emptyText}>{t('commitmentsList.empty')}</Text>
+              <Text style={styles.emptySubtext}>{t('commitmentsList.emptySubtext')}</Text>
             </View>
           }
         />

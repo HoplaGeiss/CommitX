@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { Commitment } from '../types';
 
 const { width } = Dimensions.get('window');
@@ -21,15 +22,17 @@ interface DeleteModalProps {
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ visible, commitment, onConfirm, onCancel, currentUserId }) => {
+  const { t } = useTranslation();
+  
   if (!commitment) return null;
 
   const isCreator = currentUserId && commitment.userId === currentUserId;
   const isCollaborative = commitment.type === 'collaborative';
-  const title = isCollaborative && !isCreator ? 'Leave Challenge' : 'Delete Commitment';
+  const title = isCollaborative && !isCreator ? t('deleteModal.leaveTitle') : t('deleteModal.deleteTitle');
   const message = isCollaborative && !isCreator
-    ? `Are you sure you want to leave "${commitment.title}"? You will need a new share code to join again.`
-    : `Are you sure you want to delete "${commitment.title}"? This action cannot be undone.`;
-  const buttonText = isCollaborative && !isCreator ? 'Leave' : 'Delete';
+    ? t('deleteModal.leaveMessage', { title: commitment.title })
+    : t('deleteModal.deleteMessage', { title: commitment.title });
+  const buttonText = isCollaborative && !isCreator ? t('common.leave') : t('common.delete');
 
   return (
     <Modal
@@ -62,7 +65,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ visible, commitment, onConfir
                 onPress={onCancel}
                 activeOpacity={0.8}
               >
-                <Text style={styles.modalCancelText}>Cancel</Text>
+                <Text style={styles.modalCancelText}>{t('common.cancel')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.modalDeleteButton}
