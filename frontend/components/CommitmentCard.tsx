@@ -92,15 +92,17 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
         ) : (
           <>
             <View style={styles.titleContainer}>
-              <Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">
-                {item.title}
-              </Text>
-              {isCollaborative && (
-                <Text style={styles.typeBadge}>{t('commitmentCard.collaborative')}</Text>
-              )}
-              {isShared && (
-                <Text style={styles.typeBadge}>{t('commitmentCard.sharedReadonly')}</Text>
-              )}
+              <View style={styles.titleRow}>
+                <Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">
+                  {item.title}
+                </Text>
+                {isCollaborative && (
+                  <Text style={styles.typeBadge}>{t('commitmentCard.collaborative')}</Text>
+                )}
+                {isShared && (
+                  <Text style={styles.typeBadge}>{t('commitmentCard.sharedReadonly')}</Text>
+                )}
+              </View>
             </View>
             {showActions && (
               <View style={styles.cardActions}>
@@ -109,7 +111,7 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
                     style={styles.actionButton}
                     onPress={handleShare}
                   >
-                    <Ionicons name="share-outline" size={18} color="#4CAF50" />
+                    <Ionicons name="share-outline" size={16} color="#4CAF50" />
                   </TouchableOpacity>
                 )}
                 {showEditButton && (
@@ -117,14 +119,14 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
                     style={styles.actionButton}
                     onPress={() => onStartEdit(item.id, item.title)}
                   >
-                    <Ionicons name="create-outline" size={18} color="#ffffff" />
+                    <Ionicons name="create-outline" size={16} color="#ffffff" />
                   </TouchableOpacity>
                 )}
                 <TouchableOpacity
                   style={styles.actionButton}
                   onPress={() => onDelete(item)}
                 >
-                  <Ionicons name="trash-outline" size={18} color="#ff4444" />
+                  <Ionicons name="trash-outline" size={16} color="#ff4444" />
                 </TouchableOpacity>
               </View>
             )}
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#1a1a1a',
     borderRadius: 12,
-    padding: 12,
+    padding: 10,
     marginBottom: 12,
     width: width - (20 * 2),
   },
@@ -160,40 +162,50 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 12,
-    minHeight: 40,
+    marginBottom: 8,
+    minHeight: 32,
   },
   titleContainer: {
     flex: 1,
     flexShrink: 1,
-    marginRight: 12,
+    marginRight: 8,
+  },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    flexWrap: 'wrap',
   },
   cardTitle: {
     color: '#ffffff',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
+    flexShrink: 1,
   },
   typeBadge: {
     color: '#4CAF50',
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: '500',
-    marginTop: 4,
+    paddingHorizontal: 5,
+    paddingVertical: 1.5,
+    backgroundColor: 'rgba(76, 175, 80, 0.15)',
+    borderRadius: 3,
   },
   cardActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
   },
   actionButton: {
-    padding: 6,
+    padding: 4,
   },
   titleInput: {
     flex: 1,
     color: '#ffffff',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     backgroundColor: '#1a1a1a',
-    padding: 8,
+    padding: 6,
     borderRadius: 6,
     borderWidth: 1,
     borderColor: '#333333',
