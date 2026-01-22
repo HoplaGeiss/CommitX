@@ -24,7 +24,8 @@
       },
       "env": {
         "SENTRY_ORG": "gabriel-muller",
-        "SENTRY_PROJECT": "commitx-mobile"
+        "SENTRY_PROJECT": "commitx-mobile",
+        "EXPO_PUBLIC_DEV_MODE": "true"
       }
     }
   },
