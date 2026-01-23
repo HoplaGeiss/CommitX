@@ -7,7 +7,8 @@ import { ChallengeType } from '../types';
 const { width } = Dimensions.get('window');
 const DAYS_IN_WEEK = 7;
 const CARD_PADDING = 20;
-const CARD_WIDTH = width - (CARD_PADDING * 2);
+const MAX_CARD_WIDTH = 600;
+const CARD_WIDTH = Math.min(width - (CARD_PADDING * 2), MAX_CARD_WIDTH);
 const CELL_WIDTH = (CARD_WIDTH - 32) / DAYS_IN_WEEK;
 const CELL_HEIGHT = 28; // Reduced height for rectangles
 

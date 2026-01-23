@@ -10,5 +10,10 @@
     "build:backend": "cd backend && pnpm run build",
     "build:frontend": "cd frontend && pnpm run build",
     "install:all": "pnpm install && cd backend && pnpm install && cd ../frontend && pnpm install"
+  },
+  "pnpm": {
+    "overrides": {
+      "expo-localization": "16.1.6"
+    }
   }
 }

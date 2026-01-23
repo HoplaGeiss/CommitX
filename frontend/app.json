@@ -6,6 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "privacy": "public",
+    "supportUrl": "https://hoplageiss.github.io/CommitX/support.html",
+    "privacyUrl": "https://hoplageiss.github.io/CommitX/privacy-policy.html",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

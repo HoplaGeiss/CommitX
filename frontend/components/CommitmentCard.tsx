@@ -8,6 +8,9 @@ import { getMonthDays } from './calendarUtils';
 import { Commitment } from '../types';
 
 const { width } = Dimensions.get('window');
+const CARD_PADDING = 20;
+const MAX_CARD_WIDTH = 600;
+const CARD_WIDTH = Math.min(width - (CARD_PADDING * 2), MAX_CARD_WIDTH);
 
 interface CommitmentCardProps {
   item: Commitment;
@@ -156,7 +159,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     marginBottom: 12,
-    width: width - (20 * 2),
+    width: CARD_WIDTH,
+    alignSelf: 'center',
   },
   cardHeader: {
     flexDirection: 'row',

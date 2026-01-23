@@ -129,174 +129,28 @@ maestro test .maestro/
 
 **Note:** Remember to disable E2E mode (`EXPO_PUBLIC_E2E_MODE=false`) when not running tests to hide the user switcher in development.
 
-## Publishing to iOS (App Store / TestFlight)
+## Publishing
 
-This guide covers building and submitting your app to TestFlight for external testing.
+### Step 1 build
 
-### Prerequisites
-
-- **Apple Developer Account** ($99/year)
-- **Xcode** installed (for local builds)
-- **EAS CLI** installed: `npm install -g eas-cli`
-- **EAS Account** (free): Sign up at https://expo.dev
-- **App Store Connect** configured with your app
-
-### Step 1: Test Build Locally (Recommended)
-
-Before using cloud build credits, test the build process locally to catch any issues early:
-
-```bash
 cd frontend
 
-# Run a local EAS build (simulates cloud environment)
-eas build --platform ios --profile production --local
-```
-
-**What this does:**
-- Simulates the exact EAS cloud build process
-- Tests Metro bundling with production settings
-- Runs iOS native build with Xcode
-- Validates certificates and provisioning profiles
-- Takes ~10-20 minutes
-
-**If successful:** You'll get a `.ipa` file and confidence the cloud build will work
-
-**If it fails:** You'll see detailed error logs to fix before using cloud resources
-
-**Requirements for local builds:**
-- Xcode installed with command-line tools
-- Valid Apple Developer certificates
-- At least 20 GB free disk space
-
-### Step 2: Build on EAS Cloud
-
-Once local testing passes (or if you want to skip straight to cloud):
-
-```bash
-cd frontend
-
-# Build production app on EAS servers
-eas build --platform ios --profile production
-```
-
-**What happens:**
-1. Code is uploaded to EAS servers
-2. Dependencies are installed
-3. iOS native project is generated
-4. App is compiled and signed
-5. Build typically takes 10-20 minutes
-6. You'll get a link to download the `.ipa` file
-
-**During the build, you'll be prompted for:**
-- Apple ID credentials (your Apple Developer account)
-- 2FA verification code
-- Permission to generate distribution certificates/profiles
-
-### Step 3: Submit to App Store Connect
-
-After the build completes successfully:
-
-```bash
-cd frontend
-
-# Submit the build to TestFlight
-eas submit --platform ios --profile production
-```
-
-**What happens:**
-1. EAS will show you available builds
-2. Select the build you just created
-3. Build is uploaded to App Store Connect
-4. Typically takes 5-10 minutes
-
-**Authentication:**
-- You'll need to authenticate with your Apple ID again
-- Use your regular password + 2FA (app-specific password not required)
-
-### Step 4: Set Up TestFlight External Testing
-
-Once the build is uploaded and processed by Apple (~10-30 minutes):
-
-1. **Go to App Store Connect**
-   - Visit https://appstoreconnect.apple.com
-   - Navigate to: **My Apps** → **CommitX** → **TestFlight**
-
-2. **Configure External Testing** (for external testers outside your team)
-   - Click **External Testing** tab
-   - Click **Add Group** or select existing group
-   - Select your build
-
-3. **Provide Test Information** (required for external testing)
-   - **What to Test**: Brief description of what testers should focus on
-   - **Beta App Description**: What your app does
-   - **Feedback Email**: Where testers can send feedback
-   - **Privacy Policy URL**: Link to your privacy policy
-
-4. **Submit for Beta Review**
-   - Click **Submit for Review**
-   - Apple reviews external TestFlight apps (~24-48 hours)
-   - This is faster and less strict than full App Store review
-
-5. **Add Testers**
-   - After approval, add tester emails
-   - They'll receive invitation emails
-   - Testers can install via TestFlight app
-   - Up to 10,000 external testers allowed
-
-### Step 5: Monitor and Iterate
-
-**Check Build Status:**
-- EAS Dashboard: https://expo.dev/accounts/[your-account]/projects/commitx/builds
-- App Store Connect: https://appstoreconnect.apple.com
-
-**Update Builds:**
-```bash
-# The build number auto-increments (configured in eas.json)
-eas build --platform ios --profile production
-eas submit --platform ios --profile production
-```
-
-**TestFlight Build Lifecycle:**
-- Builds expire after 90 days
-- External testers notified of new builds automatically
-- Internal testing available immediately (no review needed)
-
-### Troubleshooting
-
-**Build fails during "Upload Debug Symbols to Sentry":**
-- The Sentry Expo plugin has been removed from `frontend/app.json` to prevent this
-- Additional safeguard: `SENTRY_DISABLE_AUTO_UPLOAD=true` in `eas.json`
-- Sentry runtime still works (initialized in `App.tsx`)
-- See "TODO / Known Issues" section for details
-
-**Metro bundler error:**
-- Verify `frontend/metro.config.js` has Sentry plugin disabled for production
-- Test locally: `NODE_ENV=production pnpm expo export --platform ios`
-
-**Certificate/provisioning issues:**
-- Let EAS generate and manage certificates automatically
-- Say "Yes" when prompted to create new certificates
-
-**App Store Connect processing stuck:**
-- Processing usually takes 10-30 minutes
-- Check for email from Apple about invalid binary
-- View detailed status in App Store Connect
-
-### Quick Reference
-
-```bash
-# Full workflow
-cd frontend
-
-# 1. Test locally (recommended first time)
-eas build --platform ios --profile production --local
-
-# 2. Build on cloud
+#### For iOS (App Store)
 eas build --platform ios --profile production
 
-# 3. Submit to TestFlight
+#### For Android (Play Store)
+eas build --platform android --profile production
+
+#### Or both at once
+eas build --platform all --profile production
+
+### Step 2 publish
+
+#### Submit to App Store
 eas submit --platform ios --profile production
-```
+
+#### Submit to Play Store
+eas submit --platform android --profile production
 
 ## Technologies
 

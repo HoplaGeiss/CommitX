@@ -31,6 +31,9 @@ import { Commitment, Completion, RootStackParamList } from '../types';
 type Props = NativeStackScreenProps<RootStackParamList, 'CommitmentsList'>;
 
 const { width } = Dimensions.get('window');
+const CARD_PADDING = 20;
+const MAX_CARD_WIDTH = 600;
+const CARD_WIDTH = Math.min(width - (CARD_PADDING * 2), MAX_CARD_WIDTH);
 
 const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -635,9 +638,12 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#1a1a1a',
+    width: CARD_WIDTH,
+    alignSelf: 'center',
   },
   listContent: {
     padding: 20,
+    alignItems: 'center',
   },
   emptyContainer: {
     flex: 1,

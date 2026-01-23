@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  expo-localization: 16.1.6
+
 importers:
 
   .: {}
@@ -168,8 +171,8 @@ importers:
         specifier: ~8.0.8
         version: 8.0.8(expo@54.0.31)(react-native@0.81.5(@babel/core@7.28.5)(@react-native-community/cli@13.6.9)(@react-native/metro-config@0.83.1(@babel/core@7.28.5))(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       expo-localization:
-        specifier: ~16.0.0
-        version: 16.0.1(expo@54.0.31)(react@19.1.0)
+        specifier: 16.1.6
+        version: 16.1.6(expo@54.0.31)(react@19.1.0)
       expo-status-bar:
         specifier: ~3.0.9
         version: 3.0.9(react-native@0.81.5(@babel/core@7.28.5)(@react-native-community/cli@13.6.9)(@react-native/metro-config@0.83.1(@babel/core@7.28.5))(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
@@ -3095,8 +3098,8 @@ packages:
       expo: '*'
       react: '*'
 
-  expo-localization@16.0.1:
-    resolution: {integrity: sha512-kUrXiV/Pq9r7cG+TMt+Qa49IUQ9Y/czVwen4hmiboTclTopcWdIeCzYZv6JGtufoPpjEO9vVx1QJrXYl9V2u0Q==}
+  expo-localization@16.1.6:
+    resolution: {integrity: sha512-v4HwNzs8QvyKHwl40MvETNEKr77v1o9/eVC8WCBY++DIlBAvonHyJe2R9CfqpZbC4Tlpl7XV+07nLXc8O5PQsA==}
     peerDependencies:
       expo: '*'
       react: '*'
@@ -9684,7 +9687,7 @@ snapshots:
       expo: 54.0.31(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(graphql@15.8.0)(react-native@0.81.5(@babel/core@7.28.5)(@react-native-community/cli@13.6.9)(@react-native/metro-config@0.83.1(@babel/core@7.28.5))(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       react: 19.1.0
 
-  expo-localization@16.0.1(expo@54.0.31)(react@19.1.0):
+  expo-localization@16.1.6(expo@54.0.31)(react@19.1.0):
     dependencies:
       expo: 54.0.31(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(graphql@15.8.0)(react-native@0.81.5(@babel/core@7.28.5)(@react-native-community/cli@13.6.9)(@react-native/metro-config@0.83.1(@babel/core@7.28.5))(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       react: 19.1.0
