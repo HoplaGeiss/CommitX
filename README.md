@@ -2,6 +2,14 @@
 
 A full-stack commitment tracking application with a NestJS backend and React Native frontend built with Expo.
 
+## Download
+
+[![Download on the App Store](https://img.shields.io/badge/Download_on-App_Store-0D96F6?style=for-the-badge&logo=apple&logoColor=white)](https://apps.apple.com/app/id6757818908)
+[![Get it on Google Play](https://img.shields.io/badge/Coming_Soon-Google_Play-grey?style=for-the-badge&logo=google-play&logoColor=white)](#)
+
+**iOS:** Available now on the App Store  
+**Android:** Currently in closed testing - coming soon
+
 ## Project Structure
 
 ```
