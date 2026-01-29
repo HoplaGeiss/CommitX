@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Herausforderung beitreten"
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "leave": "Verlassen",
+    "ok": "OK",
+    "close": "Schließen",
+    "create": "Erstellen",
+    "join": "Beitreten",
+    "share": "Teilen",
+    "menu": "Menü"
+  },
+  "weekDays": {
+    "sun": "So",
+    "mon": "Mo",
+    "tue": "Di",
+    "wed": "Mi",
+    "thu": "Do",
+    "fri": "Fr",
+    "sat": "Sa"
+  },
+  "commitmentsList": {
+    "empty": "Noch keine Verpflichtungen",
+    "emptySubtext": "Tippen Sie auf +, um Ihre erste Verpflichtung zu erstellen",
+    "clearStorageTitle": "Speicher löschen",
+    "clearStorageMessage": "Dies löscht alle Verpflichtungen, Abschlüsse und Benutzerdaten aus dem lokalen Speicher. Fortfahren?",
+    "clearStorageButton": "Löschen",
+    "clearStorageSuccess": "Speicher erfolgreich gelöscht",
+    "clearStorageError": "Speicher konnte nicht gelöscht werden"
+  },
+  "addCommitment": {
+    "title": "Titel",
+    "placeholder": "Verpflichtungstitel eingeben",
+    "challengeType": "Herausforderungstyp",
+    "error": "Fehler",
+    "errorMessage": "Verpflichtung konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+  },
+  "joinChallenge": {
+    "title": "Herausforderung beitreten",
+    "description": "Geben Sie einen Teilungscode ein, um einer kollaborativen Herausforderung beizutreten.\nKollaborative Herausforderungen sind auf 2 Teilnehmer begrenzt.",
+    "placeholder": "6-stelligen Code eingeben",
+    "button": "Herausforderung beitreten",
+    "error": "Fehler",
+    "errorInvalidCode": "Ungültiger Teilungscode oder Beitritt zur Herausforderung fehlgeschlagen. Bitte überprüfen und erneut versuchen.",
+    "errorFull": "Herausforderung voll",
+    "errorFullMessage": "Diese kollaborative Herausforderung ist voll. Maximal 2 Teilnehmer erlaubt.",
+    "success": "Erfolg",
+    "successMessage": "\"{{title}}\" beigetreten",
+    "errorEmptyCode": "Bitte geben Sie einen Teilungscode ein"
+  },
+  "challengeType": {
+    "self": "Persönlich",
+    "collaborative": "Kollaborativ",
+    "label": "Herausforderungstyp"
+  },
+  "commitmentCard": {
+    "collaborative": "Kollaborativ",
+    "sharedReadonly": "Geteilt (Nur lesen)",
+    "shareMessage": "Treten Sie meiner kollaborativen Herausforderung \"{{title}}\" bei!\n\nTeilungscode: {{shareCode}}\n\nVerwenden Sie diesen Code in CommitX, um der Herausforderung beizutreten.",
+    "shareTitle": "\"{{title}}\" Herausforderung teilen",
+    "editTitle": "Verpflichtung bearbeiten"
+  },
+  "deleteModal": {
+    "deleteTitle": "Verpflichtung löschen",
+    "leaveTitle": "Herausforderung verlassen",
+    "deleteMessage": "Sind Sie sicher, dass Sie \"{{title}}\" löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "leaveMessage": "Sind Sie sicher, dass Sie \"{{title}}\" verlassen möchten? Sie benötigen einen neuen Teilungscode, um erneut beizutreten."
+  },
+  "actionSheet": {
+    "createCommitment": "Verpflichtung erstellen",
+    "joinChallenge": "Herausforderung beitreten",
+    "cancel": "Abbrechen"
+  },
+  "onboarding": {
+    "title": "Willkommen bei CommitX!",
+    "subtitle": "Entwickeln Sie bessere Gewohnheiten, indem Sie Ihre täglichen Verpflichtungen verfolgen",
+    "feature1Title": "Verfolgen Sie Ihre Gewohnheiten",
+    "feature1Description": "Erstellen Sie Verpflichtungen und markieren Sie Tage als abgeschlossen mit einem einfachen Tippen auf den Kalender",
+    "feature2Title": "Persönliche Verpflichtungen",
+    "feature2Description": "Halten Sie Verpflichtungen privat und verfolgen Sie Ihren eigenen Fortschritt",
+    "feature3Title": "Kollaborative Herausforderungen",
+    "feature3Description": "Teilen Sie Verpflichtungen mit Freunden und bleiben Sie gemeinsam verantwortlich",
+    "cta": "Meine erste Verpflichtung erstellen"
+  },
+  "sidebar": {
+    "title": "Menü",
+    "devTools": "Entwicklerwerkzeuge",
+    "faq": "Häufig gestellte Fragen",
+    "testBackendSentry": "Backend-Sentry testen",
+    "testMobileSentry": "Mobile-Sentry testen",
+    "clearStorage": "Speicher löschen",
+    "testSentryExpected": "Erwarteter Fehler",
+    "testSentryMessage": "Backend hat Testfehler ausgelöst (überprüfen Sie das Sentry-Dashboard)",
+    "testSentryMobileSent": "Test gesendet",
+    "testSentryMobileMessage": "Testfehler an Sentry Mobile-Projekt gesendet",
+    "testSentryMobileMessageDev": "Testfehler an Sentry Mobile-Projekt gesendet\n\nHinweis: Im Dev-Modus setzen Sie EXPO_PUBLIC_FORCE_SENTRY=true in .env, um Sentry zu aktivieren",
+    "testSentryError": "Testfehler konnte nicht an Sentry gesendet werden",
+    "faqItems": [
+      {
+        "question": "Wie erstelle ich eine Verpflichtung?",
+        "answer": "Tippen Sie auf die +-Taste unten rechts. Wählen Sie 'Persönlich' für Ihre eigene Verpflichtung oder 'Kollaborativ', um mit Freunden zu teilen.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Was ist eine kollaborative Verpflichtung?",
+        "answer": "Eine kollaborative Verpflichtung ermöglicht es Ihnen, den Fortschritt mit Freunden zu verfolgen. Erstellen Sie eine und teilen Sie den Code, oder treten Sie mit dem Code eines Freundes bei.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Wie trete ich der Herausforderung eines Freundes bei?",
+        "answer": "Tippen Sie auf die +-Taste und wählen Sie 'Beitreten'. Geben Sie den 6-stelligen Code ein, den Ihnen Ihr Freund gegeben hat, um seiner Herausforderung beizutreten.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Wie markiere ich einen Tag als abgeschlossen?",
+        "answer": "Tippen Sie auf einen beliebigen Tag im Kalender Ihrer Verpflichtung. Der Tag wird grün, um den Abschluss anzuzeigen. Tippen Sie erneut, um rückgängig zu machen.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Wie lösche ich eine Verpflichtung?",
+        "answer": "Tippen Sie auf die drei Punkte auf einer Verpflichtungskarte und wählen Sie 'Löschen'. Bei kollaborativen werden Sie die Herausforderung verlassen.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

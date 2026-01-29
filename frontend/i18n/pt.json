@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Juntar-se ao desafio"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "leave": "Sair",
+    "ok": "OK",
+    "close": "Fechar",
+    "create": "Criar",
+    "join": "Juntar",
+    "share": "Partilhar",
+    "menu": "Menu"
+  },
+  "weekDays": {
+    "sun": "Dom",
+    "mon": "Seg",
+    "tue": "Ter",
+    "wed": "Qua",
+    "thu": "Qui",
+    "fri": "Sex",
+    "sat": "Sáb"
+  },
+  "commitmentsList": {
+    "empty": "Ainda não há compromissos",
+    "emptySubtext": "Toque em + para criar o seu primeiro compromisso",
+    "clearStorageTitle": "Limpar armazenamento",
+    "clearStorageMessage": "Isto eliminará todos os compromissos, conclusões e dados de utilizador do armazenamento local. Continuar?",
+    "clearStorageButton": "Limpar",
+    "clearStorageSuccess": "Armazenamento limpo com sucesso",
+    "clearStorageError": "Falha ao limpar o armazenamento"
+  },
+  "addCommitment": {
+    "title": "Título",
+    "placeholder": "Introduza o título do compromisso",
+    "challengeType": "Tipo de desafio",
+    "error": "Erro",
+    "errorMessage": "Falha ao criar o compromisso. Por favor, tente novamente."
+  },
+  "joinChallenge": {
+    "title": "Juntar-se ao desafio",
+    "description": "Introduza um código de partilha para se juntar a um desafio colaborativo.\nOs desafios colaborativos estão limitados a 2 participantes.",
+    "placeholder": "Introduza o código de 6 dígitos",
+    "button": "Juntar-se ao desafio",
+    "error": "Erro",
+    "errorInvalidCode": "Código de partilha inválido ou falha ao juntar-se ao desafio. Por favor, verifique e tente novamente.",
+    "errorFull": "Desafio completo",
+    "errorFullMessage": "Este desafio colaborativo está completo. Máximo 2 participantes permitidos.",
+    "success": "Sucesso",
+    "successMessage": "Juntou-se a \"{{title}}\"",
+    "errorEmptyCode": "Por favor, introduza um código de partilha"
+  },
+  "challengeType": {
+    "self": "Pessoal",
+    "collaborative": "Colaborativo",
+    "label": "Tipo de desafio"
+  },
+  "commitmentCard": {
+    "collaborative": "Colaborativo",
+    "sharedReadonly": "Partilhado (Só leitura)",
+    "shareMessage": "Junte-se ao meu desafio colaborativo \"{{title}}\"!\n\nCódigo de partilha: {{shareCode}}\n\nUse este código no CommitX para se juntar ao desafio.",
+    "shareTitle": "Partilhar desafio \"{{title}}\"",
+    "editTitle": "Editar compromisso"
+  },
+  "deleteModal": {
+    "deleteTitle": "Eliminar compromisso",
+    "leaveTitle": "Sair do desafio",
+    "deleteMessage": "Tem a certeza de que deseja eliminar \"{{title}}\"? Esta ação não pode ser desfeita.",
+    "leaveMessage": "Tem a certeza de que deseja sair de \"{{title}}\"? Precisará de um novo código de partilha para se juntar novamente."
+  },
+  "actionSheet": {
+    "createCommitment": "Criar compromisso",
+    "joinChallenge": "Juntar-se ao desafio",
+    "cancel": "Cancelar"
+  },
+  "onboarding": {
+    "title": "Bem-vindo ao CommitX!",
+    "subtitle": "Construa melhores hábitos acompanhando os seus compromissos diários",
+    "feature1Title": "Acompanhe os seus hábitos",
+    "feature1Description": "Crie compromissos e marque dias como concluídos com um simples toque no calendário",
+    "feature2Title": "Compromissos pessoais",
+    "feature2Description": "Mantenha os compromissos privados e acompanhe o seu próprio progresso",
+    "feature3Title": "Desafios colaborativos",
+    "feature3Description": "Partilhe compromissos com amigos e mantenham-se responsáveis juntos",
+    "cta": "Criar o meu primeiro compromisso"
+  },
+  "sidebar": {
+    "title": "Menu",
+    "devTools": "Ferramentas de programador",
+    "faq": "Perguntas frequentes",
+    "testBackendSentry": "Testar Sentry Backend",
+    "testMobileSentry": "Testar Sentry Mobile",
+    "clearStorage": "Limpar armazenamento",
+    "testSentryExpected": "Erro esperado",
+    "testSentryMessage": "O backend gerou um erro de teste (verifique o painel do Sentry)",
+    "testSentryMobileSent": "Teste enviado",
+    "testSentryMobileMessage": "Erro de teste enviado para o projeto Sentry Mobile",
+    "testSentryMobileMessageDev": "Erro de teste enviado para o projeto Sentry Mobile\n\nNota: No modo dev, defina EXPO_PUBLIC_FORCE_SENTRY=true em .env para ativar o Sentry",
+    "testSentryError": "Falha ao enviar erro de teste para o Sentry",
+    "faqItems": [
+      {
+        "question": "Como crio um compromisso?",
+        "answer": "Toque no botão + no canto inferior direito. Escolha 'Pessoal' para o seu próprio compromisso ou 'Colaborativo' para partilhar com amigos.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "O que é um compromisso colaborativo?",
+        "answer": "Um compromisso colaborativo permite-lhe acompanhar o progresso com amigos. Crie um e partilhe o código, ou junte-se usando o código de um amigo.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Como me junto ao desafio de um amigo?",
+        "answer": "Toque no botão + e selecione 'Juntar'. Introduza o código de 6 dígitos que o seu amigo lhe deu para se juntar ao desafio dele.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Como marco um dia como concluído?",
+        "answer": "Toque em qualquer dia no calendário do seu compromisso. O dia ficará verde para mostrar a conclusão. Toque novamente para desfazer.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Como elimino um compromisso?",
+        "answer": "Toque nos três pontos num cartão de compromisso e selecione 'Eliminar'. Para os colaborativos, sairá do desafio.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

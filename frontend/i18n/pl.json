@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Dołącz do wyzwania"
+  },
+  "common": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "leave": "Opuść",
+    "ok": "OK",
+    "close": "Zamknij",
+    "create": "Utwórz",
+    "join": "Dołącz",
+    "share": "Udostępnij",
+    "menu": "Menu"
+  },
+  "weekDays": {
+    "sun": "Ndz",
+    "mon": "Pon",
+    "tue": "Wt",
+    "wed": "Śr",
+    "thu": "Czw",
+    "fri": "Pt",
+    "sat": "Sob"
+  },
+  "commitmentsList": {
+    "empty": "Brak zobowiązań",
+    "emptySubtext": "Dotknij +, aby utworzyć swoje pierwsze zobowiązanie",
+    "clearStorageTitle": "Wyczyść pamięć",
+    "clearStorageMessage": "Spowoduje to usunięcie wszystkich zobowiązań, ukończeń i danych użytkownika z pamięci lokalnej. Kontynuować?",
+    "clearStorageButton": "Wyczyść",
+    "clearStorageSuccess": "Pamięć wyczyszczona pomyślnie",
+    "clearStorageError": "Nie udało się wyczyścić pamięci"
+  },
+  "addCommitment": {
+    "title": "Tytuł",
+    "placeholder": "Wprowadź tytuł zobowiązania",
+    "challengeType": "Typ wyzwania",
+    "error": "Błąd",
+    "errorMessage": "Nie udało się utworzyć zobowiązania. Spróbuj ponownie."
+  },
+  "joinChallenge": {
+    "title": "Dołącz do wyzwania",
+    "description": "Wprowadź kod udostępniania, aby dołączyć do wyzwania współpracy.\nWyzwania współpracy są ograniczone do 2 uczestników.",
+    "placeholder": "Wprowadź 6-cyfrowy kod",
+    "button": "Dołącz do wyzwania",
+    "error": "Błąd",
+    "errorInvalidCode": "Nieprawidłowy kod udostępniania lub nie udało się dołączyć do wyzwania. Sprawdź i spróbuj ponownie.",
+    "errorFull": "Wyzwanie pełne",
+    "errorFullMessage": "To wyzwanie współpracy jest pełne. Maksymalnie 2 uczestników.",
+    "success": "Sukces",
+    "successMessage": "Dołączono do \"{{title}}\"",
+    "errorEmptyCode": "Wprowadź kod udostępniania"
+  },
+  "challengeType": {
+    "self": "Osobiste",
+    "collaborative": "Wspólne",
+    "label": "Typ wyzwania"
+  },
+  "commitmentCard": {
+    "collaborative": "Wspólne",
+    "sharedReadonly": "Udostępnione (Tylko odczyt)",
+    "shareMessage": "Dołącz do mojego wyzwania współpracy \"{{title}}\"!\n\nKod udostępniania: {{shareCode}}\n\nUżyj tego kodu w CommitX, aby dołączyć do wyzwania.",
+    "shareTitle": "Udostępnij wyzwanie \"{{title}}\"",
+    "editTitle": "Edytuj zobowiązanie"
+  },
+  "deleteModal": {
+    "deleteTitle": "Usuń zobowiązanie",
+    "leaveTitle": "Opuść wyzwanie",
+    "deleteMessage": "Czy na pewno chcesz usunąć \"{{title}}\"? Tej operacji nie można cofnąć.",
+    "leaveMessage": "Czy na pewno chcesz opuścić \"{{title}}\"? Będziesz potrzebować nowego kodu udostępniania, aby ponownie dołączyć."
+  },
+  "actionSheet": {
+    "createCommitment": "Utwórz zobowiązanie",
+    "joinChallenge": "Dołącz do wyzwania",
+    "cancel": "Anuluj"
+  },
+  "onboarding": {
+    "title": "Witaj w CommitX!",
+    "subtitle": "Buduj lepsze nawyki, śledząc swoje codzienne zobowiązania",
+    "feature1Title": "Śledź swoje nawyki",
+    "feature1Description": "Twórz zobowiązania i oznaczaj dni jako ukończone jednym dotknięciem kalendarza",
+    "feature2Title": "Osobiste zobowiązania",
+    "feature2Description": "Zachowaj zobowiązania prywatnie i śledź swoje postępy",
+    "feature3Title": "Wyzwania współpracy",
+    "feature3Description": "Udostępniaj zobowiązania znajomym i pozostańcie razem odpowiedzialni",
+    "cta": "Utwórz moje pierwsze zobowiązanie"
+  },
+  "sidebar": {
+    "title": "Menu",
+    "devTools": "Narzędzia programistyczne",
+    "faq": "Często zadawane pytania",
+    "testBackendSentry": "Testuj Backend Sentry",
+    "testMobileSentry": "Testuj Mobile Sentry",
+    "clearStorage": "Wyczyść pamięć",
+    "testSentryExpected": "Oczekiwany błąd",
+    "testSentryMessage": "Backend wygenerował błąd testowy (sprawdź panel Sentry)",
+    "testSentryMobileSent": "Test wysłany",
+    "testSentryMobileMessage": "Błąd testowy wysłany do projektu Sentry Mobile",
+    "testSentryMobileMessageDev": "Błąd testowy wysłany do projektu Sentry Mobile\n\nUwaga: W trybie dev ustaw EXPO_PUBLIC_FORCE_SENTRY=true w .env, aby włączyć Sentry",
+    "testSentryError": "Nie udało się wysłać błędu testowego do Sentry",
+    "faqItems": [
+      {
+        "question": "Jak utworzyć zobowiązanie?",
+        "answer": "Dotknij przycisk + w prawym dolnym rogu. Wybierz 'Osobiste' dla własnego zobowiązania lub 'Wspólne', aby udostępnić znajomym.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Czym jest zobowiązanie wspólne?",
+        "answer": "Zobowiązanie wspólne pozwala śledzić postępy ze znajomymi. Utwórz je i udostępnij kod lub dołącz, używając kodu znajomego.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Jak dołączyć do wyzwania znajomego?",
+        "answer": "Dotknij przycisk + i wybierz 'Dołącz'. Wprowadź 6-cyfrowy kod, który otrzymałeś od znajomego, aby dołączyć do jego wyzwania.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Jak oznaczyć dzień jako ukończony?",
+        "answer": "Dotknij dowolny dzień w kalendarzu swojego zobowiązania. Dzień zmieni kolor na zielony, aby pokazać ukończenie. Dotknij ponownie, aby cofnąć.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Jak usunąć zobowiązanie?",
+        "answer": "Dotknij trzech kropek na karcie zobowiązania i wybierz 'Usuń'. W przypadku wspólnych opuścisz wyzwanie.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

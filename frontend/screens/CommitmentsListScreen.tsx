@@ -21,6 +21,7 @@ import { useUser } from '../utils/userContext';
 import UserSwitcher from '../components/UserSwitcher';
 import CommitmentCard from '../components/CommitmentCard';
 import DeleteModal from '../components/DeleteModal';
+import EditCommitmentModal from '../components/EditCommitmentModal';
 import ActionSheet from '../components/ActionSheet';
 import Sidebar from '../components/Sidebar';
 import OnboardingModal from '../components/OnboardingModal';
@@ -42,7 +43,8 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   const [commitments, setCommitments] = useState<Commitment[]>([]);
   const [completions, setCompletions] = useState<Completion[]>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [commitmentToEdit, setCommitmentToEdit] = useState<Commitment | null>(null);
   const [editedTitle, setEditedTitle] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [commitmentToDelete, setCommitmentToDelete] = useState<Commitment | null>(null);
@@ -78,7 +80,7 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
       headerLeft: () => (
         <TouchableOpacity
           onPress={() => setShowSidebar(true)}
-          style={{ marginLeft: 15 }}
+          style={styles.headerButton}
         >
           <Ionicons name="menu" size={28} color="#ffffff" />
         </TouchableOpacity>
@@ -86,7 +88,7 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
       headerRight: () => (
         <TouchableOpacity
           onPress={() => setShowActionSheet(true)}
-          style={{ marginRight: 15 }}
+          style={styles.headerButton}
         >
           <Ionicons name="add" size={28} color="#ffffff" />
         </TouchableOpacity>
@@ -530,13 +532,36 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   const handleCreateFirstCommitment = async () => {
     // Mark onboarding as completed
     await storage.setOnboardingCompleted(currentUser.id);
-    setShowOnboarding(false);
-    // Navigate to create commitment screen
+    // Navigate first, then hide modal
     navigation.navigate('AddCommitment');
+    // Small delay to let navigation start before hiding modal
+    setTimeout(() => {
+      setShowOnboarding(false);
+    }, 100);
+  };
+
+  const handleStartEdit = (commitment: Commitment) => {
+    setCommitmentToEdit(commitment);
+    setEditedTitle(commitment.title);
+    setShowEditModal(true);
+  };
+
+  const handleSaveEdit = async () => {
+    if (commitmentToEdit && editedTitle.trim()) {
+      await handleEditCommitment(commitmentToEdit.id, editedTitle);
+      setShowEditModal(false);
+      setCommitmentToEdit(null);
+      setEditedTitle('');
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setShowEditModal(false);
+    setCommitmentToEdit(null);
+    setEditedTitle('');
   };
 
   const renderCommitmentCard = ({ item }: { item: Commitment }) => {
-    const isEditing = editingId === item.id;
     const isShared = item.type === 'shared';
     const participants = participantsMap[item.id] || [];
 
@@ -544,22 +569,7 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
       <CommitmentCard
         item={item}
         currentMonth={currentMonth}
-        isEditing={isEditing}
-        editedTitle={editedTitle}
-        onEditChange={setEditedTitle}
-        onEditSubmit={async () => {
-          await handleEditCommitment(item.id, editedTitle);
-          setEditingId(null);
-          setEditedTitle('');
-        }}
-        onEditCancel={() => {
-          setEditingId(null);
-          setEditedTitle('');
-        }}
-        onStartEdit={(id, title) => {
-          setEditingId(id);
-          setEditedTitle(title);
-        }}
+        onStartEdit={() => handleStartEdit(item)}
         onDelete={handleDeleteCommitment}
         isDateCompleted={isDateCompleted}
         onToggleCompletion={handleToggleCompletion}
@@ -607,6 +617,14 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
         currentUserId={currentUser.id}
       />
 
+      <EditCommitmentModal
+        visible={showEditModal}
+        title={editedTitle}
+        onChangeTitle={setEditedTitle}
+        onSave={handleSaveEdit}
+        onCancel={handleCancelEdit}
+      />
+
       <ActionSheet
         visible={showActionSheet}
         onClose={() => setShowActionSheet(false)}
@@ -632,6 +650,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000',
+  },
+  headerButton: {
+    padding: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 8,
   },
   monthNavigationContainer: {
     backgroundColor: '#000000',

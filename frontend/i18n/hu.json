@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Csatlakozás a kihíváshoz"
+  },
+  "common": {
+    "save": "Mentés",
+    "cancel": "Mégse",
+    "delete": "Törlés",
+    "leave": "Kilépés",
+    "ok": "OK",
+    "close": "Bezárás",
+    "create": "Létrehozás",
+    "join": "Csatlakozás",
+    "share": "Megosztás",
+    "menu": "Menü"
+  },
+  "weekDays": {
+    "sun": "Vas",
+    "mon": "Hét",
+    "tue": "Ked",
+    "wed": "Sze",
+    "thu": "Csü",
+    "fri": "Pén",
+    "sat": "Szo"
+  },
+  "commitmentsList": {
+    "empty": "Még nincsenek kötelezettségvállalások",
+    "emptySubtext": "Érintse meg a + gombot első kötelezettségvállalásának létrehozásához",
+    "clearStorageTitle": "Tároló törlése",
+    "clearStorageMessage": "Ez törli az összes kötelezettségvállalást, befejezést és felhasználói adatot a helyi tárolóból. Folytatja?",
+    "clearStorageButton": "Törlés",
+    "clearStorageSuccess": "A tároló sikeresen törölve",
+    "clearStorageError": "A tároló törlése sikertelen"
+  },
+  "addCommitment": {
+    "title": "Cím",
+    "placeholder": "Adja meg a kötelezettségvállalás címét",
+    "challengeType": "Kihívás típusa",
+    "error": "Hiba",
+    "errorMessage": "A kötelezettségvállalás létrehozása sikertelen. Kérjük, próbálja újra."
+  },
+  "joinChallenge": {
+    "title": "Csatlakozás a kihíváshoz",
+    "description": "Adjon meg egy megosztási kódot egy közös kihíváshoz való csatlakozáshoz.\nA közös kihívások legfeljebb 2 résztvevőre korlátozottak.",
+    "placeholder": "Adja meg a 6 jegyű kódot",
+    "button": "Csatlakozás a kihíváshoz",
+    "error": "Hiba",
+    "errorInvalidCode": "Érvénytelen megosztási kód vagy a kihíváshoz való csatlakozás sikertelen. Kérjük, ellenőrizze és próbálja újra.",
+    "errorFull": "Kihívás megtelt",
+    "errorFullMessage": "Ez a közös kihívás megtelt. Legfeljebb 2 résztvevő engedélyezett.",
+    "success": "Siker",
+    "successMessage": "Csatlakozott a következőhöz: \"{{title}}\"",
+    "errorEmptyCode": "Kérjük, adjon meg egy megosztási kódot"
+  },
+  "challengeType": {
+    "self": "Személyes",
+    "collaborative": "Közös",
+    "label": "Kihívás típusa"
+  },
+  "commitmentCard": {
+    "collaborative": "Közös",
+    "sharedReadonly": "Megosztott (Csak olvasható)",
+    "shareMessage": "Csatlakozzon a közös kihívásomhoz: \"{{title}}\"!\n\nMegosztási kód: {{shareCode}}\n\nHasználja ezt a kódot a CommitX-ben a kihíváshoz való csatlakozáshoz.",
+    "shareTitle": "\"{{title}}\" kihívás megosztása",
+    "editTitle": "Kötelezettségvállalás szerkesztése"
+  },
+  "deleteModal": {
+    "deleteTitle": "Kötelezettségvállalás törlése",
+    "leaveTitle": "Kihívás elhagyása",
+    "deleteMessage": "Biztosan törölni szeretné a következőt: \"{{title}}\"? Ez a művelet nem vonható vissza.",
+    "leaveMessage": "Biztosan el szeretné hagyni a következőt: \"{{title}}\"? Új megosztási kódra lesz szüksége az újbóli csatlakozáshoz."
+  },
+  "actionSheet": {
+    "createCommitment": "Kötelezettségvállalás létrehozása",
+    "joinChallenge": "Csatlakozás a kihíváshoz",
+    "cancel": "Mégse"
+  },
+  "onboarding": {
+    "title": "Üdvözöljük a CommitX-ben!",
+    "subtitle": "Jobb szokásokat építhet napi kötelezettségvállalásainak nyomon követésével",
+    "feature1Title": "Kövesse nyomon szokásait",
+    "feature1Description": "Hozzon létre kötelezettségvállalásokat és jelölje meg a napokat befejezettként egy egyszerű érintéssel a naptárban",
+    "feature2Title": "Személyes kötelezettségvállalások",
+    "feature2Description": "Tartsa privátnak kötelezettségvállalásait és kövesse nyomon saját haladását",
+    "feature3Title": "Közös kihívások",
+    "feature3Description": "Ossza meg kötelezettségvállalásait barátaival és maradjanak együtt felelősek",
+    "cta": "Első kötelezettségvállalásom létrehozása"
+  },
+  "sidebar": {
+    "title": "Menü",
+    "devTools": "Fejlesztői eszközök",
+    "faq": "Gyakran ismételt kérdések",
+    "testBackendSentry": "Backend Sentry tesztelése",
+    "testMobileSentry": "Mobile Sentry tesztelése",
+    "clearStorage": "Tároló törlése",
+    "testSentryExpected": "Várt hiba",
+    "testSentryMessage": "A backend tesztelési hibát dobott (ellenőrizze a Sentry irányítópultot)",
+    "testSentryMobileSent": "Teszt elküldve",
+    "testSentryMobileMessage": "Tesztelési hiba elküldve a Sentry Mobile projekthez",
+    "testSentryMobileMessageDev": "Tesztelési hiba elküldve a Sentry Mobile projekthez\n\nMegjegyzés: Dev módban állítsa be az EXPO_PUBLIC_FORCE_SENTRY=true értéket a .env fájlban a Sentry engedélyezéséhez",
+    "testSentryError": "A tesztelési hiba küldése sikertelen a Sentry-hoz",
+    "faqItems": [
+      {
+        "question": "Hogyan hozok létre kötelezettségvállalást?",
+        "answer": "Érintse meg a + gombot a jobb alsó sarokban. Válassza a 'Személyes' lehetőséget saját kötelezettségvállalásához vagy a 'Közös' lehetőséget barátaival való megosztáshoz.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Mi az a közös kötelezettségvállalás?",
+        "answer": "A közös kötelezettségvállalás lehetővé teszi a haladás követését barátaival. Hozzon létre egyet és ossza meg a kódot, vagy csatlakozzon egy barát kódjának használatával.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Hogyan csatlakozhatok egy barátom kihívásához?",
+        "answer": "Érintse meg a + gombot és válassza a 'Csatlakozás' lehetőséget. Adja meg a 6 jegyű kódot, amelyet barátja adott Önnek a kihívásához való csatlakozáshoz.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Hogyan jelölök meg egy napot befejezettként?",
+        "answer": "Érintsen meg bármely napot kötelezettségvállalása naptárában. A nap zöld színűvé válik a befejezés jelzésére. Érintse meg újra a visszavonáshoz.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Hogyan törlök egy kötelezettségvállalást?",
+        "answer": "Érintse meg a három pontot egy kötelezettségvállalás kártyán és válassza a 'Törlés' lehetőséget. Közös esetén el fogja hagyni a kihívást.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

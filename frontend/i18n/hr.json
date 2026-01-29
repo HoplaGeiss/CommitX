@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Pridruži se izazovu"
+  },
+  "common": {
+    "save": "Spremi",
+    "cancel": "Odustani",
+    "delete": "Izbriši",
+    "leave": "Napusti",
+    "ok": "OK",
+    "close": "Zatvori",
+    "create": "Kreiraj",
+    "join": "Pridruži se",
+    "share": "Podijeli",
+    "menu": "Izbornik"
+  },
+  "weekDays": {
+    "sun": "Ned",
+    "mon": "Pon",
+    "tue": "Uto",
+    "wed": "Sri",
+    "thu": "Čet",
+    "fri": "Pet",
+    "sat": "Sub"
+  },
+  "commitmentsList": {
+    "empty": "Još nema obveza",
+    "emptySubtext": "Dodirnite + za kreiranje svoje prve obveze",
+    "clearStorageTitle": "Očisti pohranu",
+    "clearStorageMessage": "Ovo će izbrisati sve obveze, dovršenja i korisničke podatke iz lokalne pohrane. Nastaviti?",
+    "clearStorageButton": "Očisti",
+    "clearStorageSuccess": "Pohrana uspješno očišćena",
+    "clearStorageError": "Neuspješno čišćenje pohrane"
+  },
+  "addCommitment": {
+    "title": "Naslov",
+    "placeholder": "Unesite naslov obveze",
+    "challengeType": "Vrsta izazova",
+    "error": "Greška",
+    "errorMessage": "Neuspješno kreiranje obveze. Molimo pokušajte ponovo."
+  },
+  "joinChallenge": {
+    "title": "Pridruži se izazovu",
+    "description": "Unesite kôd za dijeljenje kako biste se pridružili suradničkom izazovu.\nSuradnički izazovi ograničeni su na 2 sudionika.",
+    "placeholder": "Unesite 6-znamenkasti kôd",
+    "button": "Pridruži se izazovu",
+    "error": "Greška",
+    "errorInvalidCode": "Neispravan kôd za dijeljenje ili neuspješno pridruživanje izazovu. Molimo provjerite i pokušajte ponovo.",
+    "errorFull": "Izazov je pun",
+    "errorFullMessage": "Ovaj suradnički izazov je pun. Dopušteno je maksimalno 2 sudionika.",
+    "success": "Uspjeh",
+    "successMessage": "Pridružili ste se \"{{title}}\"",
+    "errorEmptyCode": "Molimo unesite kôd za dijeljenje"
+  },
+  "challengeType": {
+    "self": "Osobno",
+    "collaborative": "Suradnički",
+    "label": "Vrsta izazova"
+  },
+  "commitmentCard": {
+    "collaborative": "Suradnički",
+    "sharedReadonly": "Podijeljeno (Samo za čitanje)",
+    "shareMessage": "Pridružite se mom suradničkom izazovu \"{{title}}\"!\n\nKôd za dijeljenje: {{shareCode}}\n\nKoristite ovaj kôd u CommitX-u kako biste se pridružili izazovu.",
+    "shareTitle": "Podijeli izazov \"{{title}}\"",
+    "editTitle": "Uredi obvezu"
+  },
+  "deleteModal": {
+    "deleteTitle": "Izbriši obvezu",
+    "leaveTitle": "Napusti izazov",
+    "deleteMessage": "Jeste li sigurni da želite izbrisati \"{{title}}\"? Ova radnja se ne može poništiti.",
+    "leaveMessage": "Jeste li sigurni da želite napustiti \"{{title}}\"? Trebat će vam novi kôd za dijeljenje kako biste se ponovno pridružili."
+  },
+  "actionSheet": {
+    "createCommitment": "Kreiraj obvezu",
+    "joinChallenge": "Pridruži se izazovu",
+    "cancel": "Odustani"
+  },
+  "onboarding": {
+    "title": "Dobrodošli u CommitX!",
+    "subtitle": "Izgradite bolje navike praćenjem svojih dnevnih obveza",
+    "feature1Title": "Pratite svoje navike",
+    "feature1Description": "Kreirajte obveze i označite dane kao dovršene jednostavnim dodirom na kalendar",
+    "feature2Title": "Osobne obveze",
+    "feature2Description": "Držite obveze privatnima i pratite vlastiti napredak",
+    "feature3Title": "Suradnički izazovi",
+    "feature3Description": "Podijelite obveze s prijateljima i ostanite odgovorni zajedno",
+    "cta": "Kreiraj moju prvu obvezu"
+  },
+  "sidebar": {
+    "title": "Izbornik",
+    "devTools": "Alati za programere",
+    "faq": "Često postavljana pitanja",
+    "testBackendSentry": "Testiraj Backend Sentry",
+    "testMobileSentry": "Testiraj Mobile Sentry",
+    "clearStorage": "Očisti pohranu",
+    "testSentryExpected": "Očekivana greška",
+    "testSentryMessage": "Backend je izbacio test grešku (provjerite Sentry nadzornu ploču)",
+    "testSentryMobileSent": "Test poslan",
+    "testSentryMobileMessage": "Test greška poslana na Sentry Mobile projekt",
+    "testSentryMobileMessageDev": "Test greška poslana na Sentry Mobile projekt\n\nNapomena: U dev načinu rada postavite EXPO_PUBLIC_FORCE_SENTRY=true u .env za aktiviranje Sentryja",
+    "testSentryError": "Neuspješno slanje test greške na Sentry",
+    "faqItems": [
+      {
+        "question": "Kako kreirati obvezu?",
+        "answer": "Dodirnite gumb + u donjem desnom kutu. Odaberite 'Osobno' za vlastitu obvezu ili 'Suradnički' za dijeljenje s prijateljima.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Što je suradnička obveza?",
+        "answer": "Suradnička obveza omogućuje vam praćenje napretka s prijateljima. Kreirajte je i podijelite kôd, ili se pridružite koristeći kôd prijatelja.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Kako se pridružiti izazovu prijatelja?",
+        "answer": "Dodirnite gumb + i odaberite 'Pridruži se'. Unesite 6-znamenkasti kôd koji vam je dao vaš prijatelj kako biste se pridružili njihovom izazovu.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Kako označiti dan kao dovršen?",
+        "answer": "Dodirnite bilo koji dan u kalendaru vaše obveze. Dan će postati zelen kako bi pokazao dovršenje. Dodirnite ponovno za poništavanje.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Kako izbrisati obvezu?",
+        "answer": "Dodirnite tri točke na kartici obveze i odaberite 'Izbriši'. Za suradničke ćete napustiti izazov.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

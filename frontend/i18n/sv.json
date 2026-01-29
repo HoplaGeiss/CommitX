@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Gå med i utmaning"
+  },
+  "common": {
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "delete": "Ta bort",
+    "leave": "Lämna",
+    "ok": "OK",
+    "close": "Stäng",
+    "create": "Skapa",
+    "join": "Gå med",
+    "share": "Dela",
+    "menu": "Meny"
+  },
+  "weekDays": {
+    "sun": "Sön",
+    "mon": "Mån",
+    "tue": "Tis",
+    "wed": "Ons",
+    "thu": "Tor",
+    "fri": "Fre",
+    "sat": "Lör"
+  },
+  "commitmentsList": {
+    "empty": "Inga åtaganden ännu",
+    "emptySubtext": "Tryck på + för att skapa ditt första åtagande",
+    "clearStorageTitle": "Rensa lagring",
+    "clearStorageMessage": "Detta kommer att ta bort alla åtaganden, slutföranden och användardata från lokal lagring. Fortsätt?",
+    "clearStorageButton": "Rensa",
+    "clearStorageSuccess": "Lagring rensad framgångsrikt",
+    "clearStorageError": "Misslyckades rensa lagring"
+  },
+  "addCommitment": {
+    "title": "Titel",
+    "placeholder": "Ange åtagandets titel",
+    "challengeType": "Utmaningstyp",
+    "error": "Fel",
+    "errorMessage": "Misslyckades skapa åtagande. Vänligen försök igen."
+  },
+  "joinChallenge": {
+    "title": "Gå med i utmaning",
+    "description": "Ange en delningskod för att gå med i en samarbetsutmaning.\nSamarbetsutmaningar är begränsade till 2 deltagare.",
+    "placeholder": "Ange 6-siffrig kod",
+    "button": "Gå med i utmaning",
+    "error": "Fel",
+    "errorInvalidCode": "Ogiltig delningskod eller misslyckades gå med i utmaning. Vänligen kontrollera och försök igen.",
+    "errorFull": "Utmaning full",
+    "errorFullMessage": "Denna samarbetsutmaning är full. Maximalt 2 deltagare tillåtna.",
+    "success": "Framgång",
+    "successMessage": "Gick med i \"{{title}}\"",
+    "errorEmptyCode": "Vänligen ange en delningskod"
+  },
+  "challengeType": {
+    "self": "Personlig",
+    "collaborative": "Samarbete",
+    "label": "Utmaningstyp"
+  },
+  "commitmentCard": {
+    "collaborative": "Samarbete",
+    "sharedReadonly": "Delad (Skrivskyddad)",
+    "shareMessage": "Gå med i min samarbetsutmaning \"{{title}}\"!\n\nDelningskod: {{shareCode}}\n\nAnvänd denna kod i CommitX för att gå med i utmaningen.",
+    "shareTitle": "Dela utmaning \"{{title}}\"",
+    "editTitle": "Redigera åtagande"
+  },
+  "deleteModal": {
+    "deleteTitle": "Ta bort åtagande",
+    "leaveTitle": "Lämna utmaning",
+    "deleteMessage": "Är du säker på att du vill ta bort \"{{title}}\"? Denna åtgärd kan inte ångras.",
+    "leaveMessage": "Är du säker på att du vill lämna \"{{title}}\"? Du behöver en ny delningskod för att gå med igen."
+  },
+  "actionSheet": {
+    "createCommitment": "Skapa åtagande",
+    "joinChallenge": "Gå med i utmaning",
+    "cancel": "Avbryt"
+  },
+  "onboarding": {
+    "title": "Välkommen till CommitX!",
+    "subtitle": "Bygg bättre vanor genom att spåra dina dagliga åtaganden",
+    "feature1Title": "Spåra dina vanor",
+    "feature1Description": "Skapa åtaganden och markera dagar som slutförda med en enkel tryckning på kalendern",
+    "feature2Title": "Personliga åtaganden",
+    "feature2Description": "Håll åtaganden privata och spåra dina egna framsteg",
+    "feature3Title": "Samarbetsutmaningar",
+    "feature3Description": "Dela åtaganden med vänner och håll er ansvariga tillsammans",
+    "cta": "Skapa mitt första åtagande"
+  },
+  "sidebar": {
+    "title": "Meny",
+    "devTools": "Utvecklarverktyg",
+    "faq": "Vanliga frågor",
+    "testBackendSentry": "Testa Backend Sentry",
+    "testMobileSentry": "Testa Mobile Sentry",
+    "clearStorage": "Rensa lagring",
+    "testSentryExpected": "Förväntat fel",
+    "testSentryMessage": "Backend kastade testfel (kontrollera Sentry-instrumentpanelen)",
+    "testSentryMobileSent": "Test skickat",
+    "testSentryMobileMessage": "Testfel skickat till Sentry Mobile-projektet",
+    "testSentryMobileMessageDev": "Testfel skickat till Sentry Mobile-projektet\n\nObs: I dev-läge, sätt EXPO_PUBLIC_FORCE_SENTRY=true i .env för att aktivera Sentry",
+    "testSentryError": "Misslyckades skicka testfel till Sentry",
+    "faqItems": [
+      {
+        "question": "Hur skapar jag ett åtagande?",
+        "answer": "Tryck på +-knappen nere till höger. Välj 'Personlig' för ditt eget åtagande eller 'Samarbete' för att dela med vänner.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Vad är ett samarbetsåtagande?",
+        "answer": "Ett samarbetsåtagande låter dig spåra framsteg med vänner. Skapa ett och dela koden, eller gå med med en väns kod.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Hur går jag med i en väns utmaning?",
+        "answer": "Tryck på +-knappen och välj 'Gå med'. Ange den 6-siffriga koden din vän gav dig för att gå med i deras utmaning.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Hur markerar jag en dag som slutförd?",
+        "answer": "Tryck på valfri dag i ditt åtagandes kalender. Dagen blir grön för att visa slutförande. Tryck igen för att ångra.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Hur tar jag bort ett åtagande?",
+        "answer": "Tryck på de tre punkterna på ett åtagandekort och välj 'Ta bort'. För samarbetsåtaganden lämnar du utmaningen.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

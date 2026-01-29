@@ -63,7 +63,8 @@
     "collaborative": "Collaborative",
     "sharedReadonly": "Shared (Read-only)",
     "shareMessage": "Join my collaborative challenge \"{{title}}\"!\n\nShare code: {{shareCode}}\n\nUse this code in CommitX to join the challenge.",
-    "shareTitle": "Share \"{{title}}\" Challenge"
+    "shareTitle": "Share \"{{title}}\" Challenge",
+    "editTitle": "Edit Commitment"
   },
   "deleteModal": {
     "deleteTitle": "Delete Commitment",

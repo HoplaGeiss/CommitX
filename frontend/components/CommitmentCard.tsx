@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Share } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Share } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import WeekDaysRow from './WeekDaysRow';
@@ -15,12 +15,7 @@ const CARD_WIDTH = Math.min(width - (CARD_PADDING * 2), MAX_CARD_WIDTH);
 interface CommitmentCardProps {
   item: Commitment;
   currentMonth: Date;
-  isEditing: boolean;
-  editedTitle: string;
-  onEditChange: (text: string) => void;
-  onEditSubmit: () => void;
-  onEditCancel: () => void;
-  onStartEdit: (id: string, title: string) => void;
+  onStartEdit: () => void;
   onDelete: (commitment: Commitment) => void;
   isDateCompleted: (commitmentId: string, day: number | null, userId?: string) => boolean;
   onToggleCompletion: (commitmentId: string, day: number | null) => void;
@@ -32,11 +27,6 @@ interface CommitmentCardProps {
 const CommitmentCard: React.FC<CommitmentCardProps> = ({
   item,
   currentMonth,
-  isEditing,
-  editedTitle,
-  onEditChange,
-  onEditSubmit,
-  onEditCancel,
   onStartEdit,
   onDelete,
   isDateCompleted,
@@ -81,59 +71,44 @@ const CommitmentCard: React.FC<CommitmentCardProps> = ({
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
-        {isEditing ? (
-          <TextInput
-            style={styles.titleInput}
-            value={editedTitle}
-            onChangeText={onEditChange}
-            placeholder={t('addCommitment.placeholder')}
-            placeholderTextColor="#666666"
-            autoFocus
-            onSubmitEditing={onEditSubmit}
-            onBlur={onEditSubmit}
-          />
-        ) : (
-          <>
-            <View style={styles.titleContainer}>
-              <View style={styles.titleRow}>
-                <Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">
-                  {item.title}
-                </Text>
-                {isCollaborative && (
-                  <Text style={styles.typeBadge}>{t('commitmentCard.collaborative')}</Text>
-                )}
-                {isShared && (
-                  <Text style={styles.typeBadge}>{t('commitmentCard.sharedReadonly')}</Text>
-                )}
-              </View>
-            </View>
-            {showActions && (
-              <View style={styles.cardActions}>
-                {showShareButton && (
-                  <TouchableOpacity
-                    style={styles.actionButton}
-                    onPress={handleShare}
-                  >
-                    <Ionicons name="share-outline" size={16} color="#4CAF50" />
-                  </TouchableOpacity>
-                )}
-                {showEditButton && (
-                  <TouchableOpacity
-                    style={styles.actionButton}
-                    onPress={() => onStartEdit(item.id, item.title)}
-                  >
-                    <Ionicons name="create-outline" size={16} color="#ffffff" />
-                  </TouchableOpacity>
-                )}
-                <TouchableOpacity
-                  style={styles.actionButton}
-                  onPress={() => onDelete(item)}
-                >
-                  <Ionicons name="trash-outline" size={16} color="#ff4444" />
-                </TouchableOpacity>
-              </View>
+        <View style={styles.titleContainer}>
+          <View style={styles.titleRow}>
+            <Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">
+              {item.title}
+            </Text>
+            {isCollaborative && (
+              <Text style={styles.typeBadge}>{t('commitmentCard.collaborative')}</Text>
             )}
-          </>
+            {isShared && (
+              <Text style={styles.typeBadge}>{t('commitmentCard.sharedReadonly')}</Text>
+            )}
+          </View>
+        </View>
+        {showActions && (
+          <View style={styles.cardActions}>
+            {showShareButton && (
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={handleShare}
+              >
+                <Ionicons name="share-outline" size={16} color="#4CAF50" />
+              </TouchableOpacity>
+            )}
+            {showEditButton && (
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={onStartEdit}
+              >
+                <Ionicons name="create-outline" size={16} color="#ffffff" />
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={() => onDelete(item)}
+            >
+              <Ionicons name="trash-outline" size={16} color="#ff4444" />
+            </TouchableOpacity>
+          </View>
         )}
       </View>
       <View style={styles.calendarContainer}>
@@ -202,17 +177,6 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     padding: 4,
-  },
-  titleInput: {
-    flex: 1,
-    color: '#ffffff',
-    fontSize: 15,
-    fontWeight: '600',
-    backgroundColor: '#1a1a1a',
-    padding: 6,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#333333',
   },
   calendarContainer: {
     marginTop: 0,

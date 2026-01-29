@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Liity haasteeseen"
+  },
+  "common": {
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "delete": "Poista",
+    "leave": "Poistu",
+    "ok": "OK",
+    "close": "Sulje",
+    "create": "Luo",
+    "join": "Liity",
+    "share": "Jaa",
+    "menu": "Valikko"
+  },
+  "weekDays": {
+    "sun": "Su",
+    "mon": "Ma",
+    "tue": "Ti",
+    "wed": "Ke",
+    "thu": "To",
+    "fri": "Pe",
+    "sat": "La"
+  },
+  "commitmentsList": {
+    "empty": "Ei vielä sitoumuksia",
+    "emptySubtext": "Napauta + luodaksesi ensimmäisen sitoumuksesi",
+    "clearStorageTitle": "Tyhjennä tallennus",
+    "clearStorageMessage": "Tämä poistaa kaikki sitoumukset, suoritukset ja käyttäjätiedot paikallisesta tallennuksesta. Jatka?",
+    "clearStorageButton": "Tyhjennä",
+    "clearStorageSuccess": "Tallennus tyhjennetty onnistuneesti",
+    "clearStorageError": "Tallennuksen tyhjentäminen epäonnistui"
+  },
+  "addCommitment": {
+    "title": "Otsikko",
+    "placeholder": "Syötä sitoumuksen otsikko",
+    "challengeType": "Haasteen tyyppi",
+    "error": "Virhe",
+    "errorMessage": "Sitoumuksen luominen epäonnistui. Yritä uudelleen."
+  },
+  "joinChallenge": {
+    "title": "Liity haasteeseen",
+    "description": "Syötä jakamiskoodi liittyäksesi yhteistyöhaasteeseen.\nYhteistyöhaasteet on rajoitettu 2 osallistujaan.",
+    "placeholder": "Syötä 6-numeroinen koodi",
+    "button": "Liity haasteeseen",
+    "error": "Virhe",
+    "errorInvalidCode": "Virheellinen jakamiskoodi tai haasteeseen liittyminen epäonnistui. Tarkista ja yritä uudelleen.",
+    "errorFull": "Haaste täynnä",
+    "errorFullMessage": "Tämä yhteistyöhaaste on täynnä. Enintään 2 osallistujaa sallittu.",
+    "success": "Onnistui",
+    "successMessage": "Liityit haasteeseen \"{{title}}\"",
+    "errorEmptyCode": "Syötä jakamiskoodi"
+  },
+  "challengeType": {
+    "self": "Henkilökohtainen",
+    "collaborative": "Yhteistyö",
+    "label": "Haasteen tyyppi"
+  },
+  "commitmentCard": {
+    "collaborative": "Yhteistyö",
+    "sharedReadonly": "Jaettu (Vain luku)",
+    "shareMessage": "Liity yhteistyöhaasteeseen \"{{title}}\"!\n\nJakamiskoodi: {{shareCode}}\n\nKäytä tätä koodia CommitX:ssä liittyäksesi haasteeseen.",
+    "shareTitle": "Jaa haaste \"{{title}}\"",
+    "editTitle": "Muokkaa sitoumusta"
+  },
+  "deleteModal": {
+    "deleteTitle": "Poista sitoumus",
+    "leaveTitle": "Poistu haasteesta",
+    "deleteMessage": "Haluatko varmasti poistaa kohteen \"{{title}}\"? Tätä toimintoa ei voi peruuttaa.",
+    "leaveMessage": "Haluatko varmasti poistua kohteesta \"{{title}}\"? Tarvitset uuden jakamiskoodin liittyäksesi uudelleen."
+  },
+  "actionSheet": {
+    "createCommitment": "Luo sitoumus",
+    "joinChallenge": "Liity haasteeseen",
+    "cancel": "Peruuta"
+  },
+  "onboarding": {
+    "title": "Tervetuloa CommitX:iin!",
+    "subtitle": "Rakenna parempia tapoja seuraamalla päivittäisiä sitoumuksiasi",
+    "feature1Title": "Seuraa tapojasi",
+    "feature1Description": "Luo sitoumuksia ja merkitse päivät suoritetuiksi yhdellä napautuksella kalenterissa",
+    "feature2Title": "Henkilökohtaiset sitoumukset",
+    "feature2Description": "Pidä sitoumukset yksityisinä ja seuraa omaa edistymistäsi",
+    "feature3Title": "Yhteistyöhaasteet",
+    "feature3Description": "Jaa sitoumuksia ystävien kanssa ja pysykää vastuussa yhdessä",
+    "cta": "Luo ensimmäinen sitoumukseni"
+  },
+  "sidebar": {
+    "title": "Valikko",
+    "devTools": "Kehittäjätyökalut",
+    "faq": "Usein kysytyt kysymykset",
+    "testBackendSentry": "Testaa Backend Sentry",
+    "testMobileSentry": "Testaa Mobile Sentry",
+    "clearStorage": "Tyhjennä tallennus",
+    "testSentryExpected": "Odotettu virhe",
+    "testSentryMessage": "Backend heitti testivirheen (tarkista Sentry-kojelauta)",
+    "testSentryMobileSent": "Testi lähetetty",
+    "testSentryMobileMessage": "Testivirhe lähetetty Sentry Mobile -projektiin",
+    "testSentryMobileMessageDev": "Testivirhe lähetetty Sentry Mobile -projektiin\n\nHuomautus: Dev-tilassa aseta EXPO_PUBLIC_FORCE_SENTRY=true .env-tiedostoon ottaaksesi Sentryn käyttöön",
+    "testSentryError": "Testivirheen lähettäminen Sentryyn epäonnistui",
+    "faqItems": [
+      {
+        "question": "Miten luon sitoumuksen?",
+        "answer": "Napauta +-painiketta oikeassa alakulmassa. Valitse 'Henkilökohtainen' omalle sitoumuksellesi tai 'Yhteistyö' jakaaksesi ystävien kanssa.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Mikä on yhteistyösitoumus?",
+        "answer": "Yhteistyösitoumus mahdollistaa edistymisen seurannan ystävien kanssa. Luo sellainen ja jaa koodi, tai liity käyttämällä ystävän koodia.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Miten liityn ystävän haasteeseen?",
+        "answer": "Napauta +-painiketta ja valitse 'Liity'. Syötä 6-numeroinen koodi, jonka ystäväsi antoi sinulle liittyäksesi hänen haasteeseensa.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Miten merkitsen päivän suoritetuksi?",
+        "answer": "Napauta mitä tahansa päivää sitoumuksesi kalenterissa. Päivä muuttuu vihreäksi osoittaakseen suorituksen. Napauta uudelleen peruuttaaksesi.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Miten poistan sitoumuksen?",
+        "answer": "Napauta kolmea pistettä sitoumuskortin päällä ja valitse 'Poista'. Yhteistyösitoumusten kohdalla poistut haasteesta.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

@@ -4,6 +4,27 @@ import * as Localization from 'expo-localization';
 
 import en from './en.json';
 import fr from './fr.json';
+import de from './de.json';
+import es from './es.json';
+import it from './it.json';
+import pt from './pt.json';
+import nl from './nl.json';
+import pl from './pl.json';
+import ro from './ro.json';
+import el from './el.json';
+import cs from './cs.json';
+import hu from './hu.json';
+import sv from './sv.json';
+import da from './da.json';
+import fi from './fi.json';
+import no from './no.json';
+import sk from './sk.json';
+import bg from './bg.json';
+import hr from './hr.json';
+import lt from './lt.json';
+import sl from './sl.json';
+import lv from './lv.json';
+import et from './et.json';
 
 // Determine the language to use:
 // 1. First, check for environment variable override (for testing)
@@ -30,6 +51,27 @@ i18n
     resources: {
       en: { translation: en },
       fr: { translation: fr },
+      de: { translation: de },
+      es: { translation: es },
+      it: { translation: it },
+      pt: { translation: pt },
+      nl: { translation: nl },
+      pl: { translation: pl },
+      ro: { translation: ro },
+      el: { translation: el },
+      cs: { translation: cs },
+      hu: { translation: hu },
+      sv: { translation: sv },
+      da: { translation: da },
+      fi: { translation: fi },
+      no: { translation: no },
+      sk: { translation: sk },
+      bg: { translation: bg },
+      hr: { translation: hr },
+      lt: { translation: lt },
+      sl: { translation: sl },
+      lv: { translation: lv },
+      et: { translation: et },
     },
     lng: getInitialLanguage(),
     fallbackLng: 'en',

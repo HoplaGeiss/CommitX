@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Pridruži se izzivom"
+  },
+  "common": {
+    "save": "Shrani",
+    "cancel": "Prekliči",
+    "delete": "Izbriši",
+    "leave": "Zapusti",
+    "ok": "V redu",
+    "close": "Zapri",
+    "create": "Ustvari",
+    "join": "Pridruži se",
+    "share": "Deli",
+    "menu": "Meni"
+  },
+  "weekDays": {
+    "sun": "Ned",
+    "mon": "Pon",
+    "tue": "Tor",
+    "wed": "Sre",
+    "thu": "Čet",
+    "fri": "Pet",
+    "sat": "Sob"
+  },
+  "commitmentsList": {
+    "empty": "Še ni zavez",
+    "emptySubtext": "Tapnite +, da ustvarite svojo prvo zavezo",
+    "clearStorageTitle": "Počisti shrambo",
+    "clearStorageMessage": "To bo izbrisalo vse zaveze, dokončanja in uporabniške podatke iz lokalne shrambe. Nadaljuj?",
+    "clearStorageButton": "Počisti",
+    "clearStorageSuccess": "Shramba uspešno počiščena",
+    "clearStorageError": "Čiščenje shrambe ni uspelo"
+  },
+  "addCommitment": {
+    "title": "Naslov",
+    "placeholder": "Vnesite naslov zaveze",
+    "challengeType": "Vrsta izziva",
+    "error": "Napaka",
+    "errorMessage": "Ustvarjanje zaveze ni uspelo. Prosimo, poskusite znova."
+  },
+  "joinChallenge": {
+    "title": "Pridruži se izzivom",
+    "description": "Vnesite kodo za skupno rabo, da se pridružite sodelovalnemu izzivom.\nSodelovalni izzivi so omejeni na 2 udeleženca.",
+    "placeholder": "Vnesite 6-mestno kodo",
+    "button": "Pridruži se izzivom",
+    "error": "Napaka",
+    "errorInvalidCode": "Neveljavna koda za skupno rabo ali pridružitev izzivom ni uspela. Prosimo, preverite in poskusite znova.",
+    "errorFull": "Izziv poln",
+    "errorFullMessage": "Ta sodelovalni izziv je poln. Dovoljenih je največ 2 udeleženca.",
+    "success": "Uspeh",
+    "successMessage": "Pridružili ste se \"{{title}}\"",
+    "errorEmptyCode": "Prosimo, vnesite kodo za skupno rabo"
+  },
+  "challengeType": {
+    "self": "Osebno",
+    "collaborative": "Sodelovalno",
+    "label": "Vrsta izziva"
+  },
+  "commitmentCard": {
+    "collaborative": "Sodelovalno",
+    "sharedReadonly": "V skupni rabi (Samo za branje)",
+    "shareMessage": "Pridružite se mojemu sodelovalnemu izzivom \"{{title}}\"!\n\nKoda za skupno rabo: {{shareCode}}\n\nUporabite to kodo v CommitX za pridružitev izzivom.",
+    "shareTitle": "Deli izziv \"{{title}}\"",
+    "editTitle": "Uredi zavezo"
+  },
+  "deleteModal": {
+    "deleteTitle": "Izbriši zavezo",
+    "leaveTitle": "Zapusti izziv",
+    "deleteMessage": "Ste prepričani, da želite izbrisati \"{{title}}\"? Tega dejanja ni mogoče razveljaviti.",
+    "leaveMessage": "Ste prepričani, da želite zapustiti \"{{title}}\"? Potrebovali boste novo kodo za skupno rabo, da se ponovno pridružite."
+  },
+  "actionSheet": {
+    "createCommitment": "Ustvari zavezo",
+    "joinChallenge": "Pridruži se izzivom",
+    "cancel": "Prekliči"
+  },
+  "onboarding": {
+    "title": "Dobrodošli v CommitX!",
+    "subtitle": "Zgradite boljše navade s sledenjem vašim dnevnim zavezam",
+    "feature1Title": "Sledite svojim navadam",
+    "feature1Description": "Ustvarjajte zaveze in označite dneve kot dokončane s preprostim tapom na koledar",
+    "feature2Title": "Osebne zaveze",
+    "feature2Description": "Ohranite zaveze zasebne in sledite svojemu napredku",
+    "feature3Title": "Sodelovalni izzivi",
+    "feature3Description": "Delite zaveze s prijatelji in ostanite odgovorni skupaj",
+    "cta": "Ustvari mojo prvo zavezo"
+  },
+  "sidebar": {
+    "title": "Meni",
+    "devTools": "Razvijalska orodja",
+    "faq": "Pogosto zastavljena vprašanja",
+    "testBackendSentry": "Testiraj Backend Sentry",
+    "testMobileSentry": "Testiraj Mobile Sentry",
+    "clearStorage": "Počisti shrambo",
+    "testSentryExpected": "Pričakovana napaka",
+    "testSentryMessage": "Backend je vrgel testno napako (preverite nadzorno ploščo Sentry)",
+    "testSentryMobileSent": "Test poslan",
+    "testSentryMobileMessage": "Testna napaka poslana v projekt Sentry Mobile",
+    "testSentryMobileMessageDev": "Testna napaka poslana v projekt Sentry Mobile\n\nOpomba: V razvojnem načinu nastavite EXPO_PUBLIC_FORCE_SENTRY=true v .env za omogočanje Sentry",
+    "testSentryError": "Pošiljanje testne napake v Sentry ni uspelo",
+    "faqItems": [
+      {
+        "question": "Kako ustvarim zavezo?",
+        "answer": "Tapnite gumb + v spodnjem desnem kotu. Izberite 'Osebno' za svojo zavezo ali 'Sodelovalno' za skupno rabo s prijatelji.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Kaj je sodelovalna zaveza?",
+        "answer": "Sodelovalna zaveza vam omogoča sledenje napredka s prijatelji. Ustvarite eno in delite kodo ali se pridružite z uporabo kode prijatelja.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Kako se pridružim izzivom prijatelja?",
+        "answer": "Tapnite gumb + in izberite 'Pridruži se'. Vnesite 6-mestno kodo, ki vam jo je dal vaš prijatelj, da se pridružite njegovemu izzivom.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Kako označim dan kot dokončan?",
+        "answer": "Tapnite katerikoli dan v koledarju vaše zaveze. Dan bo postal zelen za prikaz dokončanja. Tapnite znova za razveljavitev.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Kako izbrišem zavezo?",
+        "answer": "Tapnite tri pike na kartici zaveze in izberite 'Izbriši'. Pri sodelovalnih boste zapustili izziv.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

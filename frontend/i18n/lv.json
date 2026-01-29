@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Pievienoties izaicinājumam"
+  },
+  "common": {
+    "save": "Saglabāt",
+    "cancel": "Atcelt",
+    "delete": "Dzēst",
+    "leave": "Pamest",
+    "ok": "Labi",
+    "close": "Aizvērt",
+    "create": "Izveidot",
+    "join": "Pievienoties",
+    "share": "Dalīties",
+    "menu": "Izvēlne"
+  },
+  "weekDays": {
+    "sun": "Sv",
+    "mon": "Pr",
+    "tue": "Ot",
+    "wed": "Tr",
+    "thu": "Ce",
+    "fri": "Pk",
+    "sat": "Se"
+  },
+  "commitmentsList": {
+    "empty": "Vēl nav saistību",
+    "emptySubtext": "Pieskarieties +, lai izveidotu savu pirmo saistību",
+    "clearStorageTitle": "Notīrīt krātuvi",
+    "clearStorageMessage": "Tas izdzēsīs visas saistības, pabeigšanas un lietotāja datus no vietējās krātuves. Turpināt?",
+    "clearStorageButton": "Notīrīt",
+    "clearStorageSuccess": "Krātuve veiksmīgi notīrīta",
+    "clearStorageError": "Neizdevās notīrīt krātuvi"
+  },
+  "addCommitment": {
+    "title": "Nosaukums",
+    "placeholder": "Ievadiet saistības nosaukumu",
+    "challengeType": "Izaicinājuma veids",
+    "error": "Kļūda",
+    "errorMessage": "Neizdevās izveidot saistību. Lūdzu, mēģiniet vēlreiz."
+  },
+  "joinChallenge": {
+    "title": "Pievienoties izaicinājumam",
+    "description": "Ievadiet kopīgošanas kodu, lai pievienotos sadarbības izaicinājumam.\nSadarbības izaicinājumi ir ierobežoti līdz 2 dalībniekiem.",
+    "placeholder": "Ievadiet 6 ciparu kodu",
+    "button": "Pievienoties izaicinājumam",
+    "error": "Kļūda",
+    "errorInvalidCode": "Nederīgs kopīgošanas kods vai neizdevās pievienoties izaicinājumam. Lūdzu, pārbaudiet un mēģiniet vēlreiz.",
+    "errorFull": "Izaicinājums pilns",
+    "errorFullMessage": "Šis sadarbības izaicinājums ir pilns. Atļauti maksimums 2 dalībnieki.",
+    "success": "Panākums",
+    "successMessage": "Pievienojāties \"{{title}}\"",
+    "errorEmptyCode": "Lūdzu, ievadiet kopīgošanas kodu"
+  },
+  "challengeType": {
+    "self": "Personīgs",
+    "collaborative": "Sadarbības",
+    "label": "Izaicinājuma veids"
+  },
+  "commitmentCard": {
+    "collaborative": "Sadarbības",
+    "sharedReadonly": "Kopīgots (Tikai lasīšanai)",
+    "shareMessage": "Pievienojieties manam sadarbības izaicinājumam \"{{title}}\"!\n\nKopīgošanas kods: {{shareCode}}\n\nIzmantojiet šo kodu CommitX, lai pievienotos izaicinājumam.",
+    "shareTitle": "Dalīties ar izaicinājumu \"{{title}}\"",
+    "editTitle": "Rediģēt saistību"
+  },
+  "deleteModal": {
+    "deleteTitle": "Dzēst saistību",
+    "leaveTitle": "Pamest izaicinājumu",
+    "deleteMessage": "Vai tiešām vēlaties dzēst \"{{title}}\"? Šo darbību nevar atsaukt.",
+    "leaveMessage": "Vai tiešām vēlaties pamest \"{{title}}\"? Jums būs nepieciešams jauns kopīgošanas kods, lai pievienotos atkal."
+  },
+  "actionSheet": {
+    "createCommitment": "Izveidot saistību",
+    "joinChallenge": "Pievienoties izaicinājumam",
+    "cancel": "Atcelt"
+  },
+  "onboarding": {
+    "title": "Laipni lūdzam CommitX!",
+    "subtitle": "Veidojiet labākas ieradumu, izsekojot savas ikdienas saistības",
+    "feature1Title": "Izsekojiet savus ieradumus",
+    "feature1Description": "Izveidojiet saistības un atzīmējiet dienas kā pabeigtas ar vienkāršu pieskārienu kalendārā",
+    "feature2Title": "Personīgās saistības",
+    "feature2Description": "Saglabājiet saistības privātas un izsekojiet savu progresu",
+    "feature3Title": "Sadarbības izaicinājumi",
+    "feature3Description": "Dalieties ar saistībām ar draugiem un palieciet atbildīgi kopā",
+    "cta": "Izveidot manu pirmo saistību"
+  },
+  "sidebar": {
+    "title": "Izvēlne",
+    "devTools": "Izstrādātāju rīki",
+    "faq": "Bieži uzdotie jautājumi",
+    "testBackendSentry": "Testēt Backend Sentry",
+    "testMobileSentry": "Testēt Mobile Sentry",
+    "clearStorage": "Notīrīt krātuvi",
+    "testSentryExpected": "Sagaidāmā kļūda",
+    "testSentryMessage": "Backend izmeta testa kļūdu (pārbaudiet Sentry vadības paneli)",
+    "testSentryMobileSent": "Tests nosūtīts",
+    "testSentryMobileMessage": "Testa kļūda nosūtīta uz Sentry Mobile projektu",
+    "testSentryMobileMessageDev": "Testa kļūda nosūtīta uz Sentry Mobile projektu\n\nPiezīme: Dev režīmā iestatiet EXPO_PUBLIC_FORCE_SENTRY=true .env failā, lai iespējotu Sentry",
+    "testSentryError": "Neizdevās nosūtīt testa kļūdu uz Sentry",
+    "faqItems": [
+      {
+        "question": "Kā izveidot saistību?",
+        "answer": "Pieskarieties + pogai apakšējā labajā stūrī. Izvēlieties 'Personīgs' savai saistībai vai 'Sadarbības', lai dalītos ar draugiem.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Kas ir sadarbības saistība?",
+        "answer": "Sadarbības saistība ļauj izsekot progresu ar draugiem. Izveidojiet vienu un dalieties ar kodu vai pievienojieties, izmantojot drauga kodu.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Kā pievienoties drauga izaicinājumam?",
+        "answer": "Pieskarieties + pogai un izvēlieties 'Pievienoties'. Ievadiet 6 ciparu kodu, ko jums deva draugs, lai pievienotos viņa izaicinājumam.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Kā atzīmēt dienu kā pabeigtu?",
+        "answer": "Pieskarieties jebkurai dienai savas saistības kalendārā. Diena kļūs zaļa, lai parādītu pabeigšanu. Pieskarieties vēlreiz, lai atsauktu.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Kā dzēst saistību?",
+        "answer": "Pieskarieties trim punktiem uz saistības kartītes un izvēlieties 'Dzēst'. Sadarbības gadījumā jūs pametīsiet izaicinājumu.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

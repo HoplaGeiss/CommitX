@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Unisciti alla sfida"
+  },
+  "common": {
+    "save": "Salva",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "leave": "Esci",
+    "ok": "OK",
+    "close": "Chiudi",
+    "create": "Crea",
+    "join": "Unisciti",
+    "share": "Condividi",
+    "menu": "Menu"
+  },
+  "weekDays": {
+    "sun": "Dom",
+    "mon": "Lun",
+    "tue": "Mar",
+    "wed": "Mer",
+    "thu": "Gio",
+    "fri": "Ven",
+    "sat": "Sab"
+  },
+  "commitmentsList": {
+    "empty": "Nessun impegno ancora",
+    "emptySubtext": "Tocca + per creare il tuo primo impegno",
+    "clearStorageTitle": "Cancella memoria",
+    "clearStorageMessage": "Questo eliminerà tutti gli impegni, completamenti e dati utente dalla memoria locale. Continuare?",
+    "clearStorageButton": "Cancella",
+    "clearStorageSuccess": "Memoria cancellata con successo",
+    "clearStorageError": "Impossibile cancellare la memoria"
+  },
+  "addCommitment": {
+    "title": "Titolo",
+    "placeholder": "Inserisci il titolo dell'impegno",
+    "challengeType": "Tipo di sfida",
+    "error": "Errore",
+    "errorMessage": "Impossibile creare l'impegno. Riprova."
+  },
+  "joinChallenge": {
+    "title": "Unisciti alla sfida",
+    "description": "Inserisci un codice di condivisione per unirti a una sfida collaborativa.\nLe sfide collaborative sono limitate a 2 partecipanti.",
+    "placeholder": "Inserisci il codice a 6 cifre",
+    "button": "Unisciti alla sfida",
+    "error": "Errore",
+    "errorInvalidCode": "Codice di condivisione non valido o impossibile unirsi alla sfida. Verifica e riprova.",
+    "errorFull": "Sfida completa",
+    "errorFullMessage": "Questa sfida collaborativa è completa. Massimo 2 partecipanti consentiti.",
+    "success": "Successo",
+    "successMessage": "Ti sei unito a \"{{title}}\"",
+    "errorEmptyCode": "Inserisci un codice di condivisione"
+  },
+  "challengeType": {
+    "self": "Personale",
+    "collaborative": "Collaborativa",
+    "label": "Tipo di sfida"
+  },
+  "commitmentCard": {
+    "collaborative": "Collaborativa",
+    "sharedReadonly": "Condivisa (Sola lettura)",
+    "shareMessage": "Unisciti alla mia sfida collaborativa \"{{title}}\"!\n\nCodice di condivisione: {{shareCode}}\n\nUsa questo codice in CommitX per unirti alla sfida.",
+    "shareTitle": "Condividi sfida \"{{title}}\"",
+    "editTitle": "Modifica impegno"
+  },
+  "deleteModal": {
+    "deleteTitle": "Elimina impegno",
+    "leaveTitle": "Esci dalla sfida",
+    "deleteMessage": "Sei sicuro di voler eliminare \"{{title}}\"? Questa azione non può essere annullata.",
+    "leaveMessage": "Sei sicuro di voler uscire da \"{{title}}\"? Avrai bisogno di un nuovo codice per unirti di nuovo."
+  },
+  "actionSheet": {
+    "createCommitment": "Crea impegno",
+    "joinChallenge": "Unisciti alla sfida",
+    "cancel": "Annulla"
+  },
+  "onboarding": {
+    "title": "Benvenuto su CommitX!",
+    "subtitle": "Costruisci abitudini migliori tracciando i tuoi impegni quotidiani",
+    "feature1Title": "Traccia le tue abitudini",
+    "feature1Description": "Crea impegni e segna i giorni come completati con un semplice tocco sul calendario",
+    "feature2Title": "Impegni personali",
+    "feature2Description": "Mantieni gli impegni privati e traccia i tuoi progressi",
+    "feature3Title": "Sfide collaborative",
+    "feature3Description": "Condividi gli impegni con gli amici e restate responsabili insieme",
+    "cta": "Crea il mio primo impegno"
+  },
+  "sidebar": {
+    "title": "Menu",
+    "devTools": "Strumenti per sviluppatori",
+    "faq": "Domande frequenti",
+    "testBackendSentry": "Testa Sentry Backend",
+    "testMobileSentry": "Testa Sentry Mobile",
+    "clearStorage": "Cancella memoria",
+    "testSentryExpected": "Errore previsto",
+    "testSentryMessage": "Il backend ha generato un errore di test (controlla la dashboard di Sentry)",
+    "testSentryMobileSent": "Test inviato",
+    "testSentryMobileMessage": "Errore di test inviato al progetto Sentry Mobile",
+    "testSentryMobileMessageDev": "Errore di test inviato al progetto Sentry Mobile\n\nNota: In modalità dev, imposta EXPO_PUBLIC_FORCE_SENTRY=true in .env per abilitare Sentry",
+    "testSentryError": "Impossibile inviare l'errore di test a Sentry",
+    "faqItems": [
+      {
+        "question": "Come creo un impegno?",
+        "answer": "Tocca il pulsante + in basso a destra. Scegli 'Personale' per il tuo impegno o 'Collaborativa' per condividere con gli amici.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Cos'è un impegno collaborativo?",
+        "answer": "Un impegno collaborativo ti permette di tracciare i progressi con gli amici. Creane uno e condividi il codice, oppure unisciti usando il codice di un amico.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Come mi unisco alla sfida di un amico?",
+        "answer": "Tocca il pulsante + e seleziona 'Unisciti'. Inserisci il codice a 6 cifre che ti ha dato il tuo amico per unirti alla sua sfida.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Come segno un giorno come completato?",
+        "answer": "Tocca qualsiasi giorno nel calendario del tuo impegno. Il giorno diventerà verde per mostrare il completamento. Tocca di nuovo per annullare.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Come elimino un impegno?",
+        "answer": "Tocca i tre puntini su una scheda impegno e seleziona 'Elimina'. Per quelli collaborativi, uscirai dalla sfida.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

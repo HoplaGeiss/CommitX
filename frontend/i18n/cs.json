@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Připojit se k výzvě"
+  },
+  "common": {
+    "save": "Uložit",
+    "cancel": "Zrušit",
+    "delete": "Smazat",
+    "leave": "Opustit",
+    "ok": "OK",
+    "close": "Zavřít",
+    "create": "Vytvořit",
+    "join": "Připojit se",
+    "share": "Sdílet",
+    "menu": "Menu"
+  },
+  "weekDays": {
+    "sun": "Ne",
+    "mon": "Po",
+    "tue": "Út",
+    "wed": "St",
+    "thu": "Čt",
+    "fri": "Pá",
+    "sat": "So"
+  },
+  "commitmentsList": {
+    "empty": "Zatím žádné závazky",
+    "emptySubtext": "Klepnutím na + vytvoříte svůj první závazek",
+    "clearStorageTitle": "Vymazat úložiště",
+    "clearStorageMessage": "Tím se vymažou všechny závazky, dokončení a uživatelská data z místního úložiště. Pokračovat?",
+    "clearStorageButton": "Vymazat",
+    "clearStorageSuccess": "Úložiště úspěšně vymazáno",
+    "clearStorageError": "Nepodařilo se vymazat úložiště"
+  },
+  "addCommitment": {
+    "title": "Název",
+    "placeholder": "Zadejte název závazku",
+    "challengeType": "Typ výzvy",
+    "error": "Chyba",
+    "errorMessage": "Vytvoření závazku se nezdařilo. Zkuste to prosím znovu."
+  },
+  "joinChallenge": {
+    "title": "Připojit se k výzvě",
+    "description": "Zadejte sdílecí kód pro připojení ke společné výzvě.\nSpolečné výzvy jsou omezeny na 2 účastníky.",
+    "placeholder": "Zadejte 6místný kód",
+    "button": "Připojit se k výzvě",
+    "error": "Chyba",
+    "errorInvalidCode": "Neplatný sdílecí kód nebo se nepodařilo připojit k výzvě. Zkontrolujte a zkuste to znovu.",
+    "errorFull": "Výzva plná",
+    "errorFullMessage": "Tato společná výzva je plná. Povoleno maximálně 2 účastníci.",
+    "success": "Úspěch",
+    "successMessage": "Připojili jste se k \"{{title}}\"",
+    "errorEmptyCode": "Zadejte prosím sdílecí kód"
+  },
+  "challengeType": {
+    "self": "Osobní",
+    "collaborative": "Společná",
+    "label": "Typ výzvy"
+  },
+  "commitmentCard": {
+    "collaborative": "Společná",
+    "sharedReadonly": "Sdílená (Pouze čtení)",
+    "shareMessage": "Připojte se k mé společné výzvě \"{{title}}\"!\n\nSdílecí kód: {{shareCode}}\n\nPoužijte tento kód v CommitX pro připojení k výzvě.",
+    "shareTitle": "Sdílet výzvu \"{{title}}\"",
+    "editTitle": "Upravit závazek"
+  },
+  "deleteModal": {
+    "deleteTitle": "Smazat závazek",
+    "leaveTitle": "Opustit výzvu",
+    "deleteMessage": "Jste si jisti, že chcete smazat \"{{title}}\"? Tuto akci nelze vrátit zpět.",
+    "leaveMessage": "Jste si jisti, že chcete opustit \"{{title}}\"? Budete potřebovat nový sdílecí kód pro opětovné připojení."
+  },
+  "actionSheet": {
+    "createCommitment": "Vytvořit závazek",
+    "joinChallenge": "Připojit se k výzvě",
+    "cancel": "Zrušit"
+  },
+  "onboarding": {
+    "title": "Vítejte v CommitX!",
+    "subtitle": "Budujte lepší návyky sledováním svých každodenních závazků",
+    "feature1Title": "Sledujte své návyky",
+    "feature1Description": "Vytvářejte závazky a označujte dny jako dokončené jednoduchým klepnutím na kalendář",
+    "feature2Title": "Osobní závazky",
+    "feature2Description": "Uchovávejte závazky soukromé a sledujte svůj vlastní pokrok",
+    "feature3Title": "Společné výzvy",
+    "feature3Description": "Sdílejte závazky s přáteli a zůstaňte společně zodpovědní",
+    "cta": "Vytvořit můj první závazek"
+  },
+  "sidebar": {
+    "title": "Menu",
+    "devTools": "Vývojářské nástroje",
+    "faq": "Často kladené otázky",
+    "testBackendSentry": "Testovat Backend Sentry",
+    "testMobileSentry": "Testovat Mobile Sentry",
+    "clearStorage": "Vymazat úložiště",
+    "testSentryExpected": "Očekávaná chyba",
+    "testSentryMessage": "Backend vyvolal testovací chybu (zkontrolujte panel Sentry)",
+    "testSentryMobileSent": "Test odeslán",
+    "testSentryMobileMessage": "Testovací chyba odeslána do projektu Sentry Mobile",
+    "testSentryMobileMessageDev": "Testovací chyba odeslána do projektu Sentry Mobile\n\nPoznámka: V dev režimu nastavte EXPO_PUBLIC_FORCE_SENTRY=true v .env pro aktivaci Sentry",
+    "testSentryError": "Nepodařilo se odeslat testovací chybu do Sentry",
+    "faqItems": [
+      {
+        "question": "Jak vytvořím závazek?",
+        "answer": "Klepněte na tlačítko + vpravo dole. Vyberte 'Osobní' pro vlastní závazek nebo 'Společná' pro sdílení s přáteli.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Co je společný závazek?",
+        "answer": "Společný závazek vám umožňuje sledovat pokrok s přáteli. Vytvořte jeden a sdílejte kód, nebo se připojte pomocí kódu přítele.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Jak se připojím k výzvě přítele?",
+        "answer": "Klepněte na tlačítko + a vyberte 'Připojit se'. Zadejte 6místný kód, který vám dal váš přítel, abyste se připojili k jeho výzvě.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Jak označím den jako dokončený?",
+        "answer": "Klepněte na libovolný den v kalendáři vašeho závazku. Den se zbarví zeleně, aby ukázal dokončení. Klepněte znovu pro vrácení zpět.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Jak smažu závazek?",
+        "answer": "Klepněte na tři tečky na kartě závazku a vyberte 'Smazat'. U společných opustíte výzvu.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

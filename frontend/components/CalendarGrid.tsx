@@ -207,11 +207,16 @@ const styles = StyleSheet.create({
     width: CELL_WIDTH - 4,
     height: CELL_HEIGHT - 4,
     backgroundColor: '#2a2a2a',
-    borderRadius: 8,
+    borderRadius: 6,
     margin: 2,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 2,
   },
   calendarCellEmpty: {
     width: CELL_WIDTH - 4,
@@ -221,16 +226,20 @@ const styles = StyleSheet.create({
   },
   calendarCellCompleted: {
     backgroundColor: '#4CAF50',
+    shadowColor: '#4CAF50',
+    shadowOpacity: 0.4,
   },
   calendarCellToday: {
     borderWidth: 2,
     borderColor: '#ffffff',
+    shadowColor: '#ffffff',
+    shadowOpacity: 0.5,
   },
   todayBorder: {
     ...StyleSheet.absoluteFillObject,
     borderWidth: 2,
     borderColor: '#ffffff',
-    borderRadius: 8,
+    borderRadius: 6,
     pointerEvents: 'none',
   },
   calendarCellFuture: {
@@ -238,11 +247,12 @@ const styles = StyleSheet.create({
   },
   calendarDayText: {
     color: '#ffffff',
-    fontSize: 10,
-    fontWeight: '500',
+    fontSize: 11,
+    fontWeight: '600',
   },
   calendarDayTextCompleted: {
     color: '#ffffff',
+    fontWeight: '700',
   },
   calendarDayTextFuture: {
     color: '#666666',

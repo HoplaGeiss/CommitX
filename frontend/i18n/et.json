@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Liitu väljakutsega"
+  },
+  "common": {
+    "save": "Salvesta",
+    "cancel": "Tühista",
+    "delete": "Kustuta",
+    "leave": "Lahku",
+    "ok": "OK",
+    "close": "Sulge",
+    "create": "Loo",
+    "join": "Liitu",
+    "share": "Jaga",
+    "menu": "Menüü"
+  },
+  "weekDays": {
+    "sun": "P",
+    "mon": "E",
+    "tue": "T",
+    "wed": "K",
+    "thu": "N",
+    "fri": "R",
+    "sat": "L"
+  },
+  "commitmentsList": {
+    "empty": "Kohustusi pole veel",
+    "emptySubtext": "Vajutage +, et luua oma esimene kohustus",
+    "clearStorageTitle": "Puhasta salvestusruum",
+    "clearStorageMessage": "See kustutab kõik kohustused, lõpetamised ja kasutajaandmed kohalikust salvestusruumist. Jätkata?",
+    "clearStorageButton": "Puhasta",
+    "clearStorageSuccess": "Salvestusruum edukalt puhastatud",
+    "clearStorageError": "Salvestusruumi puhastamine ebaõnnestus"
+  },
+  "addCommitment": {
+    "title": "Pealkiri",
+    "placeholder": "Sisestage kohustuse pealkiri",
+    "challengeType": "Väljakutse tüüp",
+    "error": "Viga",
+    "errorMessage": "Kohustuse loomine ebaõnnestus. Palun proovige uuesti."
+  },
+  "joinChallenge": {
+    "title": "Liitu väljakutsega",
+    "description": "Sisestage jagamiskood, et liituda koostöö väljakutsega.\nKoostöö väljakutsed on piiratud 2 osalejaga.",
+    "placeholder": "Sisestage 6-kohaline kood",
+    "button": "Liitu väljakutsega",
+    "error": "Viga",
+    "errorInvalidCode": "Kehtetu jagamiskood või väljakutsega liitumine ebaõnnestus. Palun kontrollige ja proovige uuesti.",
+    "errorFull": "Väljakutse täis",
+    "errorFullMessage": "See koostöö väljakutse on täis. Lubatud on maksimaalselt 2 osalejat.",
+    "success": "Õnnestus",
+    "successMessage": "Liitusite \"{{title}}\"",
+    "errorEmptyCode": "Palun sisestage jagamiskood"
+  },
+  "challengeType": {
+    "self": "Isiklik",
+    "collaborative": "Koostöö",
+    "label": "Väljakutse tüüp"
+  },
+  "commitmentCard": {
+    "collaborative": "Koostöö",
+    "sharedReadonly": "Jagatud (Ainult lugemiseks)",
+    "shareMessage": "Liitu minu koostöö väljakutsega \"{{title}}\"!\n\nJagamiskood: {{shareCode}}\n\nKasutage seda koodi CommitX-is, et väljakutsega liituda.",
+    "shareTitle": "Jaga väljakutset \"{{title}}\"",
+    "editTitle": "Muuda kohustust"
+  },
+  "deleteModal": {
+    "deleteTitle": "Kustuta kohustus",
+    "leaveTitle": "Lahku väljakutsest",
+    "deleteMessage": "Kas olete kindel, et soovite kustutada \"{{title}}\"? Seda tegevust ei saa tagasi võtta.",
+    "leaveMessage": "Kas olete kindel, et soovite lahkuda \"{{title}}\"? Vajate uut jagamiskoodi, et uuesti liituda."
+  },
+  "actionSheet": {
+    "createCommitment": "Loo kohustus",
+    "joinChallenge": "Liitu väljakutsega",
+    "cancel": "Tühista"
+  },
+  "onboarding": {
+    "title": "Tere tulemast CommitX-i!",
+    "subtitle": "Looge paremaid harjumusi, jälgides oma igapäevaseid kohustusi",
+    "feature1Title": "Jälgige oma harjumusi",
+    "feature1Description": "Looge kohustusi ja märkige päevad lõpetatuks lihtsa puudutusega kalendris",
+    "feature2Title": "Isiklikud kohustused",
+    "feature2Description": "Hoidke kohustused privaatsena ja jälgige oma edenemist",
+    "feature3Title": "Koostöö väljakutsed",
+    "feature3Description": "Jagage kohustusi sõpradega ja püsige vastutustundlikud koos",
+    "cta": "Loo minu esimene kohustus"
+  },
+  "sidebar": {
+    "title": "Menüü",
+    "devTools": "Arendaja tööriistad",
+    "faq": "Korduma kippuvad küsimused",
+    "testBackendSentry": "Testi Backend Sentry",
+    "testMobileSentry": "Testi Mobile Sentry",
+    "clearStorage": "Puhasta salvestusruum",
+    "testSentryExpected": "Oodatud viga",
+    "testSentryMessage": "Backend viskas testvea (kontrollige Sentry juhtpaneeli)",
+    "testSentryMobileSent": "Test saadetud",
+    "testSentryMobileMessage": "Testviga saadetud Sentry Mobile projekti",
+    "testSentryMobileMessageDev": "Testviga saadetud Sentry Mobile projekti\n\nMärkus: Arendusrežiimis seadke EXPO_PUBLIC_FORCE_SENTRY=true .env failis Sentry lubamiseks",
+    "testSentryError": "Testvea saatmine Sentry-sse ebaõnnestus",
+    "faqItems": [
+      {
+        "question": "Kuidas luua kohustust?",
+        "answer": "Vajutage + nuppu paremas alanurgas. Valige 'Isiklik' oma kohustuse jaoks või 'Koostöö' sõpradega jagamiseks.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Mis on koostöö kohustus?",
+        "answer": "Koostöö kohustus võimaldab teil jälgida edenemist sõpradega. Looge üks ja jagage koodi või liituge sõbra koodi kasutades.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Kuidas liituda sõbra väljakutsega?",
+        "answer": "Vajutage + nuppu ja valige 'Liitu'. Sisestage 6-kohaline kood, mille teie sõber teile andis, et liituda nende väljakutsega.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Kuidas märkida päev lõpetatuks?",
+        "answer": "Puudutage suvalise päeva oma kohustuse kalendris. Päev muutub roheliseks, et näidata lõpetamist. Puudutage uuesti tagasivõtmiseks.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Kuidas kustutada kohustust?",
+        "answer": "Puudutage kolme punkti kohustuse kaardil ja valige 'Kustuta'. Koostöö puhul lahkute väljakutsest.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

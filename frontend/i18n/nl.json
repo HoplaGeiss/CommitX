@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Meedoen aan uitdaging"
+  },
+  "common": {
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "leave": "Verlaten",
+    "ok": "OK",
+    "close": "Sluiten",
+    "create": "Aanmaken",
+    "join": "Deelnemen",
+    "share": "Delen",
+    "menu": "Menu"
+  },
+  "weekDays": {
+    "sun": "Zo",
+    "mon": "Ma",
+    "tue": "Di",
+    "wed": "Wo",
+    "thu": "Do",
+    "fri": "Vr",
+    "sat": "Za"
+  },
+  "commitmentsList": {
+    "empty": "Nog geen verplichtingen",
+    "emptySubtext": "Tik op + om je eerste verplichting aan te maken",
+    "clearStorageTitle": "Opslag wissen",
+    "clearStorageMessage": "Dit verwijdert alle verplichtingen, voltooiingen en gebruikersgegevens uit de lokale opslag. Doorgaan?",
+    "clearStorageButton": "Wissen",
+    "clearStorageSuccess": "Opslag succesvol gewist",
+    "clearStorageError": "Fout bij wissen van opslag"
+  },
+  "addCommitment": {
+    "title": "Titel",
+    "placeholder": "Voer titel van verplichting in",
+    "challengeType": "Type uitdaging",
+    "error": "Fout",
+    "errorMessage": "Aanmaken van verplichting mislukt. Probeer het opnieuw."
+  },
+  "joinChallenge": {
+    "title": "Meedoen aan uitdaging",
+    "description": "Voer een deelcode in om mee te doen aan een gezamenlijke uitdaging.\nGezamenlijke uitdagingen zijn beperkt tot 2 deelnemers.",
+    "placeholder": "Voer 6-cijferige code in",
+    "button": "Meedoen aan uitdaging",
+    "error": "Fout",
+    "errorInvalidCode": "Ongeldige deelcode of meedoen aan uitdaging mislukt. Controleer en probeer opnieuw.",
+    "errorFull": "Uitdaging vol",
+    "errorFullMessage": "Deze gezamenlijke uitdaging is vol. Maximaal 2 deelnemers toegestaan.",
+    "success": "Succes",
+    "successMessage": "Meegedaan aan \"{{title}}\"",
+    "errorEmptyCode": "Voer een deelcode in"
+  },
+  "challengeType": {
+    "self": "Persoonlijk",
+    "collaborative": "Gezamenlijk",
+    "label": "Type uitdaging"
+  },
+  "commitmentCard": {
+    "collaborative": "Gezamenlijk",
+    "sharedReadonly": "Gedeeld (Alleen lezen)",
+    "shareMessage": "Doe mee aan mijn gezamenlijke uitdaging \"{{title}}\"!\n\nDeelcode: {{shareCode}}\n\nGebruik deze code in CommitX om mee te doen aan de uitdaging.",
+    "shareTitle": "Deel uitdaging \"{{title}}\"",
+    "editTitle": "Verplichting bewerken"
+  },
+  "deleteModal": {
+    "deleteTitle": "Verplichting verwijderen",
+    "leaveTitle": "Uitdaging verlaten",
+    "deleteMessage": "Weet je zeker dat je \"{{title}}\" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+    "leaveMessage": "Weet je zeker dat je \"{{title}}\" wilt verlaten? Je hebt een nieuwe deelcode nodig om opnieuw mee te doen."
+  },
+  "actionSheet": {
+    "createCommitment": "Verplichting aanmaken",
+    "joinChallenge": "Meedoen aan uitdaging",
+    "cancel": "Annuleren"
+  },
+  "onboarding": {
+    "title": "Welkom bij CommitX!",
+    "subtitle": "Bouw betere gewoontes door je dagelijkse verplichtingen bij te houden",
+    "feature1Title": "Houd je gewoontes bij",
+    "feature1Description": "Maak verplichtingen aan en markeer dagen als voltooid met een simpele tik op de kalender",
+    "feature2Title": "Persoonlijke verplichtingen",
+    "feature2Description": "Houd verplichtingen privé en volg je eigen voortgang",
+    "feature3Title": "Gezamenlijke uitdagingen",
+    "feature3Description": "Deel verplichtingen met vrienden en blijf samen verantwoordelijk",
+    "cta": "Mijn eerste verplichting aanmaken"
+  },
+  "sidebar": {
+    "title": "Menu",
+    "devTools": "Ontwikkelaarstools",
+    "faq": "Veelgestelde vragen",
+    "testBackendSentry": "Test Backend Sentry",
+    "testMobileSentry": "Test Mobile Sentry",
+    "clearStorage": "Opslag wissen",
+    "testSentryExpected": "Verwachte fout",
+    "testSentryMessage": "Backend heeft testfout gegenereerd (controleer Sentry dashboard)",
+    "testSentryMobileSent": "Test verzonden",
+    "testSentryMobileMessage": "Testfout verzonden naar Sentry Mobile project",
+    "testSentryMobileMessageDev": "Testfout verzonden naar Sentry Mobile project\n\nOpmerking: In dev-modus, stel EXPO_PUBLIC_FORCE_SENTRY=true in .env in om Sentry in te schakelen",
+    "testSentryError": "Fout bij verzenden van testfout naar Sentry",
+    "faqItems": [
+      {
+        "question": "Hoe maak ik een verplichting aan?",
+        "answer": "Tik op de +-knop rechtsonder. Kies 'Persoonlijk' voor je eigen verplichting of 'Gezamenlijk' om te delen met vrienden.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Wat is een gezamenlijke verplichting?",
+        "answer": "Een gezamenlijke verplichting stelt je in staat om voortgang bij te houden met vrienden. Maak er een aan en deel de code, of doe mee met de code van een vriend.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Hoe doe ik mee aan de uitdaging van een vriend?",
+        "answer": "Tik op de +-knop en selecteer 'Deelnemen'. Voer de 6-cijferige code in die je vriend je gaf om mee te doen aan zijn uitdaging.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Hoe markeer ik een dag als voltooid?",
+        "answer": "Tik op een willekeurige dag in de kalender van je verplichting. De dag wordt groen om voltooiing aan te geven. Tik opnieuw om ongedaan te maken.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Hoe verwijder ik een verplichting?",
+        "answer": "Tik op de drie puntjes op een verplichtingskaart en selecteer 'Verwijderen'. Voor gezamenlijke verlaat je de uitdaging.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

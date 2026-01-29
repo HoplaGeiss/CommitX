@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Alătură-te provocării"
+  },
+  "common": {
+    "save": "Salvează",
+    "cancel": "Anulează",
+    "delete": "Șterge",
+    "leave": "Părăsește",
+    "ok": "OK",
+    "close": "Închide",
+    "create": "Creează",
+    "join": "Alătură-te",
+    "share": "Distribuie",
+    "menu": "Meniu"
+  },
+  "weekDays": {
+    "sun": "Dum",
+    "mon": "Lun",
+    "tue": "Mar",
+    "wed": "Mie",
+    "thu": "Joi",
+    "fri": "Vin",
+    "sat": "Sâm"
+  },
+  "commitmentsList": {
+    "empty": "Încă nu există angajamente",
+    "emptySubtext": "Apasă + pentru a crea primul tău angajament",
+    "clearStorageTitle": "Șterge memoria",
+    "clearStorageMessage": "Aceasta va șterge toate angajamentele, finalizările și datele utilizatorului din memoria locală. Continuă?",
+    "clearStorageButton": "Șterge",
+    "clearStorageSuccess": "Memoria a fost ștearsă cu succes",
+    "clearStorageError": "Nu s-a putut șterge memoria"
+  },
+  "addCommitment": {
+    "title": "Titlu",
+    "placeholder": "Introdu titlul angajamentului",
+    "challengeType": "Tip provocare",
+    "error": "Eroare",
+    "errorMessage": "Crearea angajamentului a eșuat. Te rog încearcă din nou."
+  },
+  "joinChallenge": {
+    "title": "Alătură-te provocării",
+    "description": "Introdu un cod de partajare pentru a te alătura unei provocări colaborative.\nProvocările colaborative sunt limitate la 2 participanți.",
+    "placeholder": "Introdu codul de 6 cifre",
+    "button": "Alătură-te provocării",
+    "error": "Eroare",
+    "errorInvalidCode": "Cod de partajare invalid sau alăturarea la provocare a eșuat. Te rog verifică și încearcă din nou.",
+    "errorFull": "Provocare completă",
+    "errorFullMessage": "Această provocare colaborativă este completă. Maxim 2 participanți permisi.",
+    "success": "Succes",
+    "successMessage": "Te-ai alăturat la \"{{title}}\"",
+    "errorEmptyCode": "Te rog introdu un cod de partajare"
+  },
+  "challengeType": {
+    "self": "Personal",
+    "collaborative": "Colaborativ",
+    "label": "Tip provocare"
+  },
+  "commitmentCard": {
+    "collaborative": "Colaborativ",
+    "sharedReadonly": "Partajat (Doar citire)",
+    "shareMessage": "Alătură-te provocării mele colaborative \"{{title}}\"!\n\nCod de partajare: {{shareCode}}\n\nFolosește acest cod în CommitX pentru a te alătura provocării.",
+    "shareTitle": "Distribuie provocarea \"{{title}}\"",
+    "editTitle": "Editează angajamentul"
+  },
+  "deleteModal": {
+    "deleteTitle": "Șterge angajamentul",
+    "leaveTitle": "Părăsește provocarea",
+    "deleteMessage": "Ești sigur că vrei să ștergi \"{{title}}\"? Această acțiune nu poate fi anulată.",
+    "leaveMessage": "Ești sigur că vrei să părăsești \"{{title}}\"? Vei avea nevoie de un cod nou de partajare pentru a te alătura din nou."
+  },
+  "actionSheet": {
+    "createCommitment": "Creează angajament",
+    "joinChallenge": "Alătură-te provocării",
+    "cancel": "Anulează"
+  },
+  "onboarding": {
+    "title": "Bun venit la CommitX!",
+    "subtitle": "Construiește obiceiuri mai bune urmărind angajamentele tale zilnice",
+    "feature1Title": "Urmărește-ți obiceiurile",
+    "feature1Description": "Creează angajamente și marchează zilele ca finalizate cu o simplă atingere pe calendar",
+    "feature2Title": "Angajamente personale",
+    "feature2Description": "Păstrează angajamentele private și urmărește-ți propriul progres",
+    "feature3Title": "Provocări colaborative",
+    "feature3Description": "Partajează angajamente cu prietenii și rămâneți responsabili împreună",
+    "cta": "Creează primul meu angajament"
+  },
+  "sidebar": {
+    "title": "Meniu",
+    "devTools": "Instrumente dezvoltator",
+    "faq": "Întrebări frecvente",
+    "testBackendSentry": "Testează Sentry Backend",
+    "testMobileSentry": "Testează Sentry Mobile",
+    "clearStorage": "Șterge memoria",
+    "testSentryExpected": "Eroare așteptată",
+    "testSentryMessage": "Backend-ul a generat o eroare de test (verifică panoul Sentry)",
+    "testSentryMobileSent": "Test trimis",
+    "testSentryMobileMessage": "Eroare de test trimisă către proiectul Sentry Mobile",
+    "testSentryMobileMessageDev": "Eroare de test trimisă către proiectul Sentry Mobile\n\nNotă: În modul dev, setează EXPO_PUBLIC_FORCE_SENTRY=true în .env pentru a activa Sentry",
+    "testSentryError": "Nu s-a putut trimite eroarea de test către Sentry",
+    "faqItems": [
+      {
+        "question": "Cum creez un angajament?",
+        "answer": "Apasă butonul + din colțul din dreapta jos. Alege 'Personal' pentru propriul tău angajament sau 'Colaborativ' pentru a partaja cu prietenii.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Ce este un angajament colaborativ?",
+        "answer": "Un angajament colaborativ îți permite să urmărești progresul cu prietenii. Creează unul și partajează codul sau alătură-te folosind codul unui prieten.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Cum mă alătur provocării unui prieten?",
+        "answer": "Apasă butonul + și selectează 'Alătură-te'. Introdu codul de 6 cifre pe care ți l-a dat prietenul tău pentru a te alătura provocării sale.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Cum marchez o zi ca finalizată?",
+        "answer": "Apasă pe orice zi în calendarul angajamentului tău. Ziua va deveni verde pentru a arăta finalizarea. Apasă din nou pentru a anula.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Cum șterg un angajament?",
+        "answer": "Apasă pe cele trei puncte de pe o carte de angajament și selectează 'Șterge'. Pentru cele colaborative, vei părăsi provocarea.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

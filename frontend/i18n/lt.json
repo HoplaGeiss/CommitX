@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Prisijungti prie iššūkio"
+  },
+  "common": {
+    "save": "Išsaugoti",
+    "cancel": "Atšaukti",
+    "delete": "Ištrinti",
+    "leave": "Išeiti",
+    "ok": "Gerai",
+    "close": "Uždaryti",
+    "create": "Sukurti",
+    "join": "Prisijungti",
+    "share": "Bendrinti",
+    "menu": "Meniu"
+  },
+  "weekDays": {
+    "sun": "Sek",
+    "mon": "Pir",
+    "tue": "Ant",
+    "wed": "Tre",
+    "thu": "Ket",
+    "fri": "Pen",
+    "sat": "Šeš"
+  },
+  "commitmentsList": {
+    "empty": "Dar nėra įsipareigojimų",
+    "emptySubtext": "Bakstelėkite +, kad sukurtumėte pirmąjį įsipareigojimą",
+    "clearStorageTitle": "Išvalyti saugyklą",
+    "clearStorageMessage": "Bus ištrinti visi įsipareigojimai, užbaigimai ir naudotojo duomenys iš vietinės saugyklos. Tęsti?",
+    "clearStorageButton": "Išvalyti",
+    "clearStorageSuccess": "Saugykla sėkmingai išvalyta",
+    "clearStorageError": "Nepavyko išvalyti saugyklos"
+  },
+  "addCommitment": {
+    "title": "Pavadinimas",
+    "placeholder": "Įveskite įsipareigojimo pavadinimą",
+    "challengeType": "Iššūkio tipas",
+    "error": "Klaida",
+    "errorMessage": "Nepavyko sukurti įsipareigojimo. Bandykite dar kartą."
+  },
+  "joinChallenge": {
+    "title": "Prisijungti prie iššūkio",
+    "description": "Įveskite bendrinimo kodą, kad prisijungtumėte prie bendradarbiavimo iššūkio.\nBendradarbiavimo iššūkiai apriboti iki 2 dalyvių.",
+    "placeholder": "Įveskite 6 skaitmenų kodą",
+    "button": "Prisijungti prie iššūkio",
+    "error": "Klaida",
+    "errorInvalidCode": "Neteisingas bendrinimo kodas arba nepavyko prisijungti prie iššūkio. Patikrinkite ir bandykite dar kartą.",
+    "errorFull": "Iššūkis pilnas",
+    "errorFullMessage": "Šis bendradarbiavimo iššūkis yra pilnas. Leidžiama daugiausiai 2 dalyviai.",
+    "success": "Sėkmė",
+    "successMessage": "Prisijungėte prie \"{{title}}\"",
+    "errorEmptyCode": "Įveskite bendrinimo kodą"
+  },
+  "challengeType": {
+    "self": "Asmeninis",
+    "collaborative": "Bendradarbiavimo",
+    "label": "Iššūkio tipas"
+  },
+  "commitmentCard": {
+    "collaborative": "Bendradarbiavimo",
+    "sharedReadonly": "Bendrinamas (Tik skaityti)",
+    "shareMessage": "Prisijunkite prie mano bendradarbiavimo iššūkio \"{{title}}\"!\n\nBendrinimo kodas: {{shareCode}}\n\nNaudokite šį kodą CommitX programoje, kad prisijungtumėte prie iššūkio.",
+    "shareTitle": "Bendrinti iššūkį \"{{title}}\"",
+    "editTitle": "Redaguoti įsipareigojimą"
+  },
+  "deleteModal": {
+    "deleteTitle": "Ištrinti įsipareigojimą",
+    "leaveTitle": "Išeiti iš iššūkio",
+    "deleteMessage": "Ar tikrai norite ištrinti \"{{title}}\"? Šio veiksmo negalima atšaukti.",
+    "leaveMessage": "Ar tikrai norite išeiti iš \"{{title}}\"? Jums reikės naujo bendrinimo kodo, kad vėl prisijungtumėte."
+  },
+  "actionSheet": {
+    "createCommitment": "Sukurti įsipareigojimą",
+    "joinChallenge": "Prisijungti prie iššūkio",
+    "cancel": "Atšaukti"
+  },
+  "onboarding": {
+    "title": "Sveiki atvykę į CommitX!",
+    "subtitle": "Ugdykite geresnius įpročius sekdami savo kasdieninius įsipareigojimus",
+    "feature1Title": "Sekite savo įpročius",
+    "feature1Description": "Kurkite įsipareigojimus ir pažymėkite dienas kaip užbaigtas paprastu bakstelėjimu kalendoriuje",
+    "feature2Title": "Asmeniniai įsipareigojimai",
+    "feature2Description": "Laikykite įsipareigojimus privačius ir sekite savo pažangą",
+    "feature3Title": "Bendradarbiavimo iššūkiai",
+    "feature3Description": "Bendrinkite įsipareigojimus su draugais ir likite atsakingi kartu",
+    "cta": "Sukurti pirmąjį įsipareigojimą"
+  },
+  "sidebar": {
+    "title": "Meniu",
+    "devTools": "Kūrėjo įrankiai",
+    "faq": "Dažnai užduodami klausimai",
+    "testBackendSentry": "Testuoti Backend Sentry",
+    "testMobileSentry": "Testuoti Mobile Sentry",
+    "clearStorage": "Išvalyti saugyklą",
+    "testSentryExpected": "Tikėtina klaida",
+    "testSentryMessage": "Backend sukėlė bandomąją klaidą (patikrinkite Sentry valdymo skydelį)",
+    "testSentryMobileSent": "Testas išsiųstas",
+    "testSentryMobileMessage": "Bandomoji klaida išsiųsta į Sentry Mobile projektą",
+    "testSentryMobileMessageDev": "Bandomoji klaida išsiųsta į Sentry Mobile projektą\n\nPastaba: Dev režime nustatykite EXPO_PUBLIC_FORCE_SENTRY=true .env faile, kad įjungtumėte Sentry",
+    "testSentryError": "Nepavyko išsiųsti bandomosios klaidos į Sentry",
+    "faqItems": [
+      {
+        "question": "Kaip sukurti įsipareigojimą?",
+        "answer": "Bakstelėkite + mygtuką apatiniame dešiniame kampe. Pasirinkite 'Asmeninis' savo įsipareigojimui arba 'Bendradarbiavimo' bendrinimui su draugais.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Kas yra bendradarbiavimo įsipareigojimas?",
+        "answer": "Bendradarbiavimo įsipareigojimas leidžia sekti pažangą su draugais. Sukurkite vieną ir bendrinkite kodą arba prisijunkite naudodami draugo kodą.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Kaip prisijungti prie draugo iššūkio?",
+        "answer": "Bakstelėkite + mygtuką ir pasirinkite 'Prisijungti'. Įveskite 6 skaitmenų kodą, kurį jums davė draugas, kad prisijungtumėte prie jo iššūkio.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Kaip pažymėti dieną kaip užbaigtą?",
+        "answer": "Bakstelėkite bet kurią dieną savo įsipareigojimo kalendoriuje. Diena taps žalia, kad parodytų užbaigimą. Bakstelėkite dar kartą, kad atšauktumėte.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Kaip ištrinti įsipareigojimą?",
+        "answer": "Bakstelėkite tris taškus įsipareigojimo kortelėje ir pasirinkite 'Ištrinti'. Bendradarbiavimo atveju išeisite iš iššūkio.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

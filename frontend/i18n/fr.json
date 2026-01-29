@@ -63,7 +63,8 @@
     "collaborative": "Collaboratif",
     "sharedReadonly": "Partagé (Lecture seule)",
     "shareMessage": "Rejoignez mon défi collaboratif \"{{title}}\" !\n\nCode de partage : {{shareCode}}\n\nUtilisez ce code dans CommitX pour rejoindre le défi.",
-    "shareTitle": "Partager le défi \"{{title}}\""
+    "shareTitle": "Partager le défi \"{{title}}\"",
+    "editTitle": "Modifier l'engagement"
   },
   "deleteModal": {
     "deleteTitle": "Supprimer l'engagement",

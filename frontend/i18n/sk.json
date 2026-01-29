@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Pripojiť sa k výzve"
+  },
+  "common": {
+    "save": "Uložiť",
+    "cancel": "Zrušiť",
+    "delete": "Vymazať",
+    "leave": "Opustiť",
+    "ok": "OK",
+    "close": "Zavrieť",
+    "create": "Vytvoriť",
+    "join": "Pripojiť sa",
+    "share": "Zdieľať",
+    "menu": "Menu"
+  },
+  "weekDays": {
+    "sun": "Ne",
+    "mon": "Po",
+    "tue": "Ut",
+    "wed": "St",
+    "thu": "Št",
+    "fri": "Pi",
+    "sat": "So"
+  },
+  "commitmentsList": {
+    "empty": "Zatiaľ žiadne záväzky",
+    "emptySubtext": "Ťuknutím na + vytvoríte svoj prvý záväzok",
+    "clearStorageTitle": "Vymazať úložisko",
+    "clearStorageMessage": "Tým sa vymažú všetky záväzky, dokončenia a údaje používateľa z miestneho úložiska. Pokračovať?",
+    "clearStorageButton": "Vymazať",
+    "clearStorageSuccess": "Úložisko úspešne vymazané",
+    "clearStorageError": "Nepodarilo sa vymazať úložisko"
+  },
+  "addCommitment": {
+    "title": "Názov",
+    "placeholder": "Zadajte názov záväzku",
+    "challengeType": "Typ výzvy",
+    "error": "Chyba",
+    "errorMessage": "Vytvorenie záväzku zlyhalo. Skúste to prosím znova."
+  },
+  "joinChallenge": {
+    "title": "Pripojiť sa k výzve",
+    "description": "Zadajte zdieľací kód pre pripojenie ku kolaboratívnej výzve.\nKolaboratívne výzvy sú obmedzené na 2 účastníkov.",
+    "placeholder": "Zadajte 6-miestny kód",
+    "button": "Pripojiť sa k výzve",
+    "error": "Chyba",
+    "errorInvalidCode": "Neplatný zdieľací kód alebo sa nepodarilo pripojiť k výzve. Skontrolujte a skúste znova.",
+    "errorFull": "Výzva plná",
+    "errorFullMessage": "Táto kolaboratívna výzva je plná. Povolené maximálne 2 účastníci.",
+    "success": "Úspech",
+    "successMessage": "Pripojili ste sa k \"{{title}}\"",
+    "errorEmptyCode": "Zadajte prosím zdieľací kód"
+  },
+  "challengeType": {
+    "self": "Osobný",
+    "collaborative": "Kolaboratívny",
+    "label": "Typ výzvy"
+  },
+  "commitmentCard": {
+    "collaborative": "Kolaboratívny",
+    "sharedReadonly": "Zdieľaný (Iba na čítanie)",
+    "shareMessage": "Pripojte sa k mojej kolaboratívnej výzve \"{{title}}\"!\n\nZdieľací kód: {{shareCode}}\n\nPoužite tento kód v CommitX na pripojenie k výzve.",
+    "shareTitle": "Zdieľať výzvu \"{{title}}\"",
+    "editTitle": "Upraviť záväzok"
+  },
+  "deleteModal": {
+    "deleteTitle": "Vymazať záväzok",
+    "leaveTitle": "Opustiť výzvu",
+    "deleteMessage": "Ste si istí, že chcete vymazať \"{{title}}\"? Túto akciu nie je možné vrátiť späť.",
+    "leaveMessage": "Ste si istí, že chcete opustiť \"{{title}}\"? Budete potrebovať nový zdieľací kód na opätovné pripojenie."
+  },
+  "actionSheet": {
+    "createCommitment": "Vytvoriť záväzok",
+    "joinChallenge": "Pripojiť sa k výzve",
+    "cancel": "Zrušiť"
+  },
+  "onboarding": {
+    "title": "Vitajte v CommitX!",
+    "subtitle": "Budujte lepšie návyky sledovaním svojich každodenných záväzkov",
+    "feature1Title": "Sledujte svoje návyky",
+    "feature1Description": "Vytvárajte záväzky a označujte dni ako dokončené jednoduchým ťuknutím na kalendár",
+    "feature2Title": "Osobné záväzky",
+    "feature2Description": "Udržujte záväzky súkromné a sledujte svoj vlastný pokrok",
+    "feature3Title": "Kolaboratívne výzvy",
+    "feature3Description": "Zdieľajte záväzky s priateľmi a zostaňte spoločne zodpovední",
+    "cta": "Vytvoriť môj prvý záväzok"
+  },
+  "sidebar": {
+    "title": "Menu",
+    "devTools": "Vývojárske nástroje",
+    "faq": "Často kladené otázky",
+    "testBackendSentry": "Testovať Backend Sentry",
+    "testMobileSentry": "Testovať Mobile Sentry",
+    "clearStorage": "Vymazať úložisko",
+    "testSentryExpected": "Očakávaná chyba",
+    "testSentryMessage": "Backend vyvolal testovaciu chybu (skontrolujte panel Sentry)",
+    "testSentryMobileSent": "Test odoslaný",
+    "testSentryMobileMessage": "Testovacia chyba odoslaná do projektu Sentry Mobile",
+    "testSentryMobileMessageDev": "Testovacia chyba odoslaná do projektu Sentry Mobile\n\nPoznámka: V dev režime nastavte EXPO_PUBLIC_FORCE_SENTRY=true v .env na aktiváciu Sentry",
+    "testSentryError": "Nepodarilo sa odoslať testovaciu chybu do Sentry",
+    "faqItems": [
+      {
+        "question": "Ako vytvorím záväzok?",
+        "answer": "Ťuknite na tlačidlo + vpravo dole. Vyberte 'Osobný' pre vlastný záväzok alebo 'Kolaboratívny' na zdieľanie s priateľmi.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Čo je kolaboratívny záväzok?",
+        "answer": "Kolaboratívny záväzok vám umožňuje sledovať pokrok s priateľmi. Vytvorte jeden a zdieľajte kód, alebo sa pripojte pomocou kódu priateľa.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Ako sa pripojím k výzve priateľa?",
+        "answer": "Ťuknite na tlačidlo + a vyberte 'Pripojiť sa'. Zadajte 6-miestny kód, ktorý vám dal váš priateľ, aby ste sa pripojili k jeho výzve.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Ako označím deň ako dokončený?",
+        "answer": "Ťuknite na ktorýkoľvek deň v kalendári vášho záväzku. Deň sa zafarbí na zeleno, aby ukázal dokončenie. Ťuknite znova na vrátenie späť.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Ako vymažem záväzok?",
+        "answer": "Ťuknite na tri bodky na karte záväzku a vyberte 'Vymazať'. Pri kolaboratívnych opustíte výzvu.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}

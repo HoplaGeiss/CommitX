@@ -1,0 +1,132 @@
+{
+  "navigation": {
+    "commitments": "CommitX",
+    "addCommitment": "CommitX",
+    "joinChallenge": "Bli med i utfordring"
+  },
+  "common": {
+    "save": "Lagre",
+    "cancel": "Avbryt",
+    "delete": "Slett",
+    "leave": "Forlat",
+    "ok": "OK",
+    "close": "Lukk",
+    "create": "Opprett",
+    "join": "Bli med",
+    "share": "Del",
+    "menu": "Meny"
+  },
+  "weekDays": {
+    "sun": "Søn",
+    "mon": "Man",
+    "tue": "Tir",
+    "wed": "Ons",
+    "thu": "Tor",
+    "fri": "Fre",
+    "sat": "Lør"
+  },
+  "commitmentsList": {
+    "empty": "Ingen forpliktelser ennå",
+    "emptySubtext": "Trykk på + for å opprette din første forpliktelse",
+    "clearStorageTitle": "Tøm lagring",
+    "clearStorageMessage": "Dette vil slette alle forpliktelser, fullføringer og brukerdata fra lokal lagring. Fortsett?",
+    "clearStorageButton": "Tøm",
+    "clearStorageSuccess": "Lagring tømt vellykket",
+    "clearStorageError": "Kunne ikke tømme lagring"
+  },
+  "addCommitment": {
+    "title": "Tittel",
+    "placeholder": "Skriv inn forpliktelsens tittel",
+    "challengeType": "Utfordringstype",
+    "error": "Feil",
+    "errorMessage": "Kunne ikke opprette forpliktelse. Vennligst prøv igjen."
+  },
+  "joinChallenge": {
+    "title": "Bli med i utfordring",
+    "description": "Skriv inn en delekode for å bli med i en samarbeidsutfordring.\nSamarbeidsutfordringer er begrenset til 2 deltakere.",
+    "placeholder": "Skriv inn 6-sifret kode",
+    "button": "Bli med i utfordring",
+    "error": "Feil",
+    "errorInvalidCode": "Ugyldig delekode eller kunne ikke bli med i utfordring. Vennligst sjekk og prøv igjen.",
+    "errorFull": "Utfordring full",
+    "errorFullMessage": "Denne samarbeidsutfordringen er full. Maksimalt 2 deltakere tillatt.",
+    "success": "Suksess",
+    "successMessage": "Ble med i \"{{title}}\"",
+    "errorEmptyCode": "Vennligst skriv inn en delekode"
+  },
+  "challengeType": {
+    "self": "Personlig",
+    "collaborative": "Samarbeid",
+    "label": "Utfordringstype"
+  },
+  "commitmentCard": {
+    "collaborative": "Samarbeid",
+    "sharedReadonly": "Delt (Skrivebeskyttet)",
+    "shareMessage": "Bli med i min samarbeidsutfordring \"{{title}}\"!\n\nDelekode: {{shareCode}}\n\nBruk denne koden i CommitX for å bli med i utfordringen.",
+    "shareTitle": "Del utfordring \"{{title}}\"",
+    "editTitle": "Rediger forpliktelse"
+  },
+  "deleteModal": {
+    "deleteTitle": "Slett forpliktelse",
+    "leaveTitle": "Forlat utfordring",
+    "deleteMessage": "Er du sikker på at du vil slette \"{{title}}\"? Denne handlingen kan ikke angres.",
+    "leaveMessage": "Er du sikker på at du vil forlate \"{{title}}\"? Du vil trenge en ny delekode for å bli med igjen."
+  },
+  "actionSheet": {
+    "createCommitment": "Opprett forpliktelse",
+    "joinChallenge": "Bli med i utfordring",
+    "cancel": "Avbryt"
+  },
+  "onboarding": {
+    "title": "Velkommen til CommitX!",
+    "subtitle": "Bygg bedre vaner ved å spore dine daglige forpliktelser",
+    "feature1Title": "Spor vanene dine",
+    "feature1Description": "Opprett forpliktelser og marker dager som fullført med et enkelt trykk på kalenderen",
+    "feature2Title": "Personlige forpliktelser",
+    "feature2Description": "Hold forpliktelser private og spor din egen fremgang",
+    "feature3Title": "Samarbeidsutfordringer",
+    "feature3Description": "Del forpliktelser med venner og hold hverandre ansvarlige sammen",
+    "cta": "Opprett min første forpliktelse"
+  },
+  "sidebar": {
+    "title": "Meny",
+    "devTools": "Utviklerverktøy",
+    "faq": "Ofte stilte spørsmål",
+    "testBackendSentry": "Test Backend Sentry",
+    "testMobileSentry": "Test Mobile Sentry",
+    "clearStorage": "Tøm lagring",
+    "testSentryExpected": "Forventet feil",
+    "testSentryMessage": "Backend kastet testfeil (sjekk Sentry-dashbordet)",
+    "testSentryMobileSent": "Test sendt",
+    "testSentryMobileMessage": "Testfeil sendt til Sentry Mobile-prosjektet",
+    "testSentryMobileMessageDev": "Testfeil sendt til Sentry Mobile-prosjektet\n\nMerk: I dev-modus, sett EXPO_PUBLIC_FORCE_SENTRY=true i .env for å aktivere Sentry",
+    "testSentryError": "Kunne ikke sende testfeil til Sentry",
+    "faqItems": [
+      {
+        "question": "Hvordan oppretter jeg en forpliktelse?",
+        "answer": "Trykk på +-knappen nederst til høyre. Velg 'Personlig' for din egen forpliktelse eller 'Samarbeid' for å dele med venner.",
+        "icon": "add-circle-outline"
+      },
+      {
+        "question": "Hva er en samarbeidsforpliktelse?",
+        "answer": "En samarbeidsforpliktelse lar deg spore fremgang med venner. Opprett en og del koden, eller bli med ved å bruke en venns kode.",
+        "icon": "people-outline"
+      },
+      {
+        "question": "Hvordan blir jeg med i en venns utfordring?",
+        "answer": "Trykk på +-knappen og velg 'Bli med'. Skriv inn den 6-sifrede koden vennen din ga deg for å bli med i utfordringen deres.",
+        "icon": "enter-outline"
+      },
+      {
+        "question": "Hvordan markerer jeg en dag som fullført?",
+        "answer": "Trykk på hvilken som helst dag i forpliktelsens kalender. Dagen blir grønn for å vise fullføring. Trykk igjen for å angre.",
+        "icon": "checkmark-circle-outline"
+      },
+      {
+        "question": "Hvordan sletter jeg en forpliktelse?",
+        "answer": "Trykk på de tre prikkene på et forpliktelseskort og velg 'Slett'. For samarbeidsforpliktelser vil du forlate utfordringen.",
+        "icon": "trash-outline"
+      }
+    ]
+  }
+}
