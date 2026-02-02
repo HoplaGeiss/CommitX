@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Sentry from '@sentry/react-native';
 import { useTranslation } from 'react-i18next';
 import CommitmentsListScreen from './screens/CommitmentsListScreen';
@@ -98,7 +99,10 @@ function AppNavigator() {
         <Stack.Screen 
           name="CommitmentsList" 
           component={CommitmentsListScreen}
-          options={{ title: t('navigation.commitments') }}
+          options={{ 
+            title: t('navigation.commitments'),
+            headerShown: false,
+          }}
         />
         <Stack.Screen 
           name="AddCommitment" 
@@ -117,9 +121,11 @@ function AppNavigator() {
 
 export default function App() {
   return (
-    <UserProvider>
-      <AppNavigator />
-    </UserProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <UserProvider>
+        <AppNavigator />
+      </UserProvider>
+    </GestureHandlerRootView>
   );
 }
 

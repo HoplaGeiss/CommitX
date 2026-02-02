@@ -63,12 +63,14 @@ Create a `.env` file in the `frontend` directory:
 EXPO_PUBLIC_API_URL=http://localhost:8080
 EXPO_PUBLIC_E2E_MODE=false  # Set to 'true' only for E2E testing
 EXPO_PUBLIC_DEV_MODE=true
+EXPO_PUBLIC_FORCE_ONBOARDING=false  # Set to 'true' to always show onboarding modal
 ```
 
 **Environment Variables:**
 - `EXPO_PUBLIC_API_URL`: Backend API URL
 - `EXPO_PUBLIC_E2E_MODE`: Shows user switcher for multi-user E2E testing (default: `false`)
 - `EXPO_PUBLIC_DEV_MODE`: Enables development features (default: `true`)
+- `EXPO_PUBLIC_FORCE_ONBOARDING`: Forces the welcome/onboarding modal to show every time (default: `false`)
 
 ### Running the Application
 

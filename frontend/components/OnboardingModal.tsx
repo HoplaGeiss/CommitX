@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,11 @@ import {
   Modal,
   TouchableOpacity,
   ScrollView,
+  FlatList,
+  Dimensions,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -15,64 +20,165 @@ interface OnboardingModalProps {
   onCreateFirstCommitment: () => void;
 }
 
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const SLIDE_WIDTH = Math.min(SCREEN_WIDTH - 40, 450);
+const MODAL_HEIGHT = Math.min(SCREEN_HEIGHT * 0.85, 700);
+
+interface Slide {
+  id: string;
+  renderContent: () => React.ReactNode;
+}
+
 const OnboardingModal: React.FC<OnboardingModalProps> = ({
   visible,
   onCreateFirstCommitment,
 }) => {
   const { t } = useTranslation();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef<FlatList>(null);
 
-  return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={() => {}} // Prevent dismissal by back button
-    >
-      <View style={styles.overlay}>
-        <View style={styles.container}>
+  const slides: Slide[] = [
+    {
+      id: 'slide1',
+      renderContent: () => (
+        <View style={styles.slideContent}>
+          <Text style={styles.slideTitleTop}>{t('onboarding.slide1Title')}</Text>
+
           <ScrollView 
-            contentContainerStyle={styles.content}
+            style={styles.slideScrollView}
             showsVerticalScrollIndicator={false}
           >
-            {/* Header */}
-            <View style={styles.header}>
-              <View style={styles.iconContainer}>
-                <Ionicons name="calendar" size={48} color="#4CAF50" />
-              </View>
-              <Text style={styles.title}>{t('onboarding.title')}</Text>
-              <Text style={styles.subtitle}>{t('onboarding.subtitle')}</Text>
+            {/* Screenshot */}
+            <View style={styles.screenshotContainer}>
+              <Image
+                source={require('../assets/self-commitment-example.png')}
+                style={styles.screenshot}
+                resizeMode="contain"
+              />
             </View>
 
-            {/* Features */}
-            <View style={styles.featuresContainer}>
-              <View style={styles.feature}>
-                <View style={styles.featureIcon}>
-                  <Ionicons name="checkbox-outline" size={28} color="#4CAF50" />
+            <View style={styles.examplesSection}>
+              <Text style={styles.sectionTitle}>{t('onboarding.examplesTitle')}</Text>
+              <View style={styles.exampleItem}>
+                <Ionicons name="close-circle-outline" size={20} color="#4CAF50" />
+                <Text style={styles.exampleText}>{t('onboarding.example1')}</Text>
+              </View>
+              <View style={styles.exampleItem}>
+                <Ionicons name="nutrition-outline" size={20} color="#4CAF50" />
+                <Text style={styles.exampleText}>{t('onboarding.example2')}</Text>
+              </View>
+              <View style={styles.exampleItem}>
+                <Ionicons name="barbell-outline" size={20} color="#4CAF50" />
+                <Text style={styles.exampleText}>{t('onboarding.example3')}</Text>
+              </View>
+            </View>
+
+            <View style={styles.featuresSection}>
+              <Text style={styles.sectionTitle}>{t('onboarding.slide1CheckInTitle')}</Text>
+              <Text style={styles.sectionText}>{t('onboarding.slide1CheckInDescription')}</Text>
+            </View>
+
+            <View style={styles.featuresSection}>
+              <Text style={styles.sectionTitle}>{t('onboarding.slide1PrivacyTitle')}</Text>
+              <Text style={styles.sectionText}>{t('onboarding.slide1Description')}</Text>
+            </View>
+          </ScrollView>
+        </View>
+      ),
+    },
+    {
+      id: 'slide2',
+      renderContent: () => (
+        <View style={styles.slideContent}>
+          <Text style={styles.slideTitleTop}>{t('onboarding.slide2Title')}</Text>
+
+          <ScrollView 
+            style={styles.slideScrollView}
+            showsVerticalScrollIndicator={false}
+          >
+            {/* Screenshot */}
+            <View style={styles.screenshotContainer}>
+              <Image
+                source={require('../assets/collaborative-commitment-example.png')}
+                style={styles.screenshot}
+                resizeMode="contain"
+              />
+            </View>
+
+            <View style={styles.textSection}>
+              <Text style={styles.description}>{t('onboarding.slide2Description')}</Text>
+            </View>
+
+            <View style={styles.featuresSection}>
+              <Text style={styles.sectionTitle}>{t('onboarding.slide2ColorTitle')}</Text>
+              <View style={styles.colorExplanation}>
+                <View style={styles.colorItem}>
+                  <View style={[styles.colorDot, { backgroundColor: '#4CAF50' }]} />
+                  <Text style={styles.colorText}>{t('onboarding.slide2ColorGreen')}</Text>
                 </View>
-                <View style={styles.featureText}>
-                  <Text style={styles.featureTitle}>{t('onboarding.feature1Title')}</Text>
-                  <Text style={styles.featureDescription}>{t('onboarding.feature1Description')}</Text>
+                <View style={styles.colorItem}>
+                  <View style={[styles.colorDot, { backgroundColor: '#2196F3' }]} />
+                  <Text style={styles.colorText}>{t('onboarding.slide2ColorBlue')}</Text>
                 </View>
               </View>
+            </View>
 
-              <View style={styles.feature}>
-                <View style={styles.featureIcon}>
-                  <Ionicons name="person-outline" size={28} color="#2196F3" />
-                </View>
-                <View style={styles.featureText}>
-                  <Text style={styles.featureTitle}>{t('onboarding.feature2Title')}</Text>
-                  <Text style={styles.featureDescription}>{t('onboarding.feature2Description')}</Text>
-                </View>
+            <View style={styles.featuresSection}>
+              <Text style={styles.sectionTitle}>{t('onboarding.slide2InviteTitle')}</Text>
+              <Text style={styles.sectionText}>{t('onboarding.slide2InviteDescription')}</Text>
+            </View>
+
+            <View style={styles.featuresSection}>
+              <Text style={styles.sectionTitle}>{t('onboarding.slide2LimitTitle')}</Text>
+              <Text style={styles.sectionText}>{t('onboarding.slide2LimitDescription')}</Text>
+            </View>
+          </ScrollView>
+        </View>
+      ),
+    },
+    {
+      id: 'slide3',
+      renderContent: () => (
+        <View style={styles.slideContent}>
+          <Text style={styles.slideTitleTop}>{t('onboarding.slide3Title')}</Text>
+
+          <ScrollView 
+            style={styles.slideScrollView}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.textSection}>
+              <Text style={styles.description}>{t('onboarding.slide3Description')}</Text>
+            </View>
+
+            <View style={styles.examplesListSection}>
+              <Text style={styles.sectionTitle}>{t('onboarding.slide3SelfTitle')}</Text>
+              <View style={styles.exampleItem}>
+                <Ionicons name="water-outline" size={20} color="#4CAF50" />
+                <Text style={styles.exampleText}>{t('onboarding.slide3SelfExample1')}</Text>
               </View>
+              <View style={styles.exampleItem}>
+                <Ionicons name="book-outline" size={20} color="#4CAF50" />
+                <Text style={styles.exampleText}>{t('onboarding.slide3SelfExample2')}</Text>
+              </View>
+              <View style={styles.exampleItem}>
+                <Ionicons name="moon-outline" size={20} color="#4CAF50" />
+                <Text style={styles.exampleText}>{t('onboarding.slide3SelfExample3')}</Text>
+              </View>
+            </View>
 
-              <View style={styles.feature}>
-                <View style={styles.featureIcon}>
-                  <Ionicons name="people-outline" size={28} color="#ff9800" />
-                </View>
-                <View style={styles.featureText}>
-                  <Text style={styles.featureTitle}>{t('onboarding.feature3Title')}</Text>
-                  <Text style={styles.featureDescription}>{t('onboarding.feature3Description')}</Text>
-                </View>
+            <View style={styles.examplesListSection}>
+              <Text style={styles.sectionTitle}>{t('onboarding.slide3CollabTitle')}</Text>
+              <View style={styles.exampleItem}>
+                <Ionicons name="walk-outline" size={20} color="#2196F3" />
+                <Text style={styles.exampleText}>{t('onboarding.slide3CollabExample1')}</Text>
+              </View>
+              <View style={styles.exampleItem}>
+                <Ionicons name="cafe-outline" size={20} color="#2196F3" />
+                <Text style={styles.exampleText}>{t('onboarding.slide3CollabExample2')}</Text>
+              </View>
+              <View style={styles.exampleItem}>
+                <Ionicons name="game-controller-outline" size={20} color="#2196F3" />
+                <Text style={styles.exampleText}>{t('onboarding.slide3CollabExample3')}</Text>
               </View>
             </View>
 
@@ -87,6 +193,87 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
             </TouchableOpacity>
           </ScrollView>
         </View>
+      ),
+    },
+  ];
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(offsetX / SLIDE_WIDTH);
+    setCurrentIndex(index);
+  };
+
+  const goToSlide = (index: number) => {
+    flatListRef.current?.scrollToIndex({ index, animated: true });
+    setCurrentIndex(index);
+  };
+
+  const renderSlide = ({ item }: { item: Slide }) => (
+    <View style={[styles.slide, { width: SLIDE_WIDTH }]}>
+      {item.renderContent()}
+    </View>
+  );
+
+  return (
+    <Modal
+      visible={visible}
+      transparent={true}
+      animationType="fade"
+      onRequestClose={() => {}} // Prevent dismissal by back button
+    >
+      <View style={styles.overlay}>
+        <View style={styles.container}>
+          <FlatList
+            ref={flatListRef}
+            data={slides}
+            renderItem={renderSlide}
+            keyExtractor={(item) => item.id}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            bounces={false}
+            style={styles.flatList}
+            getItemLayout={(_, index) => ({
+              length: SLIDE_WIDTH,
+              offset: SLIDE_WIDTH * index,
+              index,
+            })}
+          />
+
+          {/* Pagination Dots */}
+          <View style={styles.pagination}>
+            {slides.map((_, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => goToSlide(index)}
+                style={[
+                  styles.paginationDot,
+                  index === currentIndex && styles.paginationDotActive,
+                ]}
+              />
+            ))}
+          </View>
+
+          {/* Navigation Arrows */}
+          {currentIndex > 0 && (
+            <TouchableOpacity
+              style={[styles.navButton, styles.navButtonLeft]}
+              onPress={() => goToSlide(currentIndex - 1)}
+            >
+              <Ionicons name="chevron-back" size={24} color="#ffffff" />
+            </TouchableOpacity>
+          )}
+          {currentIndex < slides.length - 1 && (
+            <TouchableOpacity
+              style={[styles.navButton, styles.navButtonRight]}
+              onPress={() => goToSlide(currentIndex + 1)}
+            >
+              <Ionicons name="chevron-forward" size={24} color="#ffffff" />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </Modal>
   );
@@ -95,17 +282,15 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    backgroundColor: 'rgba(0, 0, 0, 0.95)',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
   },
   container: {
     backgroundColor: '#1a1a1a',
     borderRadius: 20,
-    width: '100%',
-    maxWidth: 450,
-    maxHeight: '90%',
+    width: SLIDE_WIDTH,
+    height: MODAL_HEIGHT,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.5,
@@ -113,72 +298,131 @@ const styles = StyleSheet.create({
     elevation: 15,
     borderWidth: 1,
     borderColor: '#2a2a2a',
+    overflow: 'hidden',
   },
-  content: {
-    padding: 32,
+  flatList: {
+    flex: 1,
   },
-  header: {
+  slide: {
+    height: MODAL_HEIGHT - 60, // Subtract pagination height
+  },
+  slideContent: {
+    flex: 1,
+    padding: 24,
+  },
+  slideHeader: {
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: 20,
   },
   iconContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     backgroundColor: '#1a2e1a',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
     borderWidth: 2,
     borderColor: '#4CAF50',
   },
-  title: {
-    fontSize: 28,
+  slideTitle: {
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'center',
-    marginBottom: 8,
     letterSpacing: 0.5,
   },
-  subtitle: {
-    fontSize: 16,
+  slideTitleTop: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
+    letterSpacing: 0.5,
+    marginBottom: 20,
+  },
+  slideScrollView: {
+    flex: 1,
+  },
+  textSection: {
+    marginBottom: 20,
+  },
+  description: {
+    fontSize: 15,
     color: '#aaaaaa',
     textAlign: 'center',
-    lineHeight: 24,
-    paddingHorizontal: 10,
+    lineHeight: 22,
   },
-  featuresContainer: {
-    marginBottom: 32,
+  featuresSection: {
+    marginBottom: 20,
+    backgroundColor: '#222222',
+    padding: 16,
+    borderRadius: 12,
   },
-  feature: {
-    flexDirection: 'row',
-    marginBottom: 24,
-    alignItems: 'flex-start',
-  },
-  featureIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#2a2a2a',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-  },
-  featureText: {
-    flex: 1,
-    paddingTop: 4,
-  },
-  featureTitle: {
+  sectionTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#ffffff',
-    marginBottom: 4,
+    marginBottom: 8,
     letterSpacing: 0.3,
   },
-  featureDescription: {
+  sectionText: {
     fontSize: 14,
     color: '#888888',
     lineHeight: 20,
+  },
+  examplesSection: {
+    marginBottom: 20,
+    backgroundColor: '#1a2e1a',
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#2a3a2a',
+  },
+  examplesListSection: {
+    marginBottom: 20,
+  },
+  exampleItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    paddingVertical: 6,
+  },
+  exampleText: {
+    fontSize: 14,
+    color: '#cccccc',
+    marginLeft: 12,
+    flex: 1,
+  },
+  colorExplanation: {
+    marginTop: 8,
+  },
+  colorItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 6,
+  },
+  colorDot: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    marginRight: 10,
+  },
+  colorText: {
+    fontSize: 14,
+    color: '#cccccc',
+  },
+  screenshotContainer: {
+    backgroundColor: '#000000',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#333333',
+  },
+  screenshot: {
+    width: '100%',
+    height: 250,
+    borderRadius: 8,
   },
   ctaButton: {
     backgroundColor: '#4CAF50',
@@ -193,6 +437,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 6,
+    marginTop: 10,
   },
   ctaButtonText: {
     color: '#ffffff',
@@ -200,6 +445,42 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginRight: 8,
     letterSpacing: 0.5,
+  },
+  pagination: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 16,
+    gap: 8,
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#444444',
+  },
+  paginationDotActive: {
+    backgroundColor: '#4CAF50',
+    width: 24,
+  },
+  navButton: {
+    position: 'absolute',
+    top: '50%',
+    transform: [{ translateY: -20 }],
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  navButtonLeft: {
+    left: 8,
+  },
+  navButtonRight: {
+    right: 8,
   },
 });
 

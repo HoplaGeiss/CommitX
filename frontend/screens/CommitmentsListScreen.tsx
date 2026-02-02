@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { storage } from '../utils/storage';
@@ -26,7 +27,8 @@ import ActionSheet from '../components/ActionSheet';
 import Sidebar from '../components/Sidebar';
 import OnboardingModal from '../components/OnboardingModal';
 import MonthNavigation from '../components/MonthNavigation';
-import { isDateInFuture } from '../components/calendarUtils';
+import CustomHeader from '../components/CustomHeader';
+import { isDateInFuture, isNextMonthInFuture } from '../components/calendarUtils';
 import { Commitment, Completion, RootStackParamList } from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CommitmentsList'>;
@@ -58,6 +60,13 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     const checkOnboarding = async () => {
       if (currentUser.id) {
+        // Force onboarding to show if EXPO_PUBLIC_FORCE_ONBOARDING is set
+        const forceOnboarding = process.env.EXPO_PUBLIC_FORCE_ONBOARDING === 'true';
+        if (forceOnboarding) {
+          setShowOnboarding(true);
+          return;
+        }
+        
         const hasCompleted = await storage.hasCompletedOnboarding(currentUser.id);
         if (!hasCompleted) {
           setShowOnboarding(true);
@@ -74,25 +83,10 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     }
   }, [currentUser.id, hasInitialSync]);
 
-  // Set up the burger menu button and add button in the header
+  // Hide the default navigation header - we'll use our custom header
   useEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity
-          onPress={() => setShowSidebar(true)}
-          style={styles.headerButton}
-        >
-          <Ionicons name="menu" size={28} color="#ffffff" />
-        </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <TouchableOpacity
-          onPress={() => setShowActionSheet(true)}
-          style={styles.headerButton}
-        >
-          <Ionicons name="add" size={28} color="#ffffff" />
-        </TouchableOpacity>
-      ),
+      headerShown: false,
     });
   }, [navigation]);
 
@@ -580,9 +574,36 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
     );
   };
 
+  // Swipe gesture for the main content area
+  const swipeGesture = Gesture.Pan()
+    .onEnd((event) => {
+      const SWIPE_THRESHOLD = 50;
+      
+      if (Math.abs(event.velocityX) > Math.abs(event.velocityY)) {
+        if (event.translationX > SWIPE_THRESHOLD) {
+          // Swipe right -> previous month
+          const newMonth = new Date(currentMonth);
+          newMonth.setMonth(currentMonth.getMonth() - 1);
+          setCurrentMonth(newMonth);
+        } else if (event.translationX < -SWIPE_THRESHOLD) {
+          // Swipe left -> next month (if not in future)
+          if (!isNextMonthInFuture(currentMonth)) {
+            const newMonth = new Date(currentMonth);
+            newMonth.setMonth(currentMonth.getMonth() + 1);
+            setCurrentMonth(newMonth);
+          }
+        }
+      }
+    });
+
   return (
     <>
       <View style={styles.container}>
+        <CustomHeader
+          title={t('navigation.commitments')}
+          onMenuPress={() => setShowSidebar(true)}
+          onAddPress={() => setShowActionSheet(true)}
+        />
         <UserSwitcher />
         {commitments.length > 0 && (
           <View style={styles.monthNavigationContainer}>
@@ -592,21 +613,68 @@ const CommitmentsListScreen: React.FC<Props> = ({ navigation }) => {
             />
           </View>
         )}
-        <FlatList
-          data={commitments}
-          renderItem={renderCommitmentCard}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={[
-            styles.listContent,
-            { paddingBottom: Math.max(insets.bottom, 20) }
-          ]}
+        <GestureDetector gesture={swipeGesture}>
+          <View style={styles.listContainer}>
+            <FlatList
+              data={commitments}
+              renderItem={renderCommitmentCard}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={[
+                styles.listContent,
+                { paddingBottom: Math.max(insets.bottom, 20) }
+              ]}
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
               <Text style={styles.emptyText}>{t('commitmentsList.empty')}</Text>
               <Text style={styles.emptySubtext}>{t('commitmentsList.emptySubtext')}</Text>
+              
+              {/* Examples Section */}
+              <View style={styles.examplesContainer}>
+                <View style={styles.examplesSection}>
+                  <Text style={styles.examplesSectionTitle}>{t('onboarding.slide3SelfTitle')}</Text>
+                  <View style={styles.exampleItem}>
+                    <Ionicons name="water-outline" size={20} color="#4CAF50" />
+                    <Text style={styles.exampleText}>{t('onboarding.slide3SelfExample1')}</Text>
+                  </View>
+                  <View style={styles.exampleItem}>
+                    <Ionicons name="book-outline" size={20} color="#4CAF50" />
+                    <Text style={styles.exampleText}>{t('onboarding.slide3SelfExample2')}</Text>
+                  </View>
+                  <View style={styles.exampleItem}>
+                    <Ionicons name="moon-outline" size={20} color="#4CAF50" />
+                    <Text style={styles.exampleText}>{t('onboarding.slide3SelfExample3')}</Text>
+                  </View>
+                </View>
+
+                <View style={styles.examplesSection}>
+                  <Text style={styles.examplesSectionTitle}>{t('onboarding.slide3CollabTitle')}</Text>
+                  <View style={styles.exampleItem}>
+                    <Ionicons name="walk-outline" size={20} color="#2196F3" />
+                    <Text style={styles.exampleText}>{t('onboarding.slide3CollabExample1')}</Text>
+                  </View>
+                  <View style={styles.exampleItem}>
+                    <Ionicons name="cafe-outline" size={20} color="#2196F3" />
+                    <Text style={styles.exampleText}>{t('onboarding.slide3CollabExample2')}</Text>
+                  </View>
+                  <View style={styles.exampleItem}>
+                    <Ionicons name="game-controller-outline" size={20} color="#2196F3" />
+                    <Text style={styles.exampleText}>{t('onboarding.slide3CollabExample3')}</Text>
+                  </View>
+                </View>
+              </View>
+
+              <TouchableOpacity
+                style={styles.emptyButton}
+                onPress={() => setShowActionSheet(true)}
+              >
+                <Ionicons name="add" size={20} color="#ffffff" />
+                <Text style={styles.emptyButtonText}>{t('commitmentsList.createFirst')}</Text>
+              </TouchableOpacity>
             </View>
           }
-        />
+            />
+          </View>
+        </GestureDetector>
       </View>
 
       <DeleteModal
@@ -651,12 +719,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
-  headerButton: {
-    padding: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 8,
-  },
   monthNavigationContainer: {
     backgroundColor: '#000000',
     paddingVertical: 8,
@@ -664,6 +726,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#1a1a1a',
     width: CARD_WIDTH,
     alignSelf: 'center',
+  },
+  listContainer: {
+    flex: 1,
   },
   listContent: {
     padding: 20,
@@ -673,17 +738,69 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 100,
+    paddingTop: 60,
+    paddingHorizontal: 40,
   },
   emptyText: {
     color: '#ffffff',
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 8,
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 12,
+    textAlign: 'center',
   },
   emptySubtext: {
     color: '#888888',
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: 24,
+  },
+  examplesContainer: {
+    width: '100%',
+    maxWidth: 400,
+    marginBottom: 24,
+  },
+  examplesSection: {
+    marginBottom: 20,
+  },
+  examplesSectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#ffffff',
+    marginBottom: 12,
+    textAlign: 'left',
+    letterSpacing: 0.3,
+  },
+  exampleItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 6,
+    paddingVertical: 4,
+  },
+  exampleText: {
     fontSize: 14,
+    color: '#cccccc',
+    marginLeft: 12,
+    flex: 1,
+  },
+  emptyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#4CAF50',
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 25,
+    gap: 8,
+    shadowColor: '#4CAF50',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  emptyButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 
