@@ -1,0 +1,11 @@
+Neue Funktionen
+
+Wischen zum Navigieren zwischen Monaten - Wischen Sie einfach links/rechts überall auf dem Bildschirm, um zwischen Monaten zu wechseln
+Verbesserter leerer Zustand - Neue Benutzer sehen inspirierende Verpflichtungsbeispiele für einen schnelleren Einstieg
+Benutzerdefinierter Navigations-Header - Neu gestaltete obere Leiste mit Schnellzugriff auf Menü- und Erstellen-Schaltflächen
+
+Verbesserungen der Benutzererfahrung
+
+Monatsnavigation ist jetzt mit Gestenunterstützung intuitiver
+Verbesserter Onboarding-Ablauf mit inspirierenden Beispielen
+Bessere visuelle Anleitung für Erstbenutzer

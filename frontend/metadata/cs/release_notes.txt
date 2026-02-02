@@ -1,0 +1,11 @@
+Nové Funkce
+
+Přejetí pro navigaci mezi měsíci - Jednoduše přejeďte doleva/doprava kdekoli na obrazovce pro přepnutí měsíce
+Vylepšený prázdný stav - Noví uživatelé vidí inspirativní příklady závazků pro rychlejší začátek
+Vlastní navigační záhlaví - Přepracovaný horní panel s rychlým přístupem k menu a tlačítkům pro vytváření
+
+Vylepšení Uživatelské Zkušenosti
+
+Navigace mezi měsíci je nyní intuitivnější s podporou gest
+Vylepšený proces onboardingu s inspirativními příklady
+Lepší vizuální vedení pro nové uživatele

@@ -1,0 +1,11 @@
+New Features
+
+Swipe to navigate months - Simply swipe left/right anywhere on screen to move between months
+Enhanced empty state - New users see inspiring commitment examples to get started faster
+Custom navigation header - Redesigned top bar with quick access to menu and create buttons
+
+User Experience Improvements
+
+Month navigation is now more intuitive with gesture support
+Improved onboarding flow with inspiring examples
+Better visual guidance for first-time users

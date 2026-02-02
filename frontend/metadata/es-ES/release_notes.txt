@@ -1,0 +1,11 @@
+Nuevas Funciones
+
+Deslizar para navegar entre meses - Simplemente desliza izquierda/derecha en cualquier lugar de la pantalla para cambiar de mes
+Estado vacío mejorado - Los nuevos usuarios ven ejemplos de compromisos inspiradores para comenzar más rápido
+Encabezado de navegación personalizado - Barra superior rediseñada con acceso rápido al menú y botones de creación
+
+Mejoras de Experiencia de Usuario
+
+La navegación mensual ahora es más intuitiva con soporte de gestos
+Flujo de incorporación mejorado con ejemplos inspiradores
+Mejor guía visual para usuarios nuevos

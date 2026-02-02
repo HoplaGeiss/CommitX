@@ -1,0 +1,11 @@
+Nye Funksjoner
+
+Sveip for å navigere mellom måneder - Sveip enkelt venstre/høyre hvor som helst på skjermen for å bytte måned
+Forbedret tom tilstand - Nye brukere ser inspirerende forpliktelseeksempler for raskere start
+Tilpasset navigasjonshode - Redesignet øverste felt med rask tilgang til meny og opprett-knapper
+
+Forbedringer av Brukeropplevelsen
+
+Månedsnavigering er nå mer intuitiv med gestøtte
+Forbedret onboarding-flyt med inspirerende eksempler
+Bedre visuell veiledning for nye brukere

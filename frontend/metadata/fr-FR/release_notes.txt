@@ -1,0 +1,11 @@
+Nouvelles Fonctionnalités
+
+Balayez pour naviguer entre les mois - Glissez simplement à gauche/droite n'importe où sur l'écran pour changer de mois
+État vide amélioré - Les nouveaux utilisateurs voient des exemples d'engagements inspirants pour démarrer plus rapidement
+En-tête de navigation personnalisé - Barre supérieure repensée avec accès rapide au menu et aux boutons de création
+
+Améliorations de l'Expérience Utilisateur
+
+La navigation entre les mois est désormais plus intuitive grâce au support des gestes
+Flux d'intégration amélioré avec des exemples inspirants
+Meilleur guidage visuel pour les nouveaux utilisateurs

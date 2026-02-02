@@ -1,0 +1,11 @@
+Nya Funktioner
+
+Svep för att navigera mellan månader - Svep helt enkelt vänster/höger var som helst på skärmen för att byta månad
+Förbättrat tomt tillstånd - Nya användare ser inspirerande åtagandeexempel för snabbare start
+Anpassad navigationshuvud - Omdesignad övre fält med snabb åtkomst till meny och skapa-knappar
+
+Förbättringar av Användarupplevelsen
+
+Månadnavigering är nu mer intuitiv med geststöd
+Förbättrat onboarding-flöde med inspirerande exempel
+Bättre visuell vägledning för nya användare

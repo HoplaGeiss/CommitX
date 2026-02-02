@@ -1,0 +1,1 @@
+Neu: Wischen zum Navigieren zwischen Monaten! Verbesserter leerer Zustand mit inspirierenden Beispielen. Vollständige Unterstützung für 24 Sprachen.

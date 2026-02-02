@@ -1,0 +1,11 @@
+Uudet Ominaisuudet
+
+Pyyhkäisy kuukausien välillä navigointiin - Pyyhkäise yksinkertaisesti vasemmalle/oikealle missä tahansa näytöllä vaihtaaksesi kuukautta
+Parannettu tyhjä tila - Uudet käyttäjät näkevät innostavia sitoumusesimerkkejä nopeampaan alkuun
+Mukautettu navigointiotsikko - Uudelleen suunniteltu yläpalkki nopealla pääsyllä valikkoon ja luomispainikkeisiin
+
+Käyttökokemuksen Parannukset
+
+Kuukauden navigointi on nyt intuitiivisempaa eleiden tuella
+Parannettu perehdytysprosessi innostavilla esimerkeillä
+Parempi visuaalinen opastus uusille käyttäjille

@@ -1,0 +1,1 @@
+Nuevo: ¡Desliza para navegar entre meses! Estado vacío mejorado con ejemplos inspiradores. Soporte completo para 24 idiomas.

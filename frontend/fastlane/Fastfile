@@ -1,0 +1,39 @@
+# Fastfile for CommitX
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Download existing App Store metadata"
+  lane :download_metadata do
+    deliver(
+      app_identifier: "com.commitx.app",
+      metadata_path: "./metadata",
+      download_metadata: true,
+      skip_binary_upload: true,
+      skip_screenshots: true
+    )
+  end
+
+  desc "Upload App Store metadata for all languages"
+  lane :upload_metadata do
+    deliver(
+      app_identifier: "com.commitx.app",
+      metadata_path: "./metadata",
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      force: true,
+      submit_for_review: false
+    )
+  end
+
+  desc "Upload metadata and screenshots"
+  lane :upload_all do
+    deliver(
+      app_identifier: "com.commitx.app",
+      metadata_path: "./metadata",
+      skip_binary_upload: true,
+      force: true,
+      submit_for_review: false
+    )
+  end
+end

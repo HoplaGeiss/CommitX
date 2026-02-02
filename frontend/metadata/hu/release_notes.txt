@@ -1,0 +1,11 @@
+Új Funkciók
+
+Pöccintés hónapok közti navigáláshoz - Egyszerűen pöccints balra/jobbra bárhol a képernyőn a hónap váltásához
+Továbbfejlesztett üres állapot - Az új felhasználók inspiráló kötelezettségvállalás-példákat látnak a gyorsabb kezdéshez
+Egyedi navigációs fejléc - Újratervezett felső sáv gyors hozzáféréssel a menühöz és létrehozás gombokhoz
+
+Felhasználói Élmény Fejlesztések
+
+A havi navigáció most intuitívabb gesztustámogatással
+Továbbfejlesztett onboarding folyamat inspiráló példákkal
+Jobb vizuális útmutatás új felhasználóknak

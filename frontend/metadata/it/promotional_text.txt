@@ -1,0 +1,1 @@
+Nuovo: Scorri per navigare tra i mesi! Stato vuoto migliorato con esempi ispiratori. Supporto completo per 24 lingue.

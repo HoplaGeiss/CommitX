@@ -1,0 +1,11 @@
+Nieuwe Functies
+
+Vegen om tussen maanden te navigeren - Veeg eenvoudig links/rechts ergens op het scherm om van maand te wisselen
+Verbeterde lege staat - Nieuwe gebruikers zien inspirerende voorbeelden van verplichtingen om sneller te beginnen
+Aangepaste navigatieheader - Opnieuw ontworpen bovenste balk met snelle toegang tot menu en aanmaakknoppen
+
+Verbeteringen in Gebruikerservaring
+
+Maandnavigatie is nu intuïtiever met gebarenondersteuning
+Verbeterde onboarding-flow met inspirerende voorbeelden
+Betere visuele begeleiding voor nieuwe gebruikers

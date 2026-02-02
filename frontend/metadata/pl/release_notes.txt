@@ -1,0 +1,11 @@
+Nowe Funkcje
+
+Przesuwanie do nawigacji między miesiącami - Po prostu przesuń w lewo/prawo gdziekolwiek na ekranie, aby zmienić miesiąc
+Ulepszony pusty stan - Nowi użytkownicy widzą inspirujące przykłady zobowiązań, aby szybciej rozpocząć
+Niestandardowy nagłówek nawigacji - Przeprojektowany górny pasek z szybkim dostępem do menu i przycisków tworzenia
+
+Ulepszenia Doświadczenia Użytkownika
+
+Nawigacja miesięczna jest teraz bardziej intuicyjna dzięki obsłudze gestów
+Ulepszony proces onboardingu z inspirującymi przykładami
+Lepsza wizualna pomoc dla nowych użytkowników

@@ -69,3 +69,12 @@ backend/.nyc_output
 
 # Sentry
 frontend/sentry.properties
+
+# Fastlane
+frontend/fastlane/report.xml
+frontend/fastlane/Preview.html
+frontend/fastlane/test_output/
+
+# Ruby / Bundler
+frontend/vendor/bundle/
+frontend/.bundle/

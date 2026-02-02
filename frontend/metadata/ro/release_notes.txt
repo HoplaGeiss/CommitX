@@ -1,0 +1,11 @@
+Funcții Noi
+
+Glisare pentru navigarea între luni - Glisează pur și simplu stânga/dreapta oriunde pe ecran pentru a schimba luna
+Stare goală îmbunătățită - Utilizatorii noi văd exemple de angajamente inspiratoare pentru a începe mai rapid
+Antet de navigare personalizat - Bară superioară reproiectată cu acces rapid la meniu și butoane de creare
+
+Îmbunătățiri ale Experienței Utilizatorului
+
+Navigarea lunară este acum mai intuitivă cu suport pentru gesturi
+Flux de onboarding îmbunătățit cu exemple inspiratoare
+Ghidaj vizual mai bun pentru utilizatorii noi

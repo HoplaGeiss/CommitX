@@ -1,0 +1,11 @@
+Nye Funktioner
+
+Stryg for at navigere mellem måneder - Stryg blot venstre/højre hvor som helst på skærmen for at skifte måned
+Forbedret tom tilstand - Nye brugere ser inspirerende forpligtelseseksempler for hurtigere start
+Tilpasset navigationshoved - Redesignet øverste bjælke med hurtig adgang til menu og opret-knapper
+
+Forbedringer af Brugeroplevelsen
+
+Månedsnavigation er nu mere intuitiv med gestussupport
+Forbedret onboarding-flow med inspirerende eksempler
+Bedre visuel vejledning for nye brugere

@@ -1,0 +1,11 @@
+Nove Značajke
+
+Prevlačenje za navigaciju između mjeseci - Jednostavno prevucite lijevo/desno bilo gdje na zaslonu za promjenu mjeseca
+Poboljšano prazno stanje - Novi korisnici vide inspirativne primjere obveza za brži početak
+Prilagođeno navigacijsko zaglavlje - Redizajnirani gornji panel s brzim pristupom meniju i gumbima za stvaranje
+
+Poboljšanja Korisničkog Iskustva
+
+Navigacija između mjeseci sada je intuitivnija s podrškom za geste
+Poboljšani proces onboardinga s inspirativnim primjerima
+Bolje vizualno vodstvo za nove korisnike

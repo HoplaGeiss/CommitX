@@ -1,0 +1,11 @@
+Nové Funkcie
+
+Potiahnutie pre navigáciu medzi mesiacmi - Jednoducho potiahните vľavo/vpravo kdekol'vek na obrazovke pre prepnutie mesiaca
+Vylepšený prázdny stav - Noví používatelia vidia inšpiratívne príklady záväzkov pre rýchlejší začiatok
+Vlastná navigačná hlavička - Prepracovaný horný panel s rýchlym prístupom k menu a tlačidlám pre vytváranie
+
+Vylepšenia Používateľskej Skúsenosti
+
+Navigácia medzi mesiacmi je teraz intuitívnejšia s podporou gest
+Vylepšený proces onboardingu s inšpiratívnymi príkladmi
+Lepšie vizuálne vedenie pre nových používateľov

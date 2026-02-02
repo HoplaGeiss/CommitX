@@ -1,0 +1,11 @@
+Nuove Funzionalità
+
+Scorri per navigare tra i mesi - Scorri semplicemente sinistra/destra ovunque sullo schermo per cambiare mese
+Stato vuoto migliorato - I nuovi utenti vedono esempi di impegni ispiratori per iniziare più velocemente
+Intestazione di navigazione personalizzata - Barra superiore ridisegnata con accesso rapido al menu e ai pulsanti di creazione
+
+Miglioramenti dell'Esperienza Utente
+
+La navigazione mensile è ora più intuitiva con supporto ai gesti
+Flusso di onboarding migliorato con esempi ispiratori
+Migliore guida visiva per i nuovi utenti
