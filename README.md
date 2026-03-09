@@ -5,10 +5,10 @@ A full-stack commitment tracking application with a NestJS backend and React Nat
 ## Download
 
 [![Download on the App Store](https://img.shields.io/badge/Download_on-App_Store-0D96F6?style=for-the-badge&logo=apple&logoColor=white)](https://apps.apple.com/app/id6757818908)
-[![Get it on Google Play](https://img.shields.io/badge/Coming_Soon-Google_Play-grey?style=for-the-badge&logo=google-play&logoColor=white)](#)
+[![Get it on Google Play](https://img.shields.io/badge/Get_it_on-Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.commitx.app)
 
 **iOS:** Available now on the App Store  
-**Android:** Currently in closed testing - coming soon
+**Android:** Available now on Google Play
 
 ## Project Structure
 
